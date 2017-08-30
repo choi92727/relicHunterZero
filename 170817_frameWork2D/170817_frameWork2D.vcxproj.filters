@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="frameWork2D">
+      <UniqueIdentifier>{37df42f8-9c59-40f4-b980-8c5e1a8a1840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{0a885a6c-ebd3-47ff-a335-dc56f39c5334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\util">
+      <UniqueIdentifier>{68528638-26e4-494d-99a5-ec51d2ce29d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\timer">
+      <UniqueIdentifier>{d029ac97-2640-4dae-9a22-3954ff10b711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\image">
+      <UniqueIdentifier>{8f7f91c8-8ab9-4efd-8756-73062571e3f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\keyManager">
+      <UniqueIdentifier>{dd996224-a621-4ee6-8c18-8bebd05c3003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\sceneManager">
+      <UniqueIdentifier>{3162349e-36ab-4927-9218-aa4669730188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\txtData">
+      <UniqueIdentifier>{70d3bbde-0d46-4789-addf-3669d8a6f50b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\loadingScene">
+      <UniqueIdentifier>{808175fe-6dc4-49f8-9b66-493e3db5bbcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\soundManager">
+      <UniqueIdentifier>{91e5e6e4-fada-4fa1-9fbe-29d93218a0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\progressBar">
+      <UniqueIdentifier>{fd2925f0-3dff-4edb-b3f4-8fc8959fc9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain">
+      <UniqueIdentifier>{97409c22-1ab7-499d-b534-f8acac3806e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\animation">
+      <UniqueIdentifier>{b5cd514f-6043-4241-83d5-cf659b1a1725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\effect">
+      <UniqueIdentifier>{6309ab4f-abcc-4127-8885-2e8409431fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\animationManager">
+      <UniqueIdentifier>{b605fd27-82e4-4606-8981-dcd939e7ef89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\scene">
+      <UniqueIdentifier>{6fc6c9c1-858d-4540-812c-31f637de0f61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="commonMacroFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="keyManager.h">
+      <Filter>frameWork2D\keyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>frameWork2D\image</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>frameWork2D\image</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>frameWork2D\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>frameWork2D\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>frameWork2D\sceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="txtData.h">
+      <Filter>frameWork2D\txtData</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>frameWork2D\util</Filter>
+    </ClInclude>
+    <ClInclude Include="gameNode.h">
+      <Filter>frameWork2D</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="singletonBase.h">
+      <Filter>frameWork2D\keyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="randomFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="loading.h">
+      <Filter>frameWork2D\loadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingScene.h">
+      <Filter>frameWork2D\loadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>frameWork2D\soundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="progressBar.h">
+      <Filter>frameWork2D\progressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>frameWork2D\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>frameWork2D\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>frameWork2D\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="effectTest.h">
+      <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="animationManager.h">
+      <Filter>frameWork2D\animationManager</Filter>
+    </ClInclude>
+    <ClInclude Include="camel.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="pixelCollisionScene.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="tileNode.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="tankMap.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="tankGameScene.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="tank.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="keyManager.cpp">
+      <Filter>frameWork2D\keyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>frameWork2D\image</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>frameWork2D\image</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>frameWork2D\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>frameWork2D\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>frameWork2D\sceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="txtData.cpp">
+      <Filter>frameWork2D\txtData</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>frameWork2D\util</Filter>
+    </ClCompile>
+    <ClCompile Include="gameNode.cpp">
+      <Filter>frameWork2D</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="winMain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="loading.cpp">
+      <Filter>frameWork2D\loadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingScene.cpp">
+      <Filter>frameWork2D\loadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>frameWork2D\soundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="progressBar.cpp">
+      <Filter>frameWork2D\progressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>frameWork2D\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>frameWork2D\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>frameWork2D\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="effectTest.cpp">
+      <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="animationManager.cpp">
+      <Filter>frameWork2D\animationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="camel.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="pixelCollisionScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="tankMap.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="tankGameScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="tank.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
