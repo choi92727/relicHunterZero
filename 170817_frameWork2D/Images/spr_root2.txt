@@ -1,0 +1,8 @@
+
+spr_root2
+이미지 3장 
+size : 762 * 134
+
+spr_root2_break
+이미지 9장 
+size : 2286 * 134

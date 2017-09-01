@@ -141,22 +141,10 @@
     <ClInclude Include="animationManager.h">
       <Filter>frameWork2D\animationManager</Filter>
     </ClInclude>
-    <ClInclude Include="camel.h">
+    <ClInclude Include="addImage.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
-    <ClInclude Include="pixelCollisionScene.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="tileNode.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="tankMap.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="tankGameScene.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="tank.h">
+    <ClInclude Include="loadingGame.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
   </ItemGroup>
@@ -224,19 +212,10 @@
     <ClCompile Include="animationManager.cpp">
       <Filter>frameWork2D\animationManager</Filter>
     </ClCompile>
-    <ClCompile Include="camel.cpp">
+    <ClCompile Include="addImage.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
-    <ClCompile Include="pixelCollisionScene.cpp">
-      <Filter>MainGame\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="tankMap.cpp">
-      <Filter>MainGame\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="tankGameScene.cpp">
-      <Filter>MainGame\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="tank.cpp">
+    <ClCompile Include="loadingGame.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
   </ItemGroup>

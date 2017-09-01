@@ -62,8 +62,8 @@ using namespace MY_UTIL;
 #define WINNAME LPTSTR(TEXT("1704±â 11class"))
 #define WINSTARTX 100
 #define WINSTARTY 100
-#define WINSIZEX 640+20+640
-#define WINSIZEY 600
+#define WINSIZEX 1280
+#define WINSIZEY 720
 //600
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 

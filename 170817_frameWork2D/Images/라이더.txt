@@ -1,0 +1,8 @@
+dash		2
+death		10
+dig		3
+hit		2
+idle		24
+melee		7
+teleport	9
+work		8

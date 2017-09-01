@@ -1,0 +1,9 @@
+
+spr_bullet : 샷건
+이미지 1장 
+size : 46 * 30
+
+
+spr_small_bullet :기본총알 머신건
+이미지 1장 
+size : 46 * 30

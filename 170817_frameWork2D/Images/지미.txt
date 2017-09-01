@@ -1,0 +1,11 @@
+dash 		2
+death 		11
+dig 		3
+hit 		2
+idle		12
+meele		7
+sprint		8
+teleport	8
+walk		6
+
+12*9га╥╧юс

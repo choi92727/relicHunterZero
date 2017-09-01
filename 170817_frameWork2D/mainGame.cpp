@@ -13,8 +13,8 @@ mainGame::~mainGame()
 HRESULT mainGame::init()
 {
 	gameNode::init(true);
-	SCENEMANAGER->addScene("tankGameScene", new tankGameScene);
-	SCENEMANAGER->changeScene("tankGameScene");
+	SCENEMANAGER->addScene("loadingGame", new loadingGame);
+	SCENEMANAGER->changeScene("loadingGame");
 	
 	
 

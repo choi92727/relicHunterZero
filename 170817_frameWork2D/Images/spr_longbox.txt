@@ -1,0 +1,8 @@
+
+spr_longbox
+이미지 3장 
+size : 444 * 112
+
+spr_longbox_break
+이미지 12장 
+size : 2784 * 112
