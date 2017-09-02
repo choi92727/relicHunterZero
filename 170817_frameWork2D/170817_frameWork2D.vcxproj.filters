@@ -159,6 +159,9 @@
     <ClInclude Include="gunTestScene.h">
       <Filter>gunTest</Filter>
     </ClInclude>
+    <ClInclude Include="tags.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
