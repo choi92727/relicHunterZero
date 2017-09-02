@@ -143,11 +143,13 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="defaultGun.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="effectTest.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="gunInterface.h" />
+    <ClInclude Include="gunTestScene.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
@@ -172,11 +174,13 @@
     <ClCompile Include="addImage.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
+    <ClCompile Include="defaultGun.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="effectTest.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="gunInterface.cpp" />
+    <ClCompile Include="gunTestScene.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyManager.cpp" />

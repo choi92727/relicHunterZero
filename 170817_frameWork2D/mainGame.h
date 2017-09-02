@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include "loadingGame.h"
-
+#include "gunTestScene.h"
 
 
 class mainGame : public gameNode

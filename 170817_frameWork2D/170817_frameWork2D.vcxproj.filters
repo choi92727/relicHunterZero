@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="frameWork2D">
       <UniqueIdentifier>{37df42f8-9c59-40f4-b980-8c5e1a8a1840}</UniqueIdentifier>
     </Filter>
@@ -63,6 +59,10 @@
     </Filter>
     <Filter Include="gunTest">
       <UniqueIdentifier>{2f9df5ba-ff12-43ff-81df-6d40715d2af4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +153,12 @@
     <ClInclude Include="gunInterface.h">
       <Filter>gunTest</Filter>
     </ClInclude>
+    <ClInclude Include="defaultGun.h">
+      <Filter>gunTest</Filter>
+    </ClInclude>
+    <ClInclude Include="gunTestScene.h">
+      <Filter>gunTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -225,7 +231,13 @@
       <Filter>MainGame\scene</Filter>
     </ClCompile>
     <ClCompile Include="gunInterface.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>gunTest</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultGun.cpp">
+      <Filter>gunTest</Filter>
+    </ClCompile>
+    <ClCompile Include="gunTestScene.cpp">
+      <Filter>gunTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

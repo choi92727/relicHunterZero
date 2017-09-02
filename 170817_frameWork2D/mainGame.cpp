@@ -2,6 +2,7 @@
 #include "mainGame.h"
 
 
+
 mainGame::mainGame()
 {
 }
@@ -14,6 +15,7 @@ HRESULT mainGame::init()
 {
 	gameNode::init(true);
 	SCENEMANAGER->addScene("loadingGame", new loadingGame);
+	SCENEMANAGER->addScene("gunTest",new gunTestScene);
 	SCENEMANAGER->changeScene("loadingGame");
 	
 	
