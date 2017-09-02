@@ -61,6 +61,9 @@
     <Filter Include="MainGame\scene">
       <UniqueIdentifier>{6fc6c9c1-858d-4540-812c-31f637de0f61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gunTest">
+      <UniqueIdentifier>{2f9df5ba-ff12-43ff-81df-6d40715d2af4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -147,6 +150,9 @@
     <ClInclude Include="loadingGame.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
+    <ClInclude Include="gunInterface.h">
+      <Filter>gunTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -217,6 +223,9 @@
     </ClCompile>
     <ClCompile Include="loadingGame.cpp">
       <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="gunInterface.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
