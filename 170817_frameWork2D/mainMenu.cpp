@@ -74,7 +74,7 @@ void mainMenu::update()
 		}
 		else if (m_Bar[2].selected)//credit
 		{
-			SCENEMANAGER->changeScene("loadingGame");
+			SCENEMANAGER->changeScene("creditScene");
 		}
 		else if (m_Bar[3].selected)//게임종료
 		{
@@ -91,7 +91,7 @@ void mainMenu::render()
 	RECT allRC = RectMake(0, 0, WINSIZEX, WINSIZEY);
 	IMAGEMANAGER->render("메인메뉴배경화면", getMemDC());
 	
-	//IMAGEMANAGER->loopAlphaRender("별패턴", getMemDC(), &allRC, loopx, loopy,125);
+	IMAGEMANAGER->loopAlphaRender("별패턴", getMemDC(), &allRC, loopx, loopy,125);
 	for (int i = 0; i < 4; i++)
 	{
 		if (m_Bar[i].selected)

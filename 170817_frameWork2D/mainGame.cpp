@@ -16,8 +16,9 @@ HRESULT mainGame::init()
 	SCENEMANAGER->addScene("loadingGame", new loadingGame);
 	SCENEMANAGER->addScene("mainMenu", new mainMenu);
 	SCENEMANAGER->addScene("mapTool", new mapTool);
+	SCENEMANAGER->addScene("creditScene", new creditScene);
 	SCENEMANAGER->changeScene("loadingGame");
-	
+
 	m_add = new addImage;
 	m_add->init();
 

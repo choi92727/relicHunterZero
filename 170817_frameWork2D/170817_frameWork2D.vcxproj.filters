@@ -159,6 +159,9 @@
     <ClInclude Include="tileNode.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
+    <ClInclude Include="creditScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="mapTool.cpp">
       <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="creditScene.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

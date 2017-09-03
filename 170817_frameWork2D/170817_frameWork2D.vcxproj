@@ -143,6 +143,7 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="creditScene.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="effectTest.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="addImage.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
+    <ClCompile Include="creditScene.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="effectTest.cpp" />

@@ -4,6 +4,7 @@
 #include "addImage.h"
 #include "mainMenu.h"
 #include "mapTool.h"
+#include "creditScene.h"
 
 
 
