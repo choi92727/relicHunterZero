@@ -5,6 +5,7 @@
 #include "mainMenu.h"
 #include "mapTool.h"
 #include "creditScene.h"
+#include "selectScene.h"
 
 
 

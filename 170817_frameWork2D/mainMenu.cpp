@@ -65,7 +65,7 @@ void mainMenu::update()
 	{
 		if (m_Bar[0].selected)//게임시작
 		{
-			SCENEMANAGER->changeScene("loadingGame");
+			SCENEMANAGER->changeScene("selectScene");
 		}
 		else if (m_Bar[1].selected)//맵툴
 		{

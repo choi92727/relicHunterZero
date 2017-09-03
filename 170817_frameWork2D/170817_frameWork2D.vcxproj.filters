@@ -159,8 +159,11 @@
     <ClInclude Include="tileNode.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
+    <ClInclude Include="selectScene.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
     <ClInclude Include="creditScene.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MainGame\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,8 +245,11 @@
     <ClCompile Include="mapTool.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
+    <ClCompile Include="selectScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
     <ClCompile Include="creditScene.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MainGame\scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
