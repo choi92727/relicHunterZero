@@ -87,18 +87,20 @@ void mapTool::render()
 			if (tileOn[y][x])
 			{
 				IMAGEMANAGER->frameRender("맵툴", getMemDC(), tile[y][x].rc.left, tile[y][x].rc.top, tile[y][x].terrainFrameX, tile[y][x].terrainFrameY);
-				if (tile[y][x].terrain == TR_NONE)
+				if (tile[y][x].terrain == TR_NONE) //수정필요
 				{
-					sprintf(str, "%d, %d", x, y);
 					
 				}
 				else
 				{
-					IMAGEMANAGER->frameRender("맵툴", getMemDC(), tile[y][x].rc.left, tileButton[y][x].rcTile.top, tile[y][x].terrainFrameX, tile[y][x].terrainFrameY);
+					//IMAGEMANAGER->frameRender("맵툴", getMemDC(), tile[y][x].rc.left, tileButton[y][x].rcTile.top, tile[y][x].terrainFrameX, tile[y][x].terrainFrameY);
+
+					//이쪽부분 에러
 
 				}
 				if (loookSample)
 				{
+					sprintf(str, "%d, %d", x, y);
 					Rectangle(getMemDC(), tile[y][x].rc.left, tile[y][x].rc.top, tile[y][x].rc.right, tile[y][x].rc.bottom);
 					TextOut(getMemDC(), tile[y][x].rc.left + 20, tile[y][x].rc.top + 10, str, strlen(str));
 				}
