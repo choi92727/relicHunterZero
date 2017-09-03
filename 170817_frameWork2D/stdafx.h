@@ -25,6 +25,8 @@
 #include <ole2.h> 
 #pragma comment(lib, "gdiplus")
 #include <GdiPlus.h>
+
+
 //===================================================
 // ## 내가 만든 헤더파일 이 곳에 추가 ##
 //===================================================
@@ -39,6 +41,7 @@
 #include "soundManager.h"
 #include "effectManager.h"
 #include "animationManager.h"
+#include "tags.h"
 
 //===================================================
 // ## 싱글톤 추가 ##

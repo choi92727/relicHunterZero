@@ -101,12 +101,14 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 void gameNode::DrawPng(Image * tempImage, Graphics * graphics, int x, int y, int sizeX, int sizeY, float angle)
 {
+	
 	Image* img = tempImage;
 	Matrix matrix;
-	matrix.RotateAt(angle*(180 / PI), Gdiplus::PointF((float)(x + sizeX / 2), (float)(y + sizeY / 2)));
+	matrix.RotateAt(270 - angle*(180 / PI), Gdiplus::PointF((float)(x + sizeX / 2), (float)(y + sizeY / 2)));
 	graphics->SetTransform(&matrix);
 	graphics->DrawImage(img, x, y, sizeX, sizeY);
 	img = NULL;
+	//LineMake(getMemDC(), (float)(x + sizeX / 2), (float)(y + sizeY / 2), ptMouse.x, ptMouse.y);
 	SAFE_DELETE(img);
 }
 
@@ -118,6 +120,7 @@ void gameNode::DrawPng(Image * tempImage, Graphics * graphics, int x, int y, int
 	graphics->SetTransform(&matrix);
 	graphics->DrawImage(img, x, y, sizeX, sizeY);
 	img = NULL;
+
 	SAFE_DELETE(img);
 }
 

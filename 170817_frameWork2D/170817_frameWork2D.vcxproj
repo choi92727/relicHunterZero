@@ -142,7 +142,9 @@
     <ClInclude Include="addImage.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
+    <ClInclude Include="bulletInterface.h" />
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="defaultBullet.h" />
     <ClInclude Include="defaultGun.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -160,6 +162,7 @@
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
@@ -175,6 +178,8 @@
     <ClCompile Include="addImage.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
+    <ClCompile Include="bulletInterface.cpp" />
+    <ClCompile Include="defaultBullet.cpp" />
     <ClCompile Include="defaultGun.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
@@ -203,6 +208,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="170823_frameWork2D_이펙트 매니저.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

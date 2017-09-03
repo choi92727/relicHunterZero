@@ -16,5 +16,6 @@ public:
 	~gunInterface();
 	virtual void fire();
 	virtual void setAngle();
+	virtual void setPosition(int x,int y);
 };
 
