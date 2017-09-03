@@ -14,6 +14,9 @@ private:
 	int loopX;
 	int loopY;
 	RECT select_Rc[2];
+	RECT chage_Rc;
+	RECT start_Rc;
+	RECT cancel_Rc;
 	image * im_rider;
 	image * im_jimmy;
 
@@ -21,6 +24,7 @@ private:
 	animation* ani_jimmy;
 
 	select_currentType s_Ct;
+	
 
 public:
 	selectScene();
@@ -33,5 +37,7 @@ public:
 
 	void moveStar();
 	void aniSelectBar();
+	void renderCardBar();
+	void clickCardBar();
 };
 
