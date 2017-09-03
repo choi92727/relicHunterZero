@@ -178,3 +178,4 @@ public:
 	inline int getMaxFrameX() { return m_imageInfo->maxFrameX; }
 	inline int getMaxFrameY() { return m_imageInfo->maxFrameY; }
 };
+//임시 커밋테스트 서방겸대 COMMIT
