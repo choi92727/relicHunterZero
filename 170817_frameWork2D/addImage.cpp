@@ -41,7 +41,7 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addFrameImage("ø¿∏Æ", "Images/ø¿∏Æ.bmp", 1482, 940, 13, 10, true, RGB(255, 0, 255));
 
 	//√—
-	IMAGEMANAGER->addImage("±«√—", "Images/spr_pistol_jimmy_0.bmp", 60, 22, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("±«√—", "Images/spr_pistol_jimmy_0.bmp", 22, 60, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("∏”Ω≈∞«", "Images/spr_machinegun_0.bmp", 60, 24, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("º¶∞«", "Images/spr_shotgun_0.bmp", 64, 22, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("«√∂Û¡Ó∏∂", "Images/spr_smg_plasma_0.bmp", 60, 26, true, RGB(255, 0, 255));

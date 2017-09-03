@@ -33,5 +33,8 @@ public:
 
 	//메인 프로시져
 	LRESULT MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+	void DrawPng(Image* tempImage, Graphics* graphics, int x, int y, int sizeX, int sizeY, float angle); //시범용 드로우함수 복붙용
+	void DrawPng(Image* tempImage, Graphics* graphics, int x, int y, int sizeX, int sizeY, float angle,int addAngle); //시범용 드로우함수 복붙용
+	//void DrawPng(Image* tempImag, Graphics* graphics, int x, int y, int sizeX, int sizeY);
 };
 

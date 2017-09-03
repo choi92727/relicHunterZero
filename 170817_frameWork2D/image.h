@@ -113,8 +113,6 @@ public:
 	//애니메이션 렌더
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
 
-	void gdiPlusRender(HDC hdc, char* imageName,int destX,int destY,float angle,bool isTrans,COLORREF transColor);
-
 
 
 

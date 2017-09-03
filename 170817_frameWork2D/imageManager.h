@@ -1,7 +1,6 @@
 #pragma once
 #include "singletonBase.h"
 #include "image.h"
-
 class imageManager : public singletonBase<imageManager>
 {
 private:
@@ -50,5 +49,8 @@ public:
 	//∑Á«¡∑ª¥ı
 	void loopRender(string strKey, HDC hdc, const LPRECT drawArea, int offsetX, int offsetY);
 	void loopAlphaRender(string strKey, HDC hdc, const LPRECT drawArea, int offsetX, int offsetY, BYTE alpha);
+
+
+
 
 };
