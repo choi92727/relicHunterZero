@@ -150,6 +150,15 @@
     <ClInclude Include="mapToolScene.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
+    <ClInclude Include="mainMenu.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="tileNode.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -222,6 +231,12 @@
       <Filter>MainGame\scene</Filter>
     </ClCompile>
     <ClCompile Include="mapToolScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mainMenu.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTool.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
   </ItemGroup>

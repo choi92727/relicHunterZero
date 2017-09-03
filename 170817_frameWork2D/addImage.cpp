@@ -15,6 +15,7 @@ HRESULT addImage::init()
 {
 	//¸ÊÅø
 	IMAGEMANAGER->addFrameImage("¸ÊÅø", "Images/¸ÊÅø.bmp", 3008, 192, 47, 3);
+	IMAGEMANAGER->addImage("¸ÊÅø ¹öÆ°", "Images/¸ÊÅø ¹öÆ°.bmp", 320, 192);
 
 	//¿ÀºêÁ§Æ®
 	IMAGEMANAGER->addFrameImage("¹Ú½º1", "Images/spr_crate.bmp", 444, 112, 3, 1, true, RGB(255, 0, 255));

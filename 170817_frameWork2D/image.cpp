@@ -815,6 +815,7 @@ void image::loopAlphaRender(HDC hdc, const LPRECT drawArea, int offsetX, int off
 			rcDest.right = rcDest.left + sourWidth;
 
 			//그려주자
+	
 			alphaRender(hdc, rcDest.left, rcDest.top, rcSour.left, rcSour.top, rcSour.right - rcSour.left, rcSour.bottom - rcSour.top, alpha);
 		}
 	}

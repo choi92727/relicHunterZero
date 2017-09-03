@@ -58,6 +58,9 @@ void timeManager::render(HDC hdc)
 											   //한프레임당 경과시간
 		sprintf(str, "ElapsedTime: %f", m_timer->getElapsedTime());
 		TextOut(hdc, 0, 40, str, strlen(str));
+
+		sprintf(str, "x : %d y : %d", ptMouse.x,ptMouse.y);
+		TextOut(hdc, 0, 60, str, strlen(str));
 	}
 #else
 	if (m_timer != nullptr)

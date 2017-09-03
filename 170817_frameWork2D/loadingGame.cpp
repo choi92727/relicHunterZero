@@ -26,6 +26,10 @@ void loadingGame::release()
 
 void loadingGame::update()
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		SCENEMANAGER->changeScene("mainMenu");
+	}
 }
 
 void loadingGame::render()

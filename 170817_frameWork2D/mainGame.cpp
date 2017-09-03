@@ -14,9 +14,12 @@ HRESULT mainGame::init()
 {
 	gameNode::init(true);
 	SCENEMANAGER->addScene("loadingGame", new loadingGame);
+	SCENEMANAGER->addScene("mainMenu", new mainMenu);
+	SCENEMANAGER->addScene("mapTool", new mapTool);
 	SCENEMANAGER->changeScene("loadingGame");
 	
-	
+	m_add = new addImage;
+	m_add->init();
 
 	
 	return S_OK;
