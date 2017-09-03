@@ -12,7 +12,8 @@ private:
 	tagCurrentTile currentTile;
 
 	RECT buttonUI;
-	RECT moveRC[2];
+	RECT moveRC[4];
+	RECT selectRC[2];
 	RECT saveRC[4];
 	RECT loadRC[4];
 

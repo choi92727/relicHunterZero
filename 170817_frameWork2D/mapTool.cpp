@@ -36,7 +36,11 @@ HRESULT mapTool::init()
 	buttonUI = RectMake(WINSIZEX - 320, WINSIZEY - 192, 320, 192);
 	for (int i = 0; i < 2; i++)
 	{
-		moveRC[i] = RectMake(WINSIZEX - 160 + i * 80, WINSIZEY - 192, 80, 48);
+		selectRC[i] = RectMake(WINSIZEX - 320 + i * 160, WINSIZEY - 144, 160, 48);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		moveRC[i] = RectMake(WINSIZEX - 320 + i * 80, WINSIZEY - 192, 80, 48);
 	}
 	for (int i = 0; i < 4; i++)
 	{
@@ -285,6 +289,7 @@ void mapTool::tileClick()
 		}
 		else if (PtInRect(&temp1, ptMouse))//버튼 클릭
 		{
+			
 			if (PtInRect(&moveRC[1], ptMouse))
 			{
 				for (int i = 0; i < 15; i++)
@@ -298,6 +303,23 @@ void mapTool::tileClick()
 				{
 					moveSample_left();
 				}
+			}
+			if (PtInRect(&moveRC[2], ptMouse))//tile버튼
+			{
+				
+			}
+			if (PtInRect(&selectRC[0], ptMouse))//object버튼
+			{
+				
+			}
+			if (PtInRect(&selectRC[1], ptMouse))//enermy버튼
+			{
+				
+				
+			}
+			if (PtInRect(&moveRC[3], ptMouse))
+			{
+				SCENEMANAGER->changeScene("mainMenu");
 			}
 		}
 		else//타일부분
