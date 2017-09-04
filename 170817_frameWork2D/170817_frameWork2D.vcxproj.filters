@@ -189,6 +189,12 @@
     <ClInclude Include="shotBullet.h">
       <Filter>gunTest\bullets</Filter>
     </ClInclude>
+    <ClInclude Include="plasmaGun.h">
+      <Filter>gunTest\guns</Filter>
+    </ClInclude>
+    <ClInclude Include="plasmarBullet.h">
+      <Filter>gunTest\bullets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -285,6 +291,12 @@
       <Filter>gunTest\guns</Filter>
     </ClCompile>
     <ClCompile Include="shotBullet.cpp">
+      <Filter>gunTest\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="plasmaGun.cpp">
+      <Filter>gunTest\guns</Filter>
+    </ClCompile>
+    <ClCompile Include="plasmarBullet.cpp">
       <Filter>gunTest\bullets</Filter>
     </ClCompile>
   </ItemGroup>

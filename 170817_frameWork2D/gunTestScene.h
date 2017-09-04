@@ -3,6 +3,7 @@
 #include "defaultGun.h"
 #include "machineGun.h"
 #include "shotGun.h"
+#include "plasmaGun.h"
 class gunTestScene : public gameNode
 {
 private:

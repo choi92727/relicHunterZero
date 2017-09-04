@@ -50,6 +50,11 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addImage("기본 총알", "Images/spr_bullet_small_1.bmp", 46, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("샷건 총알", "Images/spr_bullet_1.bmp", 46, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("플라즈마 총알", "Images/spr_plasmarbullet.bmp", 552, 30, 12, 1, true, RGB(255, 0, 255));
+	//IMAGEMANAGER->addFrameImage("플라즈마 총알", "Images/spr_plasmarbullet.bmp", 552, 30, 12, 1);
+
+
+	//총기 애니메이션(플라즈마)
+	ANIMATIONMANAGER->addDefAnimation("plasma", "플라즈마 총알", 10, false, true);
 
 	return S_OK;
 }

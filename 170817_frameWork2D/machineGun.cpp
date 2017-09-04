@@ -11,7 +11,7 @@ machineGun::~machineGun()
 {
 }
 
-HRESULT machineGun::init()
+HRESULT machineGun::init(CHARACTER playerType)
 {
 	m_damage = 10.0f;
 	m_speed = 15.0f;
@@ -24,9 +24,11 @@ HRESULT machineGun::init()
 	m_graphics = new Graphics(getMemDC());
 	m_gunImage[1] = new Image(L"images/spr_machinegun_1.png");
 	m_fire = true;
+	m_playerType = playerType;
 
 	m_bullet = new machineBullet;
 	m_bullet->init();
+
 
 	return S_OK;
 }
@@ -79,7 +81,7 @@ void machineGun::render()
 
 void machineGun::fire()
 {
-	m_bullet->fire(m_x, m_y, m_angle, m_speed);
+	m_bullet->fire(m_x, m_y, m_angle, m_speed, m_playerType);
 
 }
 

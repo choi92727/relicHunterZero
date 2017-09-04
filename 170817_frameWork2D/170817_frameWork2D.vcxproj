@@ -161,6 +161,8 @@
     <ClInclude Include="machineBullet.h" />
     <ClInclude Include="machineGun.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="plasmaGun.h" />
+    <ClInclude Include="plasmarBullet.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
@@ -200,6 +202,8 @@
     <ClCompile Include="machineBullet.cpp" />
     <ClCompile Include="machineGun.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="plasmaGun.cpp" />
+    <ClCompile Include="plasmarBullet.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="shotBullet.cpp" />

@@ -11,7 +11,7 @@ defaultGun::~defaultGun()
 {
 }
 
-HRESULT defaultGun::init()
+HRESULT defaultGun::init(CHARACTER playerType)
 {
 	m_damage = 10.0f;
 	m_speed = 10.0f;
@@ -25,7 +25,7 @@ HRESULT defaultGun::init()
 	m_gunImage[1] = new Image(L"images/spr_pistol_jimmy_1.png");
 	m_fire = true;
 
-
+	m_playerType = playerType;
 	m_bullet = new defaultBullet;
 	m_bullet->init();
 
@@ -83,7 +83,7 @@ void defaultGun::render()
 
 void defaultGun::fire()
 {
-	m_bullet->fire(m_x, m_y, m_angle, m_speed);
+	m_bullet->fire(m_x, m_y, m_angle, m_speed,m_playerType);
 }
 
 void defaultGun::setAngle()

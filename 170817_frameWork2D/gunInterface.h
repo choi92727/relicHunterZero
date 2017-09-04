@@ -13,11 +13,12 @@ protected:
 	bool m_fire;//발사 가능한지 여부
 	Image* m_gunImage[2];//이미지 회전 시 필요한 변수
 	Graphics* m_graphics;//이미지 회전시 필요한 변수
+	CHARACTER m_playerType;
 	
 public:
 	gunInterface();
 	virtual ~gunInterface();
-	virtual HRESULT init();
+	virtual HRESULT init(CHARACTER playerType);
 	virtual void release();
 	virtual void update();
 	virtual void render();

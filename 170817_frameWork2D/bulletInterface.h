@@ -12,9 +12,12 @@ protected:
 		float m_range;
 		float m_width;
 		float m_height;
+		float m_isGravity;
+		float m_gravity;
 		int m_x, m_y;
-		CHARACTER m_char;
-		image m_image;
+		CHARACTER m_playerType;
+		animation *m_ani;
+		image* m_image;
 	};
 	Image* m_bulletImage;
 	Graphics* m_graphics;
@@ -26,7 +29,7 @@ protected:
 public:	
 	bulletInterface();
 	~bulletInterface();
-	virtual void fire(int x,int y,float angle,float speed);
+	virtual void fire(int x,int y,float angle,float speed,CHARACTER playerType);
 	virtual HRESULT init();
 	virtual void release();
 	virtual void update();

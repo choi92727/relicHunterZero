@@ -11,7 +11,7 @@ defaultBullet::~defaultBullet()
 {
 }
 
-void defaultBullet::fire(int x, int y, float angle, float speed)
+void defaultBullet::fire(int x, int y, float angle, float speed, CHARACTER playerType)
 {
 	bullet *temp = new bullet;
 	temp->m_x = x;
@@ -22,6 +22,7 @@ void defaultBullet::fire(int x, int y, float angle, float speed)
 	temp->m_range = 600;
 	temp->m_speed = speed;
 	temp->m_angle = angle;
+	temp->m_playerType = playerType;
 
 	m_vBullet.push_back(temp);
 }

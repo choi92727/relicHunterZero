@@ -11,10 +11,9 @@ bulletInterface::~bulletInterface()
 {
 }
 
-void bulletInterface::fire(int x, int y, float angle, float speed)
+void bulletInterface::fire(int x, int y, float angle, float speed, CHARACTER m_playerType)
 {
 }
-
 
 HRESULT bulletInterface::init()
 {

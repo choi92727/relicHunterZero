@@ -1,12 +1,12 @@
 #pragma once
 #include "bulletInterface.h"
-class shotBullet : public bulletInterface
+class plasmarBullet : public bulletInterface
 {
 private:
 
 public:
-	shotBullet();
-	~shotBullet();
+	plasmarBullet();
+	~plasmarBullet();
 	void fire(int x, int y, float angle, float speed, CHARACTER playerType);
 	HRESULT init();
 	void release();

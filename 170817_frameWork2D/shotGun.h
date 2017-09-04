@@ -8,7 +8,7 @@ private:
 public:
 	shotGun();
 	~shotGun();
-	HRESULT init();
+	HRESULT init(CHARACTER playerType);
 	void release();
 	void update();
 	void render();

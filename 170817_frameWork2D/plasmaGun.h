@@ -1,20 +1,19 @@
 #pragma once
 #include "gunInterface.h"
-#include "defaultBullet.h"
-class defaultGun : public gunInterface
+#include "plasmarBullet.h"
+class plasmaGun : public gunInterface
 {
 private:
-	defaultBullet* m_bullet;
-	
+	plasmarBullet* m_bullet;
 public:
-	defaultGun();
-	~defaultGun();
+	plasmaGun();
+	~plasmaGun();
 	HRESULT init(CHARACTER playerType);
 	void release();
 	void update();
 	void render();
 	void fire();
 	void setAngle();
-	void setPosition(int x,int y);
+	void setPosition(int x, int y);
 };
 

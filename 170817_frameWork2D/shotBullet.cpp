@@ -11,7 +11,7 @@ shotBullet::~shotBullet()
 {
 }
 
-void shotBullet::fire(int x, int y, float angle, float speed)
+void shotBullet::fire(int x, int y, float angle, float speed, CHARACTER playerType)
 {
 	for (int i = 0; i < 6; i++)
 	{
@@ -19,11 +19,12 @@ void shotBullet::fire(int x, int y, float angle, float speed)
 		temp->m_x = x;
 		temp->m_y = y;
 		temp->m_width = IMAGEMANAGER->findImage("¼¦°Ç ÃÑ¾Ë")->getWidth();
-		temp->m_height = IMAGEMANAGER->findImage("¼¦°Ç ÃÑ¾Ë")->getHeight();
+		temp->m_height = IMAGEMANAGER->findImage("¼¦°Ç ÃÑ¾Ë")->getHeight() - 5;
 		temp->m_damage = 15;
-		temp->m_range = 350;
-		temp->m_speed = speed;
-		temp->m_angle = angle + ((i*3-15) * PI/180);
+		temp->m_range = 250;
+		temp->m_speed = 15.0f;
+		temp->m_angle = angle + ((i*6.0f - 15.0f) * PI / 180);
+		temp->m_playerType = playerType;
 		m_vBullet.push_back(temp);
 	}
 	

@@ -13,9 +13,10 @@ gunTestScene::~gunTestScene()
 
 HRESULT gunTestScene::init()
 {
+	m_character = CHAR_PLAYER;
 	m_rc = RectMake(WINSIZEX / 2, WINSIZEY / 2, 80, 80);
 	m_defaultGun = new defaultGun();
-	m_defaultGun->init();
+	m_defaultGun->init(m_character);
 	return S_OK;
 }
 
@@ -28,18 +29,24 @@ void gunTestScene::update()
 	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
 		m_defaultGun = new machineGun;
-		m_defaultGun->init();
+		m_defaultGun->init(m_character);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('W'))
 	{
 		m_defaultGun = new defaultGun;
-		m_defaultGun->init();
+		m_defaultGun->init(m_character);
 	}
 	if (KEYMANAGER->isOnceKeyDown('E'))
 	{
 		m_defaultGun = new shotGun;
-		m_defaultGun->init();
+		m_defaultGun->init(m_character);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('R'))
+	{
+		m_defaultGun = new plasmaGun;
+		m_defaultGun->init(m_character);
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))

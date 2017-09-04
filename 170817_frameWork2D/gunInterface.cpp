@@ -11,9 +11,9 @@ gunInterface::~gunInterface()
 {
 }
 
-HRESULT gunInterface::init()
+HRESULT gunInterface::init(CHARACTER playerType)
 {
-	return S_OK;
+	return E_NOTIMPL;
 }
 
 void gunInterface::release()
