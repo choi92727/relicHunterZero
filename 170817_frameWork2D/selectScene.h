@@ -37,5 +37,9 @@ public:
 
 	void moveStar();
 	void aniSelectBar();
+	void selectRender();
+
+	void goJimmy();
+	void goRider();
 };
 

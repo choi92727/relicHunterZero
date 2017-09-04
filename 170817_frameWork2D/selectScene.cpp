@@ -23,15 +23,16 @@ HRESULT selectScene::init()
 	IMAGEMANAGER->addImage("레드카드", "Images/card_red.bmp", 500, 281, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("캔슬", "Images/selectCancel.bmp", 243, 64, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("시작취소", "Images/start_chage_bar.bmp", 916, 43,4,1 ,true, RGB(255, 0, 255));
-
+	IMAGEMANAGER->addImage("캔슬별", "Images/spr_menu_star.bmp", 37, 40, true, RGB(255, 0, 255));
+	
 	
 	loopX = loopY = 0;
 
 	select_Rc[0] = RectMakeCenter(320, WINSIZEY / 4, 320, 72);
 	select_Rc[1] = RectMakeCenter(960, WINSIZEY / 4, 320, 72);
-	cancel_Rc= RectMakeCenter(30, WINSIZEY -64, 243, 64);
-	start_Rc = RectMakeCenter(320, WINSIZEY / 4, 229, 43);
-	change_Rc = RectMakeCenter(320, WINSIZEY / 4, 229, 43);
+	cancel_Rc= RectMake(30, WINSIZEY -64, 243, 64);
+	start_Rc = RectMake(459, 634, 229, 43);
+	change_Rc = RectMake(614, 671, 229, 43);
 
 	im_rider = IMAGEMANAGER->findImage("라이더선택");
 	im_jimmy = IMAGEMANAGER->findImage("지미선택");
@@ -70,8 +71,10 @@ void selectScene::render()
 	IMAGEMANAGER->loopAlphaRender("선택별", getMemDC(), &allRC, loopX, loopY, 125);
 	IMAGEMANAGER->render("선택중간바", getMemDC(), 0, 170);
 	IMAGEMANAGER->render("선택제목바", getMemDC(), 0, 50);
+	IMAGEMANAGER->render("캔슬",getMemDC(), cancel_Rc.left, cancel_Rc.top);
 	im_jimmy->aniRender(getMemDC(), select_Rc[0].left, select_Rc[0].top, ani_jimmy);
 	im_rider->aniRender(getMemDC(), select_Rc[1].left, select_Rc[1].top, ani_rider);
+	selectRender();
 	
 }
 
@@ -99,13 +102,33 @@ void selectScene::aniSelectBar()
 				s_Ct = rider_selected;
 				ANIMATIONMANAGER->start("rider1");
 			}
-
+			if (PtInRect(&cancel_Rc, ptMouse))
+			{
+				SCENEMANAGER->changeScene("mainMenu");
+			}
 			break;
 		case jimmy_selected:
+			if (PtInRect(&start_Rc, ptMouse))
+			{
+				goJimmy();
+				
+			}
+			else if (PtInRect(&change_Rc, ptMouse))
+			{
+				
+			}
 			ani_jimmy = ANIMATIONMANAGER->findAnimation("jimmy0");
 			s_Ct = non_selected;
 			break;
 		case rider_selected:
+			if (PtInRect(&start_Rc, ptMouse))
+			{
+				goRider();
+			}
+			else if (PtInRect(&change_Rc, ptMouse))
+			{
+
+			}
 			ani_rider = ANIMATIONMANAGER->findAnimation("rider0");
 			s_Ct = non_selected;
 			break;
@@ -146,4 +169,53 @@ void selectScene::aniSelectBar()
 		ani_rider = ANIMATIONMANAGER->findAnimation("rider1");
 		break;
 	}
+}
+
+void selectScene::selectRender()
+{
+	int startX, changeX;
+	if (PtInRect(&start_Rc, ptMouse))
+	{
+		startX = 1;
+		changeX = 2;
+	}
+	else if (PtInRect(&change_Rc, ptMouse))
+	{
+		startX = 0;
+		changeX = 3;
+	}
+	else
+	{
+		startX = 0;
+		changeX = 2;
+	}
+	switch (s_Ct)
+	{
+	case non_selected:
+		if (PtInRect(&cancel_Rc, ptMouse))
+		{
+			IMAGEMANAGER->render("캔슬별", getMemDC(), cancel_Rc.left + (cancel_Rc.right - cancel_Rc.left) / 2 - 18, cancel_Rc.top - 20);
+		}
+		break;
+	case jimmy_selected:
+		IMAGEMANAGER->render("지미카드", getMemDC(), 389, 366);
+		IMAGEMANAGER->frameRender("시작취소", getMemDC(), start_Rc.left, start_Rc.top, startX,0);
+		IMAGEMANAGER->frameRender("시작취소", getMemDC(), change_Rc.left, change_Rc.top, changeX,0);
+		break;
+	case rider_selected:
+		IMAGEMANAGER->render("레드카드", getMemDC(), 389, 366);
+		IMAGEMANAGER->frameRender("시작취소", getMemDC(), start_Rc.left, start_Rc.top, startX, 0);
+		IMAGEMANAGER->frameRender("시작취소", getMemDC(), change_Rc.left, change_Rc.top, changeX, 0);
+		break;
+	}
+}
+
+void selectScene::goJimmy()
+{
+	SCENEMANAGER->changeScene("mainMenu");//지미가 선택되고 화면전환
+}
+
+void selectScene::goRider()
+{
+	SCENEMANAGER->changeScene("mapTool");//라이더가 선택되고 화면전환
 }
