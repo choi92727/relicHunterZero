@@ -177,6 +177,18 @@
     <ClInclude Include="gunInterface.h">
       <Filter>gunTest\guns</Filter>
     </ClInclude>
+    <ClInclude Include="machineGun.h">
+      <Filter>gunTest\guns</Filter>
+    </ClInclude>
+    <ClInclude Include="machineBullet.h">
+      <Filter>gunTest\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="shotGun.h">
+      <Filter>gunTest\guns</Filter>
+    </ClInclude>
+    <ClInclude Include="shotBullet.h">
+      <Filter>gunTest\bullets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -262,6 +274,18 @@
     </ClCompile>
     <ClCompile Include="gunInterface.cpp">
       <Filter>gunTest\guns</Filter>
+    </ClCompile>
+    <ClCompile Include="machineGun.cpp">
+      <Filter>gunTest\guns</Filter>
+    </ClCompile>
+    <ClCompile Include="machineBullet.cpp">
+      <Filter>gunTest\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="shotGun.cpp">
+      <Filter>gunTest\guns</Filter>
+    </ClCompile>
+    <ClCompile Include="shotBullet.cpp">
+      <Filter>gunTest\bullets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

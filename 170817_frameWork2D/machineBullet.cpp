@@ -1,17 +1,17 @@
 #include "stdafx.h"
-#include "defaultBullet.h"
+#include "machineBullet.h"
 
 
-defaultBullet::defaultBullet()
+machineBullet::machineBullet()
 {
 }
 
 
-defaultBullet::~defaultBullet()
+machineBullet::~machineBullet()
 {
 }
 
-void defaultBullet::fire(int x, int y, float angle, float speed)
+void machineBullet::fire(int x, int y, float angle, float speed)
 {
 	bullet *temp = new bullet;
 	temp->m_x = x;
@@ -19,26 +19,25 @@ void defaultBullet::fire(int x, int y, float angle, float speed)
 	temp->m_width = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getWidth();
 	temp->m_height = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getHeight();
 	temp->m_damage = 15;
-	temp->m_range = 600;
+	temp->m_range = 750;
 	temp->m_speed = speed;
 	temp->m_angle = angle;
 
 	m_vBullet.push_back(temp);
 }
 
-HRESULT defaultBullet::init()
+HRESULT machineBullet::init()
 {
-
 	m_bulletImage = new Image(L"images/spr_bullet_small_1.png");
 	m_graphics = new Graphics(getMemDC());
 	return S_OK;
 }
 
-void defaultBullet::release()
+void machineBullet::release()
 {
 }
 
-void defaultBullet::update()
+void machineBullet::update()
 {
 	for (m_viBullet = m_vBullet.begin(); m_viBullet != m_vBullet.end();)
 	{
@@ -57,21 +56,16 @@ void defaultBullet::update()
 	}
 }
 
-void defaultBullet::render()
+void machineBullet::render()
 {
-	for (m_viBullet = m_vBullet.begin(); m_viBullet != m_vBullet.end();m_viBullet++)
+	for (m_viBullet = m_vBullet.begin(); m_viBullet != m_vBullet.end(); m_viBullet++)
 	{
-		DrawPng(m_bulletImage, m_graphics, (*m_viBullet)->m_x, (*m_viBullet)->m_y, (*m_viBullet)->m_height, (*m_viBullet)->m_width,(*m_viBullet)->m_angle);
+		DrawPng(m_bulletImage, m_graphics, (*m_viBullet)->m_x, (*m_viBullet)->m_y, (*m_viBullet)->m_height, (*m_viBullet)->m_width, (*m_viBullet)->m_angle);
 	}
 }
 
-void defaultBullet::delBullet(viBullet & delBullet)
+void machineBullet::delBullet(viBullet & delBullet)
 {
 	delBullet = m_vBullet.erase(delBullet);
 
 }
-
-
-
-
-

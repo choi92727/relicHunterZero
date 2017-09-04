@@ -1,43 +1,44 @@
 #include "stdafx.h"
-#include "defaultGun.h"
+#include "shotGun.h"
 
 
-defaultGun::defaultGun()
+shotGun::shotGun()
 {
+
 }
 
 
-defaultGun::~defaultGun()
+shotGun::~shotGun()
 {
 }
 
-HRESULT defaultGun::init()
+HRESULT shotGun::init()
 {
 	m_damage = 10.0f;
-	m_speed = 10.0f;
+	m_speed = 20.0f;
 	m_angle = 0;
 	m_x = 0;
 	m_y = 0;
-	m_fireDelay = 1.5f * 60.0f;
+	m_fireDelay = 2.0f * 60.0f;
 	m_isDelay = m_fireDelay;
-	m_gunImage[0] = new Image(L"images/spr_pistol_jimmy_0.png");
+	m_gunImage[0] = new Image(L"images/spr_shotgun_0.png");
 	m_graphics = new Graphics(getMemDC());
-	m_gunImage[1] = new Image(L"images/spr_pistol_jimmy_1.png");
+	m_gunImage[1] = new Image(L"images/spr_shotgun_1.png");
 	m_fire = true;
 
 
-	m_bullet = new defaultBullet;
+	m_bullet = new shotBullet;
 	m_bullet->init();
 
 
 	return S_OK;
 }
 
-void defaultGun::release()
+void shotGun::release()
 {
 }
 
-void defaultGun::update()
+void shotGun::update()
 {
 	setAngle();
 	if (m_fire)
@@ -60,7 +61,7 @@ void defaultGun::update()
 	m_bullet->update();
 }
 
-void defaultGun::render()
+void shotGun::render()
 {
 	if (m_x <= ptMouse.x) {
 		DrawPng(m_gunImage[0], m_graphics, m_x, m_y,
@@ -77,23 +78,22 @@ void defaultGun::render()
 	sprintf(text, "%.2f", m_angle *(180 / PI));
 
 	TextOut(getMemDC(), 10, 100, text, strlen(text));
-
-
 }
 
-void defaultGun::fire()
+void shotGun::fire()
 {
 	m_bullet->fire(m_x, m_y, m_angle, m_speed);
+
 }
 
-void defaultGun::setAngle()
+void shotGun::setAngle()
 {
 	m_angle = getAngle(m_x, m_y, ptMouse.x, ptMouse.y);
+
 }
 
-void defaultGun::setPosition(int x, int y)
+void shotGun::setPosition(int x, int y)
 {
 	m_x = x;
 	m_y = y;
 }
-

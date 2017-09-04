@@ -1,6 +1,8 @@
 #pragma once
 #include "gameNode.h"
 #include "defaultGun.h"
+#include "machineGun.h"
+#include "shotGun.h"
 class gunTestScene : public gameNode
 {
 private:

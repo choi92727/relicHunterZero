@@ -11,7 +11,7 @@ protected:
 	float m_fireDelay;//총알을 쏘는 제한시간
 	float m_isDelay;//실제 도는 제한시간
 	bool m_fire;//발사 가능한지 여부
-	Image* m_gunImage;//이미지 회전 시 필요한 변수
+	Image* m_gunImage[2];//이미지 회전 시 필요한 변수
 	Graphics* m_graphics;//이미지 회전시 필요한 변수
 	
 public:

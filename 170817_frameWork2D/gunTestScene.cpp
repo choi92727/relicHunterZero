@@ -25,6 +25,23 @@ void gunTestScene::release()
 
 void gunTestScene::update()
 {
+	if (KEYMANAGER->isOnceKeyDown('Q'))
+	{
+		m_defaultGun = new machineGun;
+		m_defaultGun->init();
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('W'))
+	{
+		m_defaultGun = new defaultGun;
+		m_defaultGun->init();
+	}
+	if (KEYMANAGER->isOnceKeyDown('E'))
+	{
+		m_defaultGun = new shotGun;
+		m_defaultGun->init();
+	}
+
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
 		m_rc.left -= 3;
