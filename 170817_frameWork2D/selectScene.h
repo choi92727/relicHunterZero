@@ -14,6 +14,10 @@ private:
 	int loopX;
 	int loopY;
 	RECT select_Rc[2];
+	RECT start_Rc;
+	RECT change_Rc;
+	RECT cancel_Rc;
+
 	image * im_rider;
 	image * im_jimmy;
 

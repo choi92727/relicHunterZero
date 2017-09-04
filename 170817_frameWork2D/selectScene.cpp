@@ -19,10 +19,19 @@ HRESULT selectScene::init()
 	IMAGEMANAGER->addImage("선택중간바", "Images/selectMiddleBar.bmp", 1280, 90, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("지미선택", "Images/jimmySelectBar.bmp", 5440, 72, 17, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("라이더선택", "Images/riderSelectBar.bmp", 5440, 72, 17, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("지미카드", "Images/card_jimmy.bmp", 500, 281, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("레드카드", "Images/card_red.bmp", 500, 281, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("캔슬", "Images/selectCancel.bmp", 243, 64, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("시작취소", "Images/start_chage_bar.bmp", 916, 43,4,1 ,true, RGB(255, 0, 255));
+
+	
 	loopX = loopY = 0;
 
 	select_Rc[0] = RectMakeCenter(320, WINSIZEY / 4, 320, 72);
 	select_Rc[1] = RectMakeCenter(960, WINSIZEY / 4, 320, 72);
+	cancel_Rc= RectMakeCenter(30, WINSIZEY -64, 243, 64);
+	start_Rc = RectMakeCenter(320, WINSIZEY / 4, 229, 43);
+	change_Rc = RectMakeCenter(320, WINSIZEY / 4, 229, 43);
 
 	im_rider = IMAGEMANAGER->findImage("라이더선택");
 	im_jimmy = IMAGEMANAGER->findImage("지미선택");
