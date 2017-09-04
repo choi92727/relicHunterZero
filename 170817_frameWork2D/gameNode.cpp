@@ -64,6 +64,7 @@ void gameNode::update()
 {
 	//나중에 고성능 타이머를 만든 후에는 사용하지 않음
 	//더블버퍼링 이후 사용하지 않는다.(true -> false)
+	
 	InvalidateRect(hWnd, NULL, false);
 }
 

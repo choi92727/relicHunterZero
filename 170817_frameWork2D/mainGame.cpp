@@ -20,6 +20,9 @@ HRESULT mainGame::init()
 	SCENEMANAGER->addScene("selectScene", new selectScene);
 	SCENEMANAGER->changeScene("loadingGame");
 
+	m_cd = new cursorDraw;
+	m_cd->init(0);
+
 	m_add = new addImage;
 	m_add->init();
 
@@ -38,7 +41,7 @@ void mainGame::update()
 	SCENEMANAGER->update();
 	EFFECTMANAGER->update();
 	ANIMATIONMANAGER->update();
-	
+	m_cd->update();
 }
 
 void mainGame::render()
@@ -49,6 +52,7 @@ void mainGame::render()
 	SCENEMANAGER->render();
 	EFFECTMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
+	m_cd->render();
 	//=================================================
 	//백버퍼의 내용을 HDC에 그린다.(이것도 지우지 말것!)
 	this->getBackBuffer()->render(getHDC());

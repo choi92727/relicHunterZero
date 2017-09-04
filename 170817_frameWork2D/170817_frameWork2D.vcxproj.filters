@@ -28,9 +28,6 @@
     <Filter Include="frameWork2D\image">
       <UniqueIdentifier>{8f7f91c8-8ab9-4efd-8756-73062571e3f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="frameWork2D\keyManager">
-      <UniqueIdentifier>{dd996224-a621-4ee6-8c18-8bebd05c3003}</UniqueIdentifier>
-    </Filter>
     <Filter Include="frameWork2D\sceneManager">
       <UniqueIdentifier>{3162349e-36ab-4927-9218-aa4669730188}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     <ClInclude Include="commonMacroFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="keyManager.h">
-      <Filter>frameWork2D\keyManager</Filter>
-    </ClInclude>
     <ClInclude Include="image.h">
       <Filter>frameWork2D\image</Filter>
     </ClInclude>
@@ -107,9 +101,6 @@
     </ClInclude>
     <ClInclude Include="mainGame.h">
       <Filter>MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="singletonBase.h">
-      <Filter>frameWork2D\keyManager</Filter>
     </ClInclude>
     <ClInclude Include="randomFunction.h">
       <Filter>헤더 파일</Filter>
@@ -165,13 +156,16 @@
     <ClInclude Include="creditScene.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
+    <ClInclude Include="keyManager.h">
+      <Filter>frameWork2D\util</Filter>
+    </ClInclude>
+    <ClInclude Include="cursorDraw.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="keyManager.cpp">
-      <Filter>frameWork2D\keyManager</Filter>
     </ClCompile>
     <ClCompile Include="image.cpp">
       <Filter>frameWork2D\image</Filter>
@@ -250,6 +244,12 @@
     </ClCompile>
     <ClCompile Include="creditScene.cpp">
       <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="keyManager.cpp">
+      <Filter>frameWork2D\util</Filter>
+    </ClCompile>
+    <ClCompile Include="cursorDraw.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
