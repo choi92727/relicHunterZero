@@ -11,6 +11,23 @@ gunInterface::~gunInterface()
 {
 }
 
+HRESULT gunInterface::init()
+{
+	return S_OK;
+}
+
+void gunInterface::release()
+{
+}
+
+void gunInterface::update()
+{
+}
+
+void gunInterface::render()
+{
+}
+
 void gunInterface::fire()
 {
 }

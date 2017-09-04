@@ -32,3 +32,7 @@ void bulletInterface::update()
 void bulletInterface::render()
 {
 }
+
+void bulletInterface::delBullet(viBullet & delBullet)
+{
+}

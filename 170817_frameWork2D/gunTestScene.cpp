@@ -15,7 +15,7 @@ HRESULT gunTestScene::init()
 {
 	m_rc = RectMake(WINSIZEX / 2, WINSIZEY / 2, 80, 80);
 	m_defaultGun = new defaultGun();
-	m_defaultGun->init((m_rc.left + m_rc.right)/2,(m_rc.top + m_rc.bottom)/2- 50);
+	m_defaultGun->init();
 	return S_OK;
 }
 

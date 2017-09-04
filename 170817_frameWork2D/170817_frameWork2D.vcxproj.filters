@@ -64,6 +64,12 @@
     <Filter Include="MainGame\GameMain\scene">
       <UniqueIdentifier>{6fc6c9c1-858d-4540-812c-31f637de0f61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gunTest\guns">
+      <UniqueIdentifier>{541be23d-f682-4f6c-b913-b90bf0adb039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gunTest\bullets">
+      <UniqueIdentifier>{1d707097-331e-40f2-9809-49218b266e3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -150,26 +156,26 @@
     <ClInclude Include="loadingGame.h">
       <Filter>MainGame\GameMain\scene</Filter>
     </ClInclude>
-    <ClInclude Include="gunInterface.h">
-      <Filter>gunTest</Filter>
-    </ClInclude>
-    <ClInclude Include="defaultGun.h">
-      <Filter>gunTest</Filter>
-    </ClInclude>
     <ClInclude Include="gunTestScene.h">
       <Filter>gunTest</Filter>
     </ClInclude>
     <ClInclude Include="tags.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="bulletInterface.h">
-      <Filter>gunTest</Filter>
-    </ClInclude>
     <ClInclude Include="resource1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="bulletInterface.h">
+      <Filter>gunTest\bullets</Filter>
+    </ClInclude>
     <ClInclude Include="defaultBullet.h">
-      <Filter>gunTest</Filter>
+      <Filter>gunTest\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultGun.h">
+      <Filter>gunTest\guns</Filter>
+    </ClInclude>
+    <ClInclude Include="gunInterface.h">
+      <Filter>gunTest\guns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,20 +248,20 @@
     <ClCompile Include="loadingGame.cpp">
       <Filter>MainGame\GameMain\scene</Filter>
     </ClCompile>
-    <ClCompile Include="gunInterface.cpp">
-      <Filter>gunTest</Filter>
-    </ClCompile>
-    <ClCompile Include="defaultGun.cpp">
-      <Filter>gunTest</Filter>
-    </ClCompile>
     <ClCompile Include="gunTestScene.cpp">
       <Filter>gunTest</Filter>
     </ClCompile>
     <ClCompile Include="bulletInterface.cpp">
-      <Filter>gunTest</Filter>
+      <Filter>gunTest\bullets</Filter>
     </ClCompile>
     <ClCompile Include="defaultBullet.cpp">
-      <Filter>gunTest</Filter>
+      <Filter>gunTest\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultGun.cpp">
+      <Filter>gunTest\guns</Filter>
+    </ClCompile>
+    <ClCompile Include="gunInterface.cpp">
+      <Filter>gunTest\guns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

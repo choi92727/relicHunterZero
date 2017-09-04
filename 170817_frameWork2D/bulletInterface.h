@@ -10,11 +10,19 @@ protected:
 		float m_angle;
 		float m_damage;
 		float m_range;
-		int x, y;
+		float m_width;
+		float m_height;
+		int m_x, m_y;
 		CHARACTER m_char;
 		image m_image;
 	};
-	vector<bullet> m_vBullet;
+	Image* m_bulletImage;
+	Graphics* m_graphics;
+	typedef vector<bullet*> vBullet;
+	typedef vector<bullet*>::iterator viBullet;
+
+	vBullet m_vBullet;
+	viBullet m_viBullet;
 public:	
 	bulletInterface();
 	~bulletInterface();
@@ -23,5 +31,8 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+	virtual void delBullet(viBullet &delBullet);
+
+
 };
 
