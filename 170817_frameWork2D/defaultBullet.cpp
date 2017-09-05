@@ -47,7 +47,7 @@ void defaultBullet::update()
 		(*m_viBullet)->m_y += -sin((*m_viBullet)->m_angle) * (*m_viBullet)->m_speed;
 
 		(*m_viBullet)->m_range -= (*m_viBullet)->m_speed;
-		if ((*m_viBullet)->m_x > WINSIZEX || (*m_viBullet)->m_range < 0)
+		if ((*m_viBullet)->m_x > WINSIZEX || (*m_viBullet)->m_range < 0 || (*m_viBullet)->m_x <  0)
 		{
 			delBullet(m_viBullet);
 		}
@@ -64,13 +64,31 @@ void defaultBullet::render()
 	{
 		DrawPng(m_bulletImage, m_graphics, (*m_viBullet)->m_x, (*m_viBullet)->m_y, (*m_viBullet)->m_height, (*m_viBullet)->m_width,(*m_viBullet)->m_angle);
 	}
+	/*if (m_vBullet.size() > 0)
+	{
+		char text[64];
+		wsprintf(text, "totalBulletSize : %d", m_vBullet.size());
+		TextOut(getMemDC(), 10, 150, text, strlen(text));
+	}*/
 }
 
 void defaultBullet::delBullet(viBullet & delBullet)
 {
 	delBullet = m_vBullet.erase(delBullet);
-
 }
+
+int defaultBullet::getBulletSize()
+{
+	if (m_vBullet.size() > 0) {
+		return m_vBullet.size();
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
 
 
 

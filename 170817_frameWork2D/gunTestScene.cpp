@@ -13,10 +13,14 @@ gunTestScene::~gunTestScene()
 
 HRESULT gunTestScene::init()
 {
+	m_bulletManager = new bulletManager;
+	m_bullet = new defaultBullet;
+	m_bullet->init();
 	m_character = CHAR_PLAYER;
 	m_rc = RectMake(WINSIZEX / 2, WINSIZEY / 2, 80, 80);
-	m_defaultGun = new defaultGun();
+	m_defaultGun = new defaultGun;
 	m_defaultGun->init(m_character);
+	m_bulletManager->addBullet(*m_defaultGun->m_bullet);
 	return S_OK;
 }
 
@@ -26,10 +30,15 @@ void gunTestScene::release()
 
 void gunTestScene::update()
 {
+
+	m_bulletManager->update();
+
 	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
 		m_defaultGun = new machineGun;
 		m_defaultGun->init(m_character);
+		m_bulletManager->addBullet(*m_defaultGun->m_bullet);
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('W'))
@@ -80,12 +89,10 @@ void gunTestScene::update()
 	pt_list[0].x = (m_rc.left + m_rc.right) / 2;
 	pt_list[0].y = (m_rc.top + m_rc.bottom) / 2;
 
-
-
-
 	m_defaultGun->setPosition(pt_list[19].x,pt_list[19].y - 20);
 
 	m_defaultGun->update();
+	
 }
 
 void gunTestScene::render()
@@ -93,5 +100,7 @@ void gunTestScene::render()
 	//IMAGEMANAGER->render("±ÇÃÑ",getMemDC(),WINSIZEX/2,WINSIZEY/2);
 	Rectangle(getMemDC(), m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
 	m_defaultGun->render();
+	m_bulletManager->render();
+
 }
 

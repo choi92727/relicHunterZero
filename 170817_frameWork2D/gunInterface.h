@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "bulletInterface.h"
 class gunInterface : public gameNode
 {
 protected:
@@ -14,8 +15,9 @@ protected:
 	Image* m_gunImage[2];//이미지 회전 시 필요한 변수
 	Graphics* m_graphics;//이미지 회전시 필요한 변수
 	CHARACTER m_playerType;
-	
+
 public:
+	bulletInterface* m_bullet;
 	gunInterface();
 	virtual ~gunInterface();
 	virtual HRESULT init(CHARACTER playerType);
@@ -25,5 +27,9 @@ public:
 	virtual void fire();
 	virtual void setAngle();
 	virtual void setPosition(int x,int y);
+	float getFireDelay() { return m_fireDelay; }
+	virtual bulletInterface getBullet();
+	
+
 };
 

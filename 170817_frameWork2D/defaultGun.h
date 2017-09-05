@@ -1,11 +1,10 @@
 #pragma once
 #include "gunInterface.h"
 #include "defaultBullet.h"
+
 class defaultGun : public gunInterface
 {
 private:
-	defaultBullet* m_bullet;
-	
 public:
 	defaultGun();
 	~defaultGun();
@@ -16,5 +15,7 @@ public:
 	void fire();
 	void setAngle();
 	void setPosition(int x,int y);
+	
+
 };
 

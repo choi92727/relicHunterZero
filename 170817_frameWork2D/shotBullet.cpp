@@ -49,7 +49,8 @@ void shotBullet::update()
 		(*m_viBullet)->m_y += -sin((*m_viBullet)->m_angle) * (*m_viBullet)->m_speed;
 
 		(*m_viBullet)->m_range -= (*m_viBullet)->m_speed;
-		if ((*m_viBullet)->m_x > WINSIZEX || (*m_viBullet)->m_range < 0)
+		if ((*m_viBullet)->m_x > WINSIZEX || (*m_viBullet)->m_range < 0 || (*m_viBullet)->m_x <  0)
+
 		{
 			delBullet(m_viBullet);
 		}
@@ -72,4 +73,15 @@ void shotBullet::delBullet(viBullet & delBullet)
 {
 	delBullet = m_vBullet.erase(delBullet);
 
+}
+
+int shotBullet::getBulletSize()
+{
+	if (m_vBullet.size() > 0) {
+		return m_vBullet.size();
+	}
+	else
+	{
+		return 0;
+	}
 }

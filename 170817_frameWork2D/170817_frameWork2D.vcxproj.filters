@@ -70,6 +70,9 @@
     <Filter Include="gunTest\bullets">
       <UniqueIdentifier>{1d707097-331e-40f2-9809-49218b266e3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gunTest\bullets\Manager">
+      <UniqueIdentifier>{4aeb6996-a7d0-4352-bdcf-8706658134d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -195,6 +198,9 @@
     <ClInclude Include="plasmarBullet.h">
       <Filter>gunTest\bullets</Filter>
     </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>gunTest\bullets\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -298,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="plasmarBullet.cpp">
       <Filter>gunTest\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>gunTest\bullets\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

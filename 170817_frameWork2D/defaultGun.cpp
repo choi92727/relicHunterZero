@@ -18,7 +18,7 @@ HRESULT defaultGun::init(CHARACTER playerType)
 	m_angle = 0;
 	m_x = 0;
 	m_y = 0;
-	m_fireDelay = 1.5f * 60.0f;
+	m_fireDelay = 0.5f * 60.0f;
 	m_isDelay = m_fireDelay;
 	m_gunImage[0] = new Image(L"images/spr_pistol_jimmy_0.png");
 	m_graphics = new Graphics(getMemDC());
@@ -35,6 +35,10 @@ HRESULT defaultGun::init(CHARACTER playerType)
 
 void defaultGun::release()
 {
+	m_bullet->release();
+	SAFE_DELETE(m_bullet);
+	SAFE_DELETE_ARRAY(*m_gunImage);
+	SAFE_DELETE(m_graphics);
 }
 
 void defaultGun::update()
@@ -74,7 +78,7 @@ void defaultGun::render()
 	m_bullet->render();
 
 	char text[64];
-	sprintf(text, "%.2f", m_angle *(180 / PI));
+	sprintf(text, "%.2f", getFireDelay());
 
 	TextOut(getMemDC(), 10, 100, text, strlen(text));
 
@@ -96,4 +100,7 @@ void defaultGun::setPosition(int x, int y)
 	m_x = x;
 	m_y = y;
 }
+
+
+
 

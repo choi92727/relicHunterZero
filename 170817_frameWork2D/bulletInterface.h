@@ -23,7 +23,6 @@ protected:
 	Graphics* m_graphics;
 	typedef vector<bullet*> vBullet;
 	typedef vector<bullet*>::iterator viBullet;
-
 	vBullet m_vBullet;
 	viBullet m_viBullet;
 public:	
@@ -35,6 +34,23 @@ public:
 	virtual void update();
 	virtual void render();
 	virtual void delBullet(viBullet &delBullet);
+	virtual int getBulletSize();
+
+
+	RECT getRect(viBullet &rectBullet)
+	{
+		RECT temp = RectMake((*rectBullet)->m_x, (*rectBullet)->m_y,
+			(*rectBullet)->m_x + (*rectBullet)->m_width, (*rectBullet)->m_y + (*rectBullet)->m_height);
+		return temp;
+	}
+	CHARACTER getType(viBullet &typeBullet)
+	{
+		return (*typeBullet)->m_playerType;
+	}
+	float getDamage(viBullet &dmgBullet)
+	{
+		return (*dmgBullet)->m_damage;
+	}
 
 
 };

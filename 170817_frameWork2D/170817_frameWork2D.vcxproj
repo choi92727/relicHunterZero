@@ -143,6 +143,7 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="bulletInterface.h" />
+    <ClInclude Include="bulletManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="defaultBullet.h" />
     <ClInclude Include="defaultGun.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
     <ClCompile Include="bulletInterface.cpp" />
+    <ClCompile Include="bulletManager.cpp" />
     <ClCompile Include="defaultBullet.cpp" />
     <ClCompile Include="defaultGun.cpp" />
     <ClCompile Include="effect.cpp" />

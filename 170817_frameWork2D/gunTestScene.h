@@ -4,13 +4,18 @@
 #include "machineGun.h"
 #include "shotGun.h"
 #include "plasmaGun.h"
+#include "bulletManager.h"
+#include "defaultBullet.h"
+#include "bulletInterface.h"
 class gunTestScene : public gameNode
 {
 private:
 	RECT m_rc;
+	bulletInterface* m_bullet;
 	gunInterface* m_defaultGun;
 	CHARACTER m_character;
 	POINT pt_list[20];
+	bulletManager* m_bulletManager;
 public:
 	gunTestScene();
 	~gunTestScene();
