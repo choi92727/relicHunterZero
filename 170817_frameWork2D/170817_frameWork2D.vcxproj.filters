@@ -160,6 +160,9 @@
       <Filter>frameWork2D\util</Filter>
     </ClInclude>
     <ClInclude Include="cursorDraw.h">
+      <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="numberDrawManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -249,6 +252,9 @@
       <Filter>frameWork2D\util</Filter>
     </ClCompile>
     <ClCompile Include="cursorDraw.cpp">
+      <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="numberDrawManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

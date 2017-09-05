@@ -41,7 +41,7 @@ void mainGame::update()
 	SCENEMANAGER->update();
 	EFFECTMANAGER->update();
 	ANIMATIONMANAGER->update();
-	m_cd->update();
+	m_cd->reload();
 }
 
 void mainGame::render()
