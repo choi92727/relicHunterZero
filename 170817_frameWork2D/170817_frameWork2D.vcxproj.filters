@@ -132,9 +132,6 @@
     <ClInclude Include="animationManager.h">
       <Filter>frameWork2D\animationManager</Filter>
     </ClInclude>
-    <ClInclude Include="addImage.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
     <ClInclude Include="loadingGame.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
@@ -164,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="numberDrawManager.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="addImage.h">
+      <Filter>MainGame\GameMain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,9 +227,6 @@
     <ClCompile Include="animationManager.cpp">
       <Filter>frameWork2D\animationManager</Filter>
     </ClCompile>
-    <ClCompile Include="addImage.cpp">
-      <Filter>MainGame\scene</Filter>
-    </ClCompile>
     <ClCompile Include="loadingGame.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
@@ -256,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="numberDrawManager.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="addImage.cpp">
+      <Filter>MainGame\GameMain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

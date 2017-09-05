@@ -54,6 +54,9 @@ void numberDrawManager::update(int x)
 
 void numberDrawManager::render(int left, int top,int spaceSize)
 {
-	number_image->frameRender(getMemDC(), left, top, number[4], 0);
+	for (int i = 0; i < numberSize; i++)
+	{
+		number_image->frameRender(getMemDC(), left+i*(spaceSize+ number_image->getFrameWidth), top, number[numberSize-i-1], 0);
 
+	}
 }

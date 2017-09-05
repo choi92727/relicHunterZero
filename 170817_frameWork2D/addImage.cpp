@@ -52,5 +52,7 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addImage("¼¦°Ç ÃÑ¾Ë", "Images/spr_bullet_1.bmp", 46, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ÇÃ¶óÁî¸¶ ÃÑ¾Ë", "Images/spr_plasmarbullet.bmp", 552, 30, 12, 1, true, RGB(255, 0, 255));
 
+
+	IMAGEMANAGER->
 	return S_OK;
 }

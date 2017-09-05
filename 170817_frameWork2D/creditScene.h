@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "cursorDraw.h"
 class creditScene :
 	public gameNode
 {
