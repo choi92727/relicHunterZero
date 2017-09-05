@@ -10,6 +10,7 @@ private:
 	RECT m_rc;
 	gunInterface* m_defaultGun;
 	CHARACTER m_character;
+	POINT pt_list[20];
 public:
 	gunTestScene();
 	~gunTestScene();

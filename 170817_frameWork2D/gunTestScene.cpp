@@ -49,6 +49,12 @@ void gunTestScene::update()
 		m_defaultGun->init(m_character);
 	}
 
+	for (int i = 1; i < 20; i++)
+	{
+		pt_list[i].x = pt_list[i - 1].x;
+		pt_list[i].y = pt_list[i - 1].y;
+	}
+
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 	{
 		m_rc.left -= 3;
@@ -71,7 +77,13 @@ void gunTestScene::update()
 		m_rc.bottom += 3;
 	}
 
-	m_defaultGun->setPosition((m_rc.left + m_rc.right) / 2, (m_rc.top + m_rc.bottom) / 2 - 50);
+	pt_list[0].x = (m_rc.left + m_rc.right) / 2;
+	pt_list[0].y = (m_rc.top + m_rc.bottom) / 2;
+
+
+
+
+	m_defaultGun->setPosition(pt_list[19].x,pt_list[19].y - 20);
 
 	m_defaultGun->update();
 }
