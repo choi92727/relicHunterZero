@@ -212,7 +212,7 @@ void selectScene::selectRender()
 
 void selectScene::goJimmy()
 {
-	SCENEMANAGER->changeScene("mainMenu");//지미가 선택되고 화면전환
+	SCENEMANAGER->changeScene("stageScene");//지미가 선택되고 화면전환
 }
 
 void selectScene::goRider()

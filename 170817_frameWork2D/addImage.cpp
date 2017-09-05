@@ -15,6 +15,10 @@ HRESULT addImage::init()
 {
 	//¸ÊÅø
 	IMAGEMANAGER->addFrameImage("¸ÊÅø", "Images/¸ÊÅø.bmp", 3008, 192, 47, 3);
+	IMAGEMANAGER->addFrameImage("¿ÀºêÁ§Æ®", "Images/¿ÀºêÁ§Æ®.bmp", 576, 64, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("¿¡³Ê¹Ì", "Images/¿¡³Ê¹Ì.bmp", 192, 64, 3, 1, true, RGB(255, 0, 255));
+
+	//¸ÊÅø ¹öÆ°
 	IMAGEMANAGER->addImage("¸ÊÅø ¹öÆ°", "Images/¸ÊÅø ¹öÆ°.bmp", 320, 192);
 
 	//¿ÀºêÁ§Æ®
@@ -52,7 +56,9 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addImage("¼¦°Ç ÃÑ¾Ë", "Images/spr_bullet_1.bmp", 46, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ÇÃ¶óÁî¸¶ ÃÑ¾Ë", "Images/spr_plasmarbullet.bmp", 552, 30, 12, 1, true, RGB(255, 0, 255));
 
+	//¼ıÀÚ
+	IMAGEMANAGER->addFrameImage("ÃÑ¾Ë¼ıÀÚ", "Images/bulletNubmer.bmp", 260, 37, 10, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("º°¼ıÀÚ", "Images/starNumber.bmp", 150, 22, 10, 1, true, RGB(255, 0, 255));
 
-	IMAGEMANAGER->
 	return S_OK;
 }

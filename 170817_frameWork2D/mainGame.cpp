@@ -18,6 +18,8 @@ HRESULT mainGame::init()
 	SCENEMANAGER->addScene("mapTool", new mapTool);
 	SCENEMANAGER->addScene("creditScene", new creditScene);
 	SCENEMANAGER->addScene("selectScene", new selectScene);
+	SCENEMANAGER->addScene("stageScene", new stageScene);
+	
 	SCENEMANAGER->changeScene("loadingGame");
 
 	m_cd = new cursorDraw;

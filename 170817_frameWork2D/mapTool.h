@@ -6,22 +6,27 @@ class mapTool : public gameNode
 {
 private:
 	tagTile tile[TILEY][TILEX];
+	tagCreateEnemy m_createEnemy[ENEMYMAX];
 	bool tileOn[TILEY][TILEX];
-	tagSampleTile tileButton[SAMPLETILEY][SAMPLETILEX];
+
+	tagSampleTile sampleButton[SAMPLETILEY][SAMPLETILEX];
+
 	int currentTileButton;
 	tagCurrentTile currentTile;
 
 	RECT buttonUI;
-	RECT moveRC[4];
-	RECT selectRC[2];
+	RECT moveRC[2];
+	RECT tileRC;
+	RECT exitRC;
+	RECT objectRC;
+	RECT enemyRC;
 	RECT saveRC[4];
 	RECT loadRC[4];
 
 	POINT currentShowPt;
 
-	BOOL loookSample;
-
-	int sampleX;
+	bool sampleTile, sampleObject, sampleEnemy;
+	bool loookSample;
 public:
 	mapTool();
 	~mapTool();
@@ -35,9 +40,16 @@ public:
 	void tileCheck();
 	void tileClick();
 
+	//오브젝트 설치
+	void createObject();
+	//에너미 설치
+	void createEnemy();
+
 	void moveSample_left();
 	void moveSample_right();
 
 	void saveLoad();
+
+	void pushEnemyMemory();
 };
 

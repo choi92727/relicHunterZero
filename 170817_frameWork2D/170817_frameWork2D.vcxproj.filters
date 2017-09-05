@@ -99,9 +99,6 @@
     <ClInclude Include="gameNode.h">
       <Filter>frameWork2D</Filter>
     </ClInclude>
-    <ClInclude Include="mainGame.h">
-      <Filter>MainGame</Filter>
-    </ClInclude>
     <ClInclude Include="randomFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -159,11 +156,23 @@
     <ClInclude Include="cursorDraw.h">
       <Filter>MainGame\GameMain</Filter>
     </ClInclude>
-    <ClInclude Include="numberDrawManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="addImage.h">
       <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="numberDrawManager.h">
+      <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="stageScene.h">
+      <Filter>MainGame\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -193,9 +202,6 @@
     </ClCompile>
     <ClCompile Include="gameNode.cpp">
       <Filter>frameWork2D</Filter>
-    </ClCompile>
-    <ClCompile Include="mainGame.cpp">
-      <Filter>MainGame</Filter>
     </ClCompile>
     <ClCompile Include="winMain.cpp">
       <Filter>소스 파일</Filter>
@@ -251,11 +257,23 @@
     <ClCompile Include="cursorDraw.cpp">
       <Filter>MainGame\GameMain</Filter>
     </ClCompile>
-    <ClCompile Include="numberDrawManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="addImage.cpp">
       <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="numberDrawManager.cpp">
+      <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="stageScene.cpp">
+      <Filter>MainGame\scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

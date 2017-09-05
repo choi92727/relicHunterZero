@@ -30,33 +30,31 @@ void numberDrawManager::release()
 
 void numberDrawManager::update(int x)
 {
-	if (x / 10000 > 1)
+	if (x < 0)
 	{
-		number[4] = x / 10000;
+		x = 0;
 	}
-	else if (x / 1000 > 1)
-	{
-		number[3] = (x / 1000) % 10;
-	}
-	else if (x / 100 > 1)
-	{
-		number[2] = (x / 100) % 10;
-	}
-	else if (x / 10 > 1)
-	{
-		number[1] = (x / 10) % 10;
-	}
-	else
-	{
-		number[0] = x % 10;
-	}
+
+
+	number[4] = x / 10000;
+
+	number[3] = (x / 1000) % 10;
+
+	number[2] = (x / 100) % 10;
+
+	number[1] = (x / 10) % 10;
+
+	number[0] = x % 10;
+
+
+	
 }
 
 void numberDrawManager::render(int left, int top,int spaceSize)
 {
 	for (int i = 0; i < numberSize; i++)
 	{
-		number_image->frameRender(getMemDC(), left+i*(spaceSize+ number_image->getFrameWidth), top, number[numberSize-i-1], 0);
+		number_image->frameRender(getMemDC(), left+i*(spaceSize+ number_image->getFrameWidth()), top, number[numberSize-i-1], 0);
 
 	}
 }

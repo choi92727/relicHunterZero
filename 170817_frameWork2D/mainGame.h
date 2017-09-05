@@ -7,6 +7,7 @@
 #include "creditScene.h"
 #include "selectScene.h"
 #include "cursorDraw.h"
+#include "stageScene.h"
 
 
 
