@@ -26,15 +26,15 @@ HRESULT machineGun::init(CHARACTER playerType)
 	m_fire = true;
 	m_playerType = playerType;
 
-	m_bullet = new machineBullet;
-	m_bullet->init();
-
 
 	return S_OK;
 }
 
 void machineGun::release()
 {
+	SAFE_DELETE_ARRAY(*m_gunImage);
+	SAFE_DELETE(m_graphics);
+	SAFE_DELETE(m_bulletManager);
 }
 
 void machineGun::update()
@@ -57,7 +57,6 @@ void machineGun::update()
 			m_fire = true;
 		}
 	}
-	m_bullet->update();
 }
 
 void machineGun::render()
@@ -71,18 +70,16 @@ void machineGun::render()
 		DrawPng(m_gunImage[1], m_graphics, m_x, m_y,
 			24, 60, m_angle);
 	}
-	m_bullet->render();
-	char text[64];
-	sprintf(text, "%.2f", m_angle *(180 / PI));
-
-	TextOut(getMemDC(), 10, 100, text, strlen(text));
 
 }
 
 void machineGun::fire()
 {
-	m_bullet->fire(m_x, m_y, m_angle, m_speed, m_playerType);
+	m_bullet = new machineBullet;
+	m_bullet->init();
+	m_bullet->fire(m_x, m_y +IMAGEMANAGER->findImage("±ÇÃÑ")->getHeight() / 2, m_angle, m_speed, m_playerType);
 
+	m_bulletManager->addBullet(*m_bullet);
 }
 
 void machineGun::setAngle()

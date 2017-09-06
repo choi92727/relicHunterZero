@@ -14,7 +14,7 @@ defaultGun::~defaultGun()
 HRESULT defaultGun::init(CHARACTER playerType)
 {
 	m_damage = 10.0f;
-	m_speed = 10.0f;
+	m_speed = 15.0f;
 	m_angle = 0;
 	m_x = 0;
 	m_y = 0;
@@ -24,10 +24,7 @@ HRESULT defaultGun::init(CHARACTER playerType)
 	m_graphics = new Graphics(getMemDC());
 	m_gunImage[1] = new Image(L"images/spr_pistol_jimmy_1.png");
 	m_fire = true;
-
 	m_playerType = playerType;
-	m_bullet = new defaultBullet;
-	m_bullet->init();
 
 
 	return S_OK;
@@ -35,10 +32,9 @@ HRESULT defaultGun::init(CHARACTER playerType)
 
 void defaultGun::release()
 {
-	m_bullet->release();
-	SAFE_DELETE(m_bullet);
 	SAFE_DELETE_ARRAY(*m_gunImage);
 	SAFE_DELETE(m_graphics);
+	SAFE_DELETE(m_bulletManager);
 }
 
 void defaultGun::update()
@@ -61,7 +57,6 @@ void defaultGun::update()
 			m_fire = true;
 		}
 	}
-	m_bullet->update();
 }
 
 void defaultGun::render()
@@ -75,7 +70,6 @@ void defaultGun::render()
 		DrawPng(m_gunImage[1], m_graphics, m_x, m_y,
 			22, 60, m_angle);
 	}
-	m_bullet->render();
 
 	char text[64];
 	sprintf(text, "%.2f", getFireDelay());
@@ -87,7 +81,15 @@ void defaultGun::render()
 
 void defaultGun::fire()
 {
-	m_bullet->fire(m_x, m_y, m_angle, m_speed,m_playerType);
+	m_bullet = new defaultBullet;
+	m_bullet->init();
+	m_bullet->fire(
+		m_x,
+		m_y + IMAGEMANAGER->findImage("±ÇÃÑ")->getHeight()/2
+		, m_angle, m_speed,m_playerType);
+
+	m_bulletManager->addBullet(*m_bullet);
+
 }
 
 void defaultGun::setAngle()

@@ -13,17 +13,17 @@ machineBullet::~machineBullet()
 
 void machineBullet::fire(int x, int y, float angle, float speed, CHARACTER playerType)
 {
-	bullet *temp = new bullet;
-	temp->m_x = x;
-	temp->m_y = y;
-	temp->m_width = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getWidth();
-	temp->m_height = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getHeight();
-	temp->m_damage = 15;
-	temp->m_range = 750;
-	temp->m_speed = speed;
-	temp->m_angle = angle;
-	temp->m_playerType = playerType;
-	m_vBullet.push_back(temp);
+	
+	m_x = x;
+	m_y = y;
+	m_width = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getWidth();
+	m_height = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getHeight();
+	m_damage = 15;
+	m_range = 750;
+	m_speed = speed;
+	m_angle = angle;
+	m_playerType = playerType;
+
 }
 
 HRESULT machineBullet::init()
@@ -35,51 +35,24 @@ HRESULT machineBullet::init()
 
 void machineBullet::release()
 {
-
+	SAFE_DELETE(m_bulletImage);
+	SAFE_DELETE(m_graphics);
 }
 
 void machineBullet::update()
 {
-	for (m_viBullet = m_vBullet.begin(); m_viBullet != m_vBullet.end();)
-	{
-		(*m_viBullet)->m_x += cos((*m_viBullet)->m_angle) * (*m_viBullet)->m_speed;
-		(*m_viBullet)->m_y += -sin((*m_viBullet)->m_angle) * (*m_viBullet)->m_speed;
-
-		(*m_viBullet)->m_range -= (*m_viBullet)->m_speed;
-		if ((*m_viBullet)->m_x > WINSIZEX || (*m_viBullet)->m_range < 0 || (*m_viBullet)->m_x <  0)
-		{
-			delBullet(m_viBullet);
-		}
-		else
-		{
-			m_viBullet++;
-		}
-	}
+	m_x += cos(m_angle) * m_speed;
+	m_y += -sin(m_angle) * m_speed;
+	m_range -= m_speed;
 }
 
 void machineBullet::render()
 {
-	for (m_viBullet = m_vBullet.begin(); m_viBullet != m_vBullet.end(); m_viBullet++)
-	{
-		Rectangle(getMemDC(), (*m_viBullet)->m_x, (*m_viBullet)->m_y, (*m_viBullet)->m_x + (*m_viBullet)->m_width, (*m_viBullet)->m_y + (*m_viBullet)->m_height);
-	
-		DrawPng(m_bulletImage, m_graphics, (*m_viBullet)->m_x, (*m_viBullet)->m_y, (*m_viBullet)->m_height, (*m_viBullet)->m_width, (*m_viBullet)->m_angle);
-	}
-}
+	Rectangle(getMemDC(), m_x, m_y, m_x + m_width, m_y + m_height / 2);
 
-void machineBullet::delBullet(viBullet & delBullet)
-{
-	delBullet = m_vBullet.erase(delBullet);
 
-}
+	DrawPng(m_bulletImage, m_graphics, m_x, m_y - m_width / 2, m_height, m_width, m_angle);
 
-int machineBullet::getBulletSize()
-{
-	if (m_vBullet.size() > 0) {
-		return m_vBullet.size();
-	}
-	else
-	{
-		return 0;
-	}
-}
+} 
+
+

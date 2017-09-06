@@ -18,23 +18,35 @@ HRESULT bulletManager::init()
 
 void bulletManager::release()
 {
+
 }
 
 void bulletManager::update()
 {
-	cnt = 0;
-	for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end(); m_viBulletList++)
+	for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
 	{
-		cnt += (*m_viBulletList)->getBulletSize();
+		(*m_viBulletList)->update();
+		if ((*m_viBulletList)->getRange() < 0)
+		{
+			deleteBullet(m_viBulletList);
+		}
+		else
+		{
+			m_viBulletList++;
+		}
 	}
 }
 
 void bulletManager::render()
 {
-	char text[64];
-	wsprintf(text, "bulletSize %d", cnt);
+	for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end(); m_viBulletList++)
+	{
+		(*m_viBulletList)->render();
+	}
+	//char text[64];
+	//wsprintf(text, "bulletSize %d",m_vBulletList.size());
 
-	TextOut(getMemDC(), 10, 130, text, strlen(text));
+	//TextOut(getMemDC(), 10, 130, text, strlen(text));
 }
 
 void bulletManager::addBullet(bulletInterface &m_bullet)
@@ -44,4 +56,12 @@ void bulletManager::addBullet(bulletInterface &m_bullet)
 
 void bulletManager::checkBullet()
 {
+
 }
+
+void bulletManager::deleteBullet(viBulletList &m_bullet)
+{
+	(*m_bullet)->release();
+	m_bullet = m_vBulletList.erase(m_bullet);
+}
+

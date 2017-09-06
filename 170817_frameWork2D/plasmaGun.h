@@ -14,9 +14,8 @@ public:
 	void fire();
 	void setAngle();
 	void setPosition(int x, int y);
-	bulletInterface* getBullet() {
-		return m_bullet;
-	};
+
+
 
 };
 

@@ -26,10 +26,6 @@ HRESULT plasmaGun::init(CHARACTER playerType)
 	m_fire = true;
 	m_playerType = playerType;
 
-	m_bullet = new plasmarBullet;
-	m_bullet->init();
-
-
 
 	return S_OK;
 }
@@ -58,7 +54,7 @@ void plasmaGun::update()
 			m_fire = true;
 		}
 	}
-	m_bullet->update();
+
 }
 
 void plasmaGun::render()
@@ -73,7 +69,7 @@ void plasmaGun::render()
 		DrawPng(m_gunImage[1], m_graphics, m_x, m_y,
 			22, 60, m_angle);
 	}
-	m_bullet->render();
+
 
 	char text[64];
 	sprintf(text, "%.2f", m_angle *(180 / PI));
@@ -84,13 +80,18 @@ void plasmaGun::render()
 
 void plasmaGun::fire()
 {
-	m_bullet->fire(m_x, m_y, m_angle, m_speed, m_playerType);
+	m_bullet = new plasmarBullet;
+	m_bullet->init();
+	m_bullet->fire(m_x, 
+		m_y + IMAGEMANAGER->findImage("플라즈마")->getHeight() / 2
+		, m_angle, m_speed, m_playerType);
+	m_bulletManager->addBullet(*m_bullet);
 }
 
 void plasmaGun::setAngle()
 {
-	m_angle = getAngle(m_x, m_y, (float)ptMouse.x, (float)ptMouse.y);
 
+	m_angle = getAngle(m_x, m_y, (float)ptMouse.x, (float)ptMouse.y);
 }
 
 void plasmaGun::setPosition(int x, int y)

@@ -39,8 +39,3 @@ void gunInterface::setAngle()
 void gunInterface::setPosition(int x, int y)
 {
 }
-
-bulletInterface* gunInterface::getBullet()
-{
-	return &bulletInterface();
-}

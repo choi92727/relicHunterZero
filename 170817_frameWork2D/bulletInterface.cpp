@@ -31,13 +31,5 @@ void bulletInterface::render()
 {
 }
 
-void bulletInterface::delBullet(viBullet & delBullet)
-{
-}
-
-int bulletInterface::getBulletSize()
-{
-	return 0;
-}
 
 

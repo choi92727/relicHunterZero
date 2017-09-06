@@ -15,7 +15,7 @@ shotGun::~shotGun()
 HRESULT shotGun::init(CHARACTER playerType)
 {
 	m_damage = 10.0f;
-	m_speed = 20.0f;
+	m_speed = 25.0f;
 	m_angle = 0;
 	m_x = 0;
 	m_y = 0;
@@ -27,15 +27,13 @@ HRESULT shotGun::init(CHARACTER playerType)
 	m_fire = true;
 	m_playerType = playerType;
 
-
-	m_bullet = new shotBullet;
-	m_bullet->init();
-
 	return S_OK;
 }
 
 void shotGun::release()
 {
+	SAFE_DELETE_ARRAY(*m_gunImage);
+	SAFE_DELETE(m_graphics);
 }
 
 void shotGun::update()
@@ -58,7 +56,7 @@ void shotGun::update()
 			m_fire = true;
 		}
 	}
-	m_bullet->update();
+
 }
 
 void shotGun::render()
@@ -72,7 +70,7 @@ void shotGun::render()
 		DrawPng(m_gunImage[1], m_graphics, m_x, m_y,
 			22, 60, m_angle);
 	}
-	m_bullet->render();
+
 
 	char text[64];
 	sprintf(text, "%.2f", m_angle *(180 / PI));
@@ -82,8 +80,14 @@ void shotGun::render()
 
 void shotGun::fire()
 {
-	m_bullet->fire(m_x, m_y, m_angle, m_speed, m_playerType);
-
+	for (int i = 0; i < 6; i++) {
+		m_bullet = new shotBullet;
+		m_bullet->init();
+		m_bullet->fire(m_x,
+			m_y + IMAGEMANAGER->findImage("¼¦°Ç")->getHeight()
+			, m_angle + ((i * 6) - 15) * PI / 180, m_speed, m_playerType);
+		m_bulletManager->addBullet(*m_bullet);
+	}
 }
 
 void shotGun::setAngle()

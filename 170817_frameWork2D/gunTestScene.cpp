@@ -13,14 +13,19 @@ gunTestScene::~gunTestScene()
 
 HRESULT gunTestScene::init()
 {
+
+	//구동순서
+	//1.총 생성
+	//2.초기화=CARACTER변수를 같이 넣어줘서 누구의 총인지 확인
+	//3.불렛 매니저를 총에다가 넣어줌(총이 발사될 때마다 불렛매니저에 총의 포인터를 넣어줌);
 	m_bulletManager = new bulletManager;
-	m_bullet = new defaultBullet;
-	m_bullet->init();
 	m_character = CHAR_PLAYER;
 	m_rc = RectMake(WINSIZEX / 2, WINSIZEY / 2, 80, 80);
 	m_defaultGun = new defaultGun;
 	m_defaultGun->init(m_character);
-	m_bulletManager->addBullet(*m_defaultGun->getBullet());
+	m_defaultGun->setBulletManagerLink(*m_bulletManager);
+
+
 	return S_OK;
 }
 
@@ -31,31 +36,44 @@ void gunTestScene::release()
 void gunTestScene::update()
 {
 
-	m_bulletManager->update();
+	
 
 	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
+		//m_defaultGun->release();
 		m_defaultGun = new machineGun;
 		m_defaultGun->init(m_character);
-		m_bulletManager->addBullet(*m_defaultGun->m_bullet);
+		m_defaultGun->setBulletManagerLink(*m_bulletManager);
 
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('W'))
 	{
+		//m_defaultGun->release();
+
 		m_defaultGun = new defaultGun;
 		m_defaultGun->init(m_character);
+		m_defaultGun->setBulletManagerLink(*m_bulletManager);
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('E'))
 	{
+		//m_defaultGun->release();
+
 		m_defaultGun = new shotGun;
 		m_defaultGun->init(m_character);
+		m_defaultGun->setBulletManagerLink(*m_bulletManager);
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('R'))
 	{
+	//	m_defaultGun->release();
+
 		m_defaultGun = new plasmaGun;
 		m_defaultGun->init(m_character);
+		m_defaultGun->setBulletManagerLink(*m_bulletManager);
+
 	}
 
 	for (int i = 1; i < 20; i++)
@@ -92,6 +110,8 @@ void gunTestScene::update()
 	m_defaultGun->setPosition(pt_list[19].x,pt_list[19].y - 20);
 
 	m_defaultGun->update();
+
+	m_bulletManager->update();
 	
 }
 
