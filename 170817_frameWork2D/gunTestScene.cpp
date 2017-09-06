@@ -20,7 +20,7 @@ HRESULT gunTestScene::init()
 	m_rc = RectMake(WINSIZEX / 2, WINSIZEY / 2, 80, 80);
 	m_defaultGun = new defaultGun;
 	m_defaultGun->init(m_character);
-	m_bulletManager->addBullet(*m_defaultGun->m_bullet);
+	m_bulletManager->addBullet(*m_defaultGun->getBullet());
 	return S_OK;
 }
 

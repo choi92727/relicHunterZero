@@ -28,7 +28,7 @@ public:
 	virtual void setAngle();
 	virtual void setPosition(int x,int y);
 	float getFireDelay() { return m_fireDelay; }
-	virtual bulletInterface getBullet();
+	virtual bulletInterface* getBullet();
 	
 
 };

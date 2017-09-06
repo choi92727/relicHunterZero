@@ -40,7 +40,7 @@ void gunInterface::setPosition(int x, int y)
 {
 }
 
-bulletInterface gunInterface::getBullet()
+bulletInterface* gunInterface::getBullet()
 {
-	return bulletInterface();
+	return &bulletInterface();
 }

@@ -4,7 +4,7 @@
 class machineGun : public gunInterface
 {
 private:
-	machineBullet* m_bullet;
+
 public:
 	machineGun();
 	~machineGun();
@@ -15,5 +15,9 @@ public:
 	void fire();
 	void setAngle();
 	void setPosition(int x, int y);
+	bulletInterface* getBullet() {
+		return m_bullet;
+	};
+
 };
 

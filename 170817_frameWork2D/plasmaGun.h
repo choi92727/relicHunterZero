@@ -4,7 +4,6 @@
 class plasmaGun : public gunInterface
 {
 private:
-	plasmarBullet* m_bullet;
 public:
 	plasmaGun();
 	~plasmaGun();
@@ -15,5 +14,9 @@ public:
 	void fire();
 	void setAngle();
 	void setPosition(int x, int y);
+	bulletInterface* getBullet() {
+		return m_bullet;
+	};
+
 };
 
