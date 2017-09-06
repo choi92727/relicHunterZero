@@ -50,11 +50,17 @@ HRESULT selectScene::init()
 	ani_jimmy = ANIMATIONMANAGER->findAnimation("jimmy0");
 
 	s_Ct = non_selected;
+
+	startX = 0;
+	changeX = 2;
+		
+	SOUNDMANAGER->play("선택메뉴브금", 0.1f);
 	return S_OK;
 }
 
 void selectScene::release()
 {
+	SOUNDMANAGER->stop("선택메뉴브금");
 }
 
 void selectScene::update()
@@ -93,29 +99,33 @@ void selectScene::aniSelectBar()
 		case non_selected:
 			if (PtInRect(&select_Rc[0], ptMouse))
 			{
+				SOUNDMANAGER->play("메뉴클릭", 1.0f);
 				s_Ct = jimmy_selected;
 				ANIMATIONMANAGER->start("jimmy1");
 			}
 
 			if (PtInRect(&select_Rc[1], ptMouse))
 			{
+				SOUNDMANAGER->play("메뉴클릭", 1.0f);
 				s_Ct = rider_selected;
 				ANIMATIONMANAGER->start("rider1");
 			}
 			if (PtInRect(&cancel_Rc, ptMouse))
 			{
+				SOUNDMANAGER->play("메뉴클릭", 1.0f);
 				SCENEMANAGER->changeScene("mainMenu");
 			}
 			break;
 		case jimmy_selected:
 			if (PtInRect(&start_Rc, ptMouse))
 			{
+				SOUNDMANAGER->play("메뉴클릭", 1.0f);
 				goJimmy();
 				
 			}
 			else if (PtInRect(&change_Rc, ptMouse))
 			{
-				
+				SOUNDMANAGER->play("메뉴클릭", 1.0f);
 			}
 			ani_jimmy = ANIMATIONMANAGER->findAnimation("jimmy0");
 			s_Ct = non_selected;
@@ -123,11 +133,12 @@ void selectScene::aniSelectBar()
 		case rider_selected:
 			if (PtInRect(&start_Rc, ptMouse))
 			{
+				SOUNDMANAGER->play("메뉴클릭", 1.0f);
 				goRider();
 			}
 			else if (PtInRect(&change_Rc, ptMouse))
 			{
-
+				SOUNDMANAGER->play("메뉴클릭", 1.0f);
 			}
 			ani_rider = ANIMATIONMANAGER->findAnimation("rider0");
 			s_Ct = non_selected;
@@ -139,8 +150,10 @@ void selectScene::aniSelectBar()
 	case non_selected:
 		if (PtInRect(&select_Rc[0], ptMouse))
 		{
+			
 			if (ani_jimmy != ANIMATIONMANAGER->findAnimation("jimmy2"))
 			{
+				SOUNDMANAGER->play("메뉴마우스", 1.0f);
 				ani_jimmy = ANIMATIONMANAGER->findAnimation("jimmy2");
 				ANIMATIONMANAGER->start("jimmy2");
 			}
@@ -153,6 +166,7 @@ void selectScene::aniSelectBar()
 		{
 			if (ani_rider != ANIMATIONMANAGER->findAnimation("rider2"))
 			{
+			SOUNDMANAGER->play("메뉴마우스", 1.0f);
 				ani_rider = ANIMATIONMANAGER->findAnimation("rider2");
 				ANIMATIONMANAGER->start("rider2");
 			}
@@ -173,14 +187,18 @@ void selectScene::aniSelectBar()
 
 void selectScene::selectRender()
 {
-	int startX, changeX;
+	
 	if (PtInRect(&start_Rc, ptMouse))
 	{
+		if(!(startX == 1&& changeX == 2))
+		SOUNDMANAGER->play("메뉴마우스", 1.0f);
 		startX = 1;
 		changeX = 2;
 	}
 	else if (PtInRect(&change_Rc, ptMouse))
 	{
+		if (!(startX == 0 && changeX == 3))
+		SOUNDMANAGER->play("메뉴마우스", 1.0f);
 		startX = 0;
 		changeX = 3;
 	}

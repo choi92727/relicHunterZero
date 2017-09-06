@@ -13,6 +13,8 @@ mapTool::~mapTool()
 
 HRESULT mapTool::init()
 {
+	
+	SOUNDMANAGER->play("할아버지의11월", 0.5f);
 	for (int y = 0; y < TILEY; y++)
 	{
 		for (int x = 0; x < TILEX; x++)
@@ -57,6 +59,7 @@ HRESULT mapTool::init()
 
 void mapTool::release()
 {
+	SOUNDMANAGER->stop("할아버지의11월");
 }
 
 void mapTool::update()

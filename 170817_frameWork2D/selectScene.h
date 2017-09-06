@@ -26,6 +26,8 @@ private:
 
 	select_currentType s_Ct;
 
+	int startX , changeX ;
+
 public:
 	selectScene();
 	~selectScene();

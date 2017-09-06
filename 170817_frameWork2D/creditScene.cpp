@@ -14,12 +14,14 @@ creditScene::~creditScene()
 HRESULT creditScene::init()
 {
 	IMAGEMANAGER->addImage("크레딧", "Images/크레딧.bmp", 1280, 1000);
+	SOUNDMANAGER->play("테란브금", 0.5f);
 	y = 0;
 	return S_OK;
 }
 
 void creditScene::release()
 {
+	SOUNDMANAGER->stop("테란브금");
 }
 
 void creditScene::update()

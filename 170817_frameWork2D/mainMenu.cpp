@@ -23,6 +23,8 @@ HRESULT mainMenu::init()
 	IMAGEMANAGER->addFrameImage("메인로고", "images/mainMenu_logo.bmp",22890,243,42,1,true, RGB(255, 0, 255));
 	//right-41,top+6
 
+	SOUNDMANAGER->play("메인메뉴브금", 0.5f);
+
 	m_Bar[0].pre_Select = RectMake(0, 359, 474, 54);
 	m_Bar[1].pre_Select = RectMake(-80, 459, 474, 54);
 	m_Bar[2].pre_Select = RectMake(-160, 559, 474, 54);
@@ -46,6 +48,7 @@ HRESULT mainMenu::init()
 
 void mainMenu::release()
 {
+	SOUNDMANAGER->stop("메인메뉴브금");
 }
 
 void mainMenu::update()
@@ -54,7 +57,10 @@ void mainMenu::update()
 	{
 		if (PtInRect(&m_Bar[i].pre_Select, ptMouse))
 		{
+			if(!m_Bar[i].selected)
+			SOUNDMANAGER->play("메뉴마우스", 1.0f);
 			m_Bar[i].selected = true;
+			
 		}
 		else
 		{
@@ -65,19 +71,23 @@ void mainMenu::update()
 	{
 		if (m_Bar[0].selected)//게임시작
 		{
+			SOUNDMANAGER->play("메뉴클릭", 1.0f);
 			SCENEMANAGER->changeScene("selectScene");
 		}
 		else if (m_Bar[1].selected)//맵툴
 		{
+			SOUNDMANAGER->play("메뉴클릭", 1.0f);
 			SCENEMANAGER->changeScene("mapTool");
 			
 		}
 		else if (m_Bar[2].selected)//credit
 		{
+			SOUNDMANAGER->play("메뉴클릭", 1.0f);
 			SCENEMANAGER->changeScene("creditScene");
 		}
 		else if (m_Bar[3].selected)//게임종료
 		{
+			SOUNDMANAGER->play("메뉴클릭", 1.0f);
 			PostQuitMessage(0);
 		}
 	}
