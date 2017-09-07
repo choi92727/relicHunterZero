@@ -23,8 +23,16 @@ HRESULT stageScene::init()
 	camera_rc = RectMake(currentCamera.x, currentCamera.y,1280,720);
 	speed = 3;
 
+	m_bulletManager = new bulletManager;
+	m_bulletManager->init();
+
+	m_defaultGun = new defaultGun;
+
+	m_defaultGun->init(CHAR_PLAYER);
 	
-	
+	m_defaultGun->setBulletManagerLink(*m_bulletManager);
+		
+	m_defaultGun->setPosition(WINSIZEX/2,WINSIZEY/2);
 
 	return S_OK;
 }
@@ -52,6 +60,12 @@ void stageScene::update()
 	{
 		Charcter_pt.y += speed;
 	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		m_defaultGun->fire();
+	}
+
 	//currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
 	moveCamera(Charcter_pt);
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
@@ -72,6 +86,9 @@ void stageScene::update()
 		}
 	}
 	testNumber->update(Charcter_pt.x);
+
+	m_defaultGun->update();
+	m_bulletManager->update();
 }
 
 void stageScene::render()
@@ -111,6 +128,9 @@ void stageScene::render()
 	
 	IMAGEMANAGER->frameRender("Áö¹Ì", getMemDC(), Charcter_pt.x - currentCamera.x,  Charcter_pt.y - currentCamera.y);
 	testNumber->render(WINSIZEX/2,0, 1);
+
+	m_defaultGun->render();
+	m_bulletManager->render();
 }
 
 void stageScene::loadStage(char* mapName)

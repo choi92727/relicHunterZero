@@ -8,7 +8,7 @@ namespace MY_UTIL
 		float x = endX - startX;
 		float y = endY - startY;
 		float distance = sqrtf(x * x + y * y);
-		float angle = x / distance;
+		float angle = acosf(x / distance);
 
 		if (endY > startY)
 		{

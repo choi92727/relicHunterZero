@@ -2,7 +2,9 @@
 #include "gameNode.h"
 #include "tileNode.h"
 #include "numberDrawManager.h"
-
+#include "bulletManager.h"
+#include "gunInterface.h"
+#include "defaultGun.h"
 
 class stageScene :
 	public gameNode
@@ -17,6 +19,8 @@ private:
 	POINT Charcter_pt;
 	POINT currentCamera;
 	RECT camera_rc;
+	bulletManager *m_bulletManager;//불렛 매니저
+	gunInterface *m_defaultGun;
 
 	numberDrawManager *testNumber;
 public:

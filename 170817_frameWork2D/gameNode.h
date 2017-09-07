@@ -29,6 +29,7 @@ public:
 	HDC getMemDC() { return m_backBuffer->getMemDC(); }
 	//HDC 얻기
 	HDC getHDC() { return m_hdc; }
+	void DrawPng(Image* tempImage, Graphics* graphics, int x, int y, int sizeX, int sizeY, float angle); //드로우함수
 
 
 	//메인 프로시져

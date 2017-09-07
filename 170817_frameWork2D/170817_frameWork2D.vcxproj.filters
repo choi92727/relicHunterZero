@@ -58,6 +58,33 @@
     <Filter Include="MainGame\scene">
       <UniqueIdentifier>{6fc6c9c1-858d-4540-812c-31f637de0f61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\GameMain\Character">
+      <UniqueIdentifier>{e3c7001e-8a25-4512-b471-602966d412a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain\AddResource">
+      <UniqueIdentifier>{c1e8ad43-e848-406d-ae97-2dae736867e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain\Enemy">
+      <UniqueIdentifier>{d57d40c1-984b-4e6b-9bf6-6cc843703b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain\Enemy\Manager">
+      <UniqueIdentifier>{7ea82ca6-51e8-4df2-884a-5494c3f2c404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\scene\MapTool">
+      <UniqueIdentifier>{4e1b5b7b-1dc7-420b-a819-ff46cad646c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain\Weapon">
+      <UniqueIdentifier>{9585407e-1ce4-46c7-beb7-edbb9bb151d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain\Weapon\bullet">
+      <UniqueIdentifier>{95d7039e-3a60-4767-b961-8851aecb2015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain\Weapon\bullet\Manager">
+      <UniqueIdentifier>{6c421b1e-b12c-4397-a12c-4ba762cfd8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\GameMain\Weapon\Guns">
+      <UniqueIdentifier>{c403b709-a14b-4875-9ba7-ed486c4e5238}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -123,25 +150,13 @@
     <ClInclude Include="effectManager.h">
       <Filter>frameWork2D\effect</Filter>
     </ClInclude>
-    <ClInclude Include="effectTest.h">
-      <Filter>MainGame\GameMain</Filter>
-    </ClInclude>
     <ClInclude Include="animationManager.h">
       <Filter>frameWork2D\animationManager</Filter>
     </ClInclude>
     <ClInclude Include="loadingGame.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
-    <ClInclude Include="mapToolScene.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
     <ClInclude Include="mainMenu.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="mapTool.h">
-      <Filter>MainGame\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="tileNode.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
     <ClInclude Include="selectScene.h">
@@ -156,15 +171,6 @@
     <ClInclude Include="cursorDraw.h">
       <Filter>MainGame\GameMain</Filter>
     </ClInclude>
-    <ClInclude Include="addImage.h">
-      <Filter>MainGame\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>MainGame\GameMain</Filter>
-    </ClInclude>
-    <ClInclude Include="enemyManager.h">
-      <Filter>MainGame\GameMain</Filter>
-    </ClInclude>
     <ClInclude Include="numberDrawManager.h">
       <Filter>MainGame\GameMain</Filter>
     </ClInclude>
@@ -174,14 +180,47 @@
     <ClInclude Include="stageScene.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
-    <ClInclude Include="addSounds.h">
-      <Filter>MainGame\GameMain</Filter>
-    </ClInclude>
     <ClInclude Include="testScene.h">
       <Filter>MainGame\scene</Filter>
     </ClInclude>
     <ClInclude Include="teleport.h">
       <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="addImage.h">
+      <Filter>MainGame\GameMain\AddResource</Filter>
+    </ClInclude>
+    <ClInclude Include="addSounds.h">
+      <Filter>MainGame\GameMain\AddResource</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>MainGame\GameMain\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>MainGame\GameMain\Enemy\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>MainGame\scene\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="tileNode.h">
+      <Filter>MainGame\scene\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="tags.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="gunInterface.h">
+      <Filter>MainGame\GameMain\Weapon\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletInterface.h">
+      <Filter>MainGame\GameMain\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>MainGame\GameMain\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultGun.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultBullet.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,22 +275,13 @@
     <ClCompile Include="effectManager.cpp">
       <Filter>frameWork2D\effect</Filter>
     </ClCompile>
-    <ClCompile Include="effectTest.cpp">
-      <Filter>MainGame\GameMain</Filter>
-    </ClCompile>
     <ClCompile Include="animationManager.cpp">
       <Filter>frameWork2D\animationManager</Filter>
     </ClCompile>
     <ClCompile Include="loadingGame.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
-    <ClCompile Include="mapToolScene.cpp">
-      <Filter>MainGame\scene</Filter>
-    </ClCompile>
     <ClCompile Include="mainMenu.cpp">
-      <Filter>MainGame\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="mapTool.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
     <ClCompile Include="selectScene.cpp">
@@ -266,32 +296,50 @@
     <ClCompile Include="cursorDraw.cpp">
       <Filter>MainGame\GameMain</Filter>
     </ClCompile>
-    <ClCompile Include="addImage.cpp">
-      <Filter>MainGame\GameMain</Filter>
-    </ClCompile>
-    <ClCompile Include="enemyManager.cpp">
-      <Filter>MainGame\GameMain</Filter>
-    </ClCompile>
     <ClCompile Include="numberDrawManager.cpp">
       <Filter>MainGame\GameMain</Filter>
     </ClCompile>
     <ClCompile Include="mainGame.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>MainGame\GameMain</Filter>
-    </ClCompile>
     <ClCompile Include="stageScene.cpp">
       <Filter>MainGame\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="addSounds.cpp">
-      <Filter>MainGame\GameMain</Filter>
     </ClCompile>
     <ClCompile Include="testScene.cpp">
       <Filter>MainGame\scene</Filter>
     </ClCompile>
     <ClCompile Include="teleport.cpp">
       <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="addImage.cpp">
+      <Filter>MainGame\GameMain\AddResource</Filter>
+    </ClCompile>
+    <ClCompile Include="addSounds.cpp">
+      <Filter>MainGame\GameMain\AddResource</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>MainGame\GameMain\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>MainGame\GameMain\Enemy\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTool.cpp">
+      <Filter>MainGame\scene\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="gunInterface.cpp">
+      <Filter>MainGame\GameMain\Weapon\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletInterface.cpp">
+      <Filter>MainGame\GameMain\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>MainGame\GameMain\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultGun.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultBullet.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
