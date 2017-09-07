@@ -536,7 +536,7 @@ void image::alphaRender(HDC hdc, BYTE alpha)
 		GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height,
 			m_imageInfo->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_transColor);
 		//3. 블렌드 DC를 출력해야 할 DC에 그린다.
-		AlphaBlend(hdc, 0, 0, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
+		AlphaBlend(hdc, 0, 0, m_imageInfo->width, m_imageInfo->height, m_blendImage->hMemDC,
 			0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
 	}
 	//원본 이미지 그대로 알파블렌딩 할거냐?
@@ -588,7 +588,7 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 		GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, sourWidth, sourHeight,
 			m_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, m_transColor);
 		//3. 블렌드 DC를 출력해야 할 DC에 그린다.
-		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight, m_imageInfo->hMemDC,
+		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight, m_blendImage->hMemDC,
 			sourX, sourY, sourWidth, sourHeight, m_blendFunc);
 	}
 	//원본 이미지 그대로 알파블렌딩 할거냐?
@@ -824,4 +824,9 @@ void image::loopAlphaRender(HDC hdc, const LPRECT drawArea, int offsetX, int off
 void image::aniRender(HDC hdc, int destX, int destY, animation * ani)
 {
 	render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
+}
+
+void image::aniAlphaRender(HDC hdc, int destX, int destY, animation *ani, BYTE alpha)
+{
+	alphaRender(hdc,destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight(),alpha);
 }

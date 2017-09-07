@@ -46,7 +46,7 @@ void progressBar::update()
 
 void progressBar::render()
 {
-	if (showBar)
+	//if (showBar)
 	{
 		//프로그래스바 백이미지(변경될 필요 없다.)
 		m_progressBarBack->render(getMemDC(), m_rcProgress.left + 1, m_y + 1, 0, 0, m_progressBarBack->getWidth(), m_progressBarBack->getHeight());
@@ -61,6 +61,6 @@ void progressBar::render()
 void progressBar::setGauge(float currentGauge, float maxGauge)
 {
 	m_width = (currentGauge / maxGauge) * m_progressBarBack->getWidth();
-	if (currentGauge == maxGauge || currentGauge <= 0) showBar = false;
-	else showBar = true;
+	//if (currentGauge == maxGauge || currentGauge <= 0) showBar = false;
+	//else showBar = true;
 }

@@ -26,11 +26,13 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addFrameImage("박스2", "Images/spr_longbox.bmp", 444, 112, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("루트1", "Images/spr_root1.bmp", 762, 134, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("루트2", "Images/spr_root2.bmp", 762, 134, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("텔레포트","Images/teleport.bmp", 150, 100,true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("박스1 파괴", "Images/spr_crate_break.bmp", 2552, 130, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("박스2 파괴", "Images/spr_longbox_break.bmp", 2784, 130, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("루트1 파괴", "Images/spr_root1_break.bmp", 3048, 134, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("루트2 파괴", "Images/spr_root2_break.bmp", 2286, 134, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("텔레포트이펙트", "Images/텔레포트이펙트 사본.bmp", 2550, 100, 17, 1, true, RGB(255, 0, 255));
 
 	//표지판
 	IMAGEMANAGER->addFrameImage("방향 표지판", "Images/notice_move.bmp", 3520, 86, 16, 1, true, RGB(255, 0, 255));

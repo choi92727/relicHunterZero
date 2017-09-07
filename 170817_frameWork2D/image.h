@@ -112,6 +112,7 @@ public:
 
 	//애니메이션 렌더
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
+	void aniAlphaRender(HDC hdc, int destX, int destY, animation* ani, BYTE alpha);
 
 	//DC 얻어온다
 	inline HDC getMemDC() { return m_imageInfo->hMemDC; }

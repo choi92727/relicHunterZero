@@ -29,5 +29,7 @@ public:
 	void render();
 
 	void loadStage(char* mapName);
+
+	void moveCamera(POINT characterPt);
 };
 

@@ -177,6 +177,12 @@
     <ClInclude Include="addSounds.h">
       <Filter>MainGame\GameMain</Filter>
     </ClInclude>
+    <ClInclude Include="testScene.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="teleport.h">
+      <Filter>MainGame\GameMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -279,6 +285,12 @@
       <Filter>MainGame\scene</Filter>
     </ClCompile>
     <ClCompile Include="addSounds.cpp">
+      <Filter>MainGame\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="testScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="teleport.cpp">
       <Filter>MainGame\GameMain</Filter>
     </ClCompile>
   </ItemGroup>

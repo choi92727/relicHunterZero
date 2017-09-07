@@ -27,7 +27,9 @@ HRESULT mainGame::init()
 	SCENEMANAGER->addScene("creditScene", new creditScene);
 	SCENEMANAGER->addScene("selectScene", new selectScene);
 	SCENEMANAGER->addScene("stageScene", new stageScene);
-	
+	SCENEMANAGER->addScene("testScene", new testScene);
+
+
 	SCENEMANAGER->changeScene("loadingGame");
 
 

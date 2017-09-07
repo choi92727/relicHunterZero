@@ -9,6 +9,8 @@
 #include "cursorDraw.h"
 #include "stageScene.h"
 #include "addSounds.h"
+#include "testScene.h"
+
 
 
 

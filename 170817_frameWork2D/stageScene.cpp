@@ -23,6 +23,9 @@ HRESULT stageScene::init()
 	camera_rc = RectMake(currentCamera.x, currentCamera.y,1280,720);
 	speed = 3;
 
+	
+	
+
 	return S_OK;
 }
 
@@ -49,7 +52,8 @@ void stageScene::update()
 	{
 		Charcter_pt.y += speed;
 	}
-	currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
+	//currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
+	moveCamera(Charcter_pt);
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
 
 	RECT temp;
@@ -137,4 +141,24 @@ void stageScene::loadStage(char* mapName)
 		}
 	}
 
+}
+
+void stageScene::moveCamera(POINT characterPt)
+{
+	/*RECT temp=RectMakeCenter (WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY);
+	if (PtInRect(&temp, ptMouse))
+	{
+		currentCamera.x = characterPt.x + (ptMouse.x - WINSIZEX / 2) / 4 - WINSIZEX / 2;
+		currentCamera.y = characterPt.y + (ptMouse.y - WINSIZEY / 2) / 4 - WINSIZEY / 2;
+	}
+	temp = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX / 2, WINSIZEY / 2);
+	if (PtInRect(&temp, ptMouse))
+	{
+		currentCamera.x = characterPt.x + (ptMouse.x - WINSIZEX / 2) / 8 - WINSIZEX / 2;
+		currentCamera.y = characterPt.y + (ptMouse.y - WINSIZEY / 2) / 8 - WINSIZEY / 2;
+
+	}*/
+	
+	currentCamera.x = characterPt.x + (ptMouse.x - WINSIZEX / 2) / 8 - WINSIZEX / 2;
+	currentCamera.y = characterPt.y + (ptMouse.y - WINSIZEY / 2) / 6 - WINSIZEY / 2;
 }
