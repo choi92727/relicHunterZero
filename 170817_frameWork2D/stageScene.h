@@ -5,6 +5,7 @@
 #include "bulletManager.h"
 #include "gunInterface.h"
 #include "defaultGun.h"
+#include "characterManager.h"
 
 class stageScene :
 	public gameNode
@@ -21,6 +22,7 @@ private:
 	RECT camera_rc;
 	bulletManager *m_bulletManager;//불렛 매니저
 	gunInterface *m_defaultGun;
+	characterManager *m_cm;
 
 	numberDrawManager *testNumber;
 public:

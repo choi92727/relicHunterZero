@@ -29,34 +29,38 @@ HRESULT stageScene::init()
 	m_defaultGun = new defaultGun;
 
 	m_defaultGun->init(CHAR_PLAYER);
+
+	m_cm = new characterManager;
+	m_cm->init(Charcter_pt, JIMMY);
 	
 	m_defaultGun->setBulletManagerLink(*m_bulletManager);
 		
-	m_defaultGun->setPosition(WINSIZEX/2,WINSIZEY/2);
+	
 
 	return S_OK;
 }
 
 void stageScene::release()
 {
+	m_cm->release();
 }
 
 void stageScene::update()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	if (KEYMANAGER->isStayKeyDown('A'))
 	{
 		Charcter_pt.x-= speed;
 
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	if (KEYMANAGER->isStayKeyDown('D'))
 	{
 		Charcter_pt.x += speed;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	if (KEYMANAGER->isStayKeyDown('W'))
 	{
 		Charcter_pt.y -= speed;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	if (KEYMANAGER->isStayKeyDown('S'))
 	{
 		Charcter_pt.y += speed;
 	}
@@ -65,11 +69,15 @@ void stageScene::update()
 	{
 		m_defaultGun->fire();
 	}
-
+	
 	//currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
 	moveCamera(Charcter_pt);
+	Character_Rc = RectMakeCenter(Charcter_pt.x, Charcter_pt.y, 50, 100);
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
-
+	m_defaultGun->setPosition(Charcter_pt.x - currentCamera.x, Charcter_pt.y - currentCamera.y);
+	m_cm->update();
+	m_cm->setPlayerX((float)(Charcter_pt.x-currentCamera.x));
+	m_cm->setPlayerY((float)(Charcter_pt.y-currentCamera.y));
 	RECT temp;
 	for (int y = 0; y < TILEY; y++)
 	{
@@ -126,7 +134,7 @@ void stageScene::render()
 		else if (m_createEnemy[i].enm == ENM_KAMIKAZE) IMAGEMANAGER->frameRender("가미가제", getMemDC(), m_createEnemy[i].rc.left - 37 - currentCamera.x, m_createEnemy[i].rc.top - 51 - currentCamera.y, 0, 0);
 	}
 	
-	IMAGEMANAGER->frameRender("지미", getMemDC(), Charcter_pt.x - currentCamera.x,  Charcter_pt.y - currentCamera.y);
+	m_cm->render();
 	testNumber->render(WINSIZEX/2,0, 1);
 
 	m_defaultGun->render();
@@ -182,3 +190,5 @@ void stageScene::moveCamera(POINT characterPt)
 	currentCamera.x = characterPt.x + (ptMouse.x - WINSIZEX / 2) / 8 - WINSIZEX / 2;
 	currentCamera.y = characterPt.y + (ptMouse.y - WINSIZEY / 2) / 6 - WINSIZEY / 2;
 }
+
+

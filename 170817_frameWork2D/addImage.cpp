@@ -39,8 +39,8 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addFrameImage("튜토리얼 표지판", "Images/notice_tutorial.bmp", 2784, 70, 16, 1, true, RGB(255, 0, 255));
 
 	//플레이어
-	IMAGEMANAGER->addFrameImage("지미", "Images/jimmy.bmp", 1368, 846, 12, 9, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("라이더", "Images/rider.bmp", 2736, 896, 24, 8, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("지미", "Images/jimmy.bmp", 1368, 1692, 12, 18, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("라이더", "Images/rider.bmp", 2736, 1792, 24, 16, true, RGB(255, 0, 255));
 
 	//에너미
 	IMAGEMANAGER->addFrameImage("가미가제", "Images/가미가제.bmp", 1824, 940, 16, 10, true, RGB(255, 0, 255));

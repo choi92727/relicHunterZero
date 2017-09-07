@@ -1,11 +1,10 @@
 #pragma once
 #include "gameNode.h"
-#include "teleport.h"
-class testScene :
-	public gameNode
+#include "characterManager.h"
+class testScene :public gameNode
 {
 private:
-	teleport* m_tp;
+	characterManager* m_player;
 public:
 	testScene();
 	~testScene();

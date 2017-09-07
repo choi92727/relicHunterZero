@@ -222,6 +222,21 @@
     <ClInclude Include="defaultBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="characterInterface.h">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="characterManager.h">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="jimmy.h">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="rider.h">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="characterClassic.h">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -340,6 +355,18 @@
     </ClCompile>
     <ClCompile Include="defaultBullet.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="characterInterface.cpp">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="characterManager.cpp">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="jimmy.cpp">
+      <Filter>MainGame\GameMain\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="rider.cpp">
+      <Filter>MainGame\GameMain\Character</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
