@@ -25,6 +25,7 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+	virtual void render(POINT pt);
 	virtual void fire();
 	virtual void setAngle();//앵글을 새로 넣어준다
 	virtual void setPosition(int x, int y);//포지션 재설정

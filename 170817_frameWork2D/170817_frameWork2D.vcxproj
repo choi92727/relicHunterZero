@@ -145,6 +145,9 @@
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="bulletInterface.h" />
     <ClInclude Include="bulletManager.h" />
+    <ClInclude Include="characterClassic.h" />
+    <ClInclude Include="characterInterface.h" />
+    <ClInclude Include="characterManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="creditScene.h" />
     <ClInclude Include="cursorDraw.h" />
@@ -158,6 +161,7 @@
     <ClInclude Include="gunInterface.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
+    <ClInclude Include="jimmy.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="loading.h" />
     <ClInclude Include="loadingGame.h" />
@@ -169,6 +173,7 @@
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="rider.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="selectScene.h" />
     <ClInclude Include="soundManager.h" />
@@ -191,6 +196,8 @@
     <ClCompile Include="animationManager.cpp" />
     <ClCompile Include="bulletInterface.cpp" />
     <ClCompile Include="bulletManager.cpp" />
+    <ClCompile Include="characterInterface.cpp" />
+    <ClCompile Include="characterManager.cpp" />
     <ClCompile Include="creditScene.cpp" />
     <ClCompile Include="cursorDraw.cpp" />
     <ClCompile Include="defaultBullet.cpp" />
@@ -203,6 +210,7 @@
     <ClCompile Include="gunInterface.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
+    <ClCompile Include="jimmy.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="loadingGame.cpp" />
@@ -212,6 +220,7 @@
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="numberDrawManager.cpp" />
     <ClCompile Include="progressBar.cpp" />
+    <ClCompile Include="rider.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="selectScene.cpp" />
     <ClCompile Include="soundManager.cpp" />
