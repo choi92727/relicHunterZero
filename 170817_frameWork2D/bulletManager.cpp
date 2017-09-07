@@ -37,11 +37,13 @@ void bulletManager::update()
 	}
 }
 
-void bulletManager::render()
+
+
+void bulletManager::render(POINT pt)
 {
 	for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end(); m_viBulletList++)
 	{
-		(*m_viBulletList)->render();
+		(*m_viBulletList)->render(pt);
 	}
 	//char text[64];
 	//wsprintf(text, "bulletSize %d",m_vBulletList.size());

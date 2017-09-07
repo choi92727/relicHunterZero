@@ -11,7 +11,7 @@ numberDrawManager::~numberDrawManager()
 {
 }
 
-HRESULT numberDrawManager::init(string strKey, int size)
+HRESULT numberDrawManager::init(string strKey, int size)//이미지 이름, 자릿수 1~5
 {
 	number_image = IMAGEMANAGER->findImage(strKey);
 	numberSize = size;
@@ -28,7 +28,7 @@ void numberDrawManager::release()
 {
 }
 
-void numberDrawManager::update(int x)
+void numberDrawManager::update(int x)//지금값
 {
 	if (x < 0)
 	{
@@ -50,7 +50,7 @@ void numberDrawManager::update(int x)
 	
 }
 
-void numberDrawManager::render(int left, int top,int spaceSize)
+void numberDrawManager::render(int left, int top,int spaceSize)//
 {
 	for (int i = 0; i < numberSize; i++)
 	{

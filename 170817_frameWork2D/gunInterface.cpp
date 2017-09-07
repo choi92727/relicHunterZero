@@ -28,6 +28,10 @@ void gunInterface::render()
 {
 }
 
+void gunInterface::render(POINT pt)
+{
+}
+
 void gunInterface::fire()
 {
 }

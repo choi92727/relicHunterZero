@@ -89,10 +89,10 @@ void stageScene::update()
 	moveCamera(Charcter_pt);
 	Character_Rc = RectMakeCenter(Charcter_pt.x, Charcter_pt.y, 50, 100);
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
-	m_defaultGun->setPosition(Charcter_pt.x - currentCamera.x, Charcter_pt.y - currentCamera.y);
+	m_defaultGun->setPosition(m_cm->getPlayerX(), m_cm->getPlayerY());
 	m_cm->update();
-	m_cm->setPlayerX((float)(Charcter_pt.x-currentCamera.x));
-	m_cm->setPlayerY((float)(Charcter_pt.y-currentCamera.y));
+	m_cm->setPlayerX((float)(Charcter_pt.x));
+	m_cm->setPlayerY((float)(Charcter_pt.y));
 	RECT temp;
 	for (int y = 0; y < TILEY; y++)
 	{
@@ -162,12 +162,20 @@ void stageScene::render()
 
 	//¿¡³Ê¹Ì
 	
-	m_cm->render();
+	m_cm->render(currentCamera);
 	testNumber->render(WINSIZEX/2,0, 1);
 
-	m_defaultGun->render();
-	m_bulletManager->render();
+
+	
+
 	m_enemyManager->render(currentCamera);
+
+
+	
+	m_defaultGun->render(currentCamera);
+	m_bulletManager->render(currentCamera);
+
+
 }
 
 void stageScene::loadStage(char* mapName)
@@ -195,6 +203,7 @@ void stageScene::loadStage(char* mapName)
 				tile[y][x].terrain = TR_WALL;
 			}
 			if (tile[y][x].terrain == TR_WALL) tile[y][x].attribute = ATTR_UNMOVE;
+			else tile[y][x].attribute = ATTR_POSITION;
 		}
 	}
 

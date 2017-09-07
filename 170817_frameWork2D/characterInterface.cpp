@@ -24,7 +24,7 @@ void characterInterface::update()
 {
 }
 
-void characterInterface::render()
+void characterInterface::render(POINT pt)
 {
 }
 

@@ -71,9 +71,9 @@ void rider::update()
 	command();		//커맨드 (부모클래스에있음 더블연타시 대쉬를 출력함)
 }
 
-void rider::render()
+void rider::render(POINT pt)
 {
-	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left - 38, m_player.enemy_hitRc.top - 30);	
+	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left - 38 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y);	
 
 	HBRUSH MyBrush, OldBrush;
 	HPEN MyPen, OldPen;
@@ -83,10 +83,10 @@ void rider::render()
 	MyPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 	OldPen = (HPEN)SelectObject(getMemDC(), MyPen);
 
-	Rectangle(getMemDC(), m_player.enemy_hitRc.left, m_player.enemy_hitRc.top,
-		m_player.enemy_hitRc.right, m_player.enemy_hitRc.bottom);
-	Rectangle(getMemDC(), m_player.wall_hitRc.left, m_player.wall_hitRc.top,
-		m_player.wall_hitRc.right, m_player.wall_hitRc.bottom);
+	Rectangle(getMemDC(), m_player.enemy_hitRc.left - pt.x, m_player.enemy_hitRc.top - pt.y,
+		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
+	Rectangle(getMemDC(), m_player.wall_hitRc.left - pt.x, m_player.wall_hitRc.top - pt.y,
+		m_player.wall_hitRc.right - pt.x, m_player.wall_hitRc.bottom - pt.y);
 
 	SelectObject(getMemDC(), OldBrush);
 	SelectObject(getMemDC(), OldPen);

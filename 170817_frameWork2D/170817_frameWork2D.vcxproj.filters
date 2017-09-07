@@ -204,18 +204,6 @@
     <ClInclude Include="gunInterface.h">
       <Filter>MainGame\GameMain\Weapon\Guns</Filter>
     </ClInclude>
-    <ClInclude Include="bulletInterface.h">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="bulletManager.h">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="defaultGun.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="defaultBullet.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="characterInterface.h">
       <Filter>MainGame\GameMain\Character</Filter>
     </ClInclude>
@@ -231,11 +219,25 @@
     <ClInclude Include="characterClassic.h">
       <Filter>MainGame\GameMain\Character</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="enemy.h">
       <Filter>MainGame\GameMain\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="enemyManager.h">
       <Filter>MainGame\GameMain\Enemy\Manager</Filter>
+=======
+    <ClInclude Include="defaultBullet.h">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultGun.h">
+      <Filter>MainGame\GameMain\Weapon\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletInterface.h">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>MainGame\GameMain\Weapon\bullet\Manager</Filter>
+>>>>>>> origin/맵툴
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,18 +340,6 @@
     <ClCompile Include="gunInterface.cpp">
       <Filter>MainGame\GameMain\Weapon\Guns</Filter>
     </ClCompile>
-    <ClCompile Include="bulletInterface.cpp">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="bulletManager.cpp">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="defaultGun.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="defaultBullet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="characterInterface.cpp">
       <Filter>MainGame\GameMain\Character</Filter>
     </ClCompile>
@@ -362,11 +352,25 @@
     <ClCompile Include="rider.cpp">
       <Filter>MainGame\GameMain\Character</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="enemy.cpp">
       <Filter>MainGame\GameMain\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="enemyManager.cpp">
       <Filter>MainGame\GameMain\Enemy\Manager</Filter>
+=======
+    <ClCompile Include="defaultBullet.cpp">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultGun.cpp">
+      <Filter>MainGame\GameMain\Weapon\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletInterface.cpp">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>MainGame\GameMain\Weapon\bullet\Manager</Filter>
+>>>>>>> origin/맵툴
     </ClCompile>
   </ItemGroup>
 </Project>

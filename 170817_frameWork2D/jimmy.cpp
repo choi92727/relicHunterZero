@@ -61,7 +61,7 @@ void jimmy::update()
 	{
 		fire();
 	}
-	melee();	//근접공격 (앵글오류로 보류)
+	melee();	//근접공격 
 
 	hit();		//피격 숫자1번
 
@@ -69,13 +69,13 @@ void jimmy::update()
 
 	animation();	//애니메이션 함수
 
-	
+
 
 }
-void jimmy::render()
+void jimmy::render(POINT pt)
 {
 
-	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left-40, m_player.enemy_hitRc.top - 30);
+	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left-40 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y);
 
 	HBRUSH MyBrush, OldBrush;
 	HPEN MyPen, OldPen;
@@ -85,10 +85,10 @@ void jimmy::render()
 	MyPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 	OldPen = (HPEN)SelectObject(getMemDC(), MyPen);
 
-	Rectangle(getMemDC(), m_player.enemy_hitRc.left, m_player.enemy_hitRc.top,
-		m_player.enemy_hitRc.right, m_player.enemy_hitRc.bottom);
-	Rectangle(getMemDC(), m_player.wall_hitRc.left, m_player.wall_hitRc.top,
-		m_player.wall_hitRc.right, m_player.wall_hitRc.bottom);
+	Rectangle(getMemDC(), m_player.enemy_hitRc.left -pt.x, m_player.enemy_hitRc.top-pt.y,
+		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
+	Rectangle(getMemDC(), m_player.wall_hitRc.left-pt.x, m_player.wall_hitRc.top-pt.y,
+		m_player.wall_hitRc.right-pt.x, m_player.wall_hitRc.bottom-pt.y);
 
 	SelectObject(getMemDC(), OldBrush);
 	SelectObject(getMemDC(), OldPen);
@@ -109,6 +109,9 @@ void jimmy::render()
 	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, lstrlen(str));
 
 	LineMake(getMemDC(),m_player.x, m_player.y, m_player.x + cosf(m_player.angle) * 100, m_player.y + (-sinf(m_player.angle) * 100));
+
+	sprintf(str, TEXT("x : %f, y : %f"), m_player.x, m_player.y);
+	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2 + 40, str, lstrlen(str));
 }
 
 void jimmy::animation()
@@ -239,7 +242,7 @@ void jimmy::animation()
 void jimmy::move()
 {
 	//마우스보다 커지거나 작아지면 좌우 값을 바꿈
-	if (ptMouse.x < m_player.x)m_player.isLeft = true;
+	if (ptMouse.x < WINSIZEX/2)m_player.isLeft = true;
 	else m_player.isLeft = false;
 
 

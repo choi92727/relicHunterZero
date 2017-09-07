@@ -31,5 +31,9 @@ void bulletInterface::render()
 {
 }
 
+void bulletInterface::render(POINT pt)
+{
+}
+
 
 
