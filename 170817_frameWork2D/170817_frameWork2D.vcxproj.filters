@@ -192,12 +192,6 @@
     <ClInclude Include="addSounds.h">
       <Filter>MainGame\GameMain\AddResource</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>MainGame\GameMain\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="enemyManager.h">
-      <Filter>MainGame\GameMain\Enemy\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="mapTool.h">
       <Filter>MainGame\scene\MapTool</Filter>
     </ClInclude>
@@ -236,6 +230,12 @@
     </ClInclude>
     <ClInclude Include="characterClassic.h">
       <Filter>MainGame\GameMain\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>MainGame\GameMain\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>MainGame\GameMain\Enemy\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -332,12 +332,6 @@
     <ClCompile Include="addSounds.cpp">
       <Filter>MainGame\GameMain\AddResource</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>MainGame\GameMain\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="enemyManager.cpp">
-      <Filter>MainGame\GameMain\Enemy\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="mapTool.cpp">
       <Filter>MainGame\scene\MapTool</Filter>
     </ClCompile>
@@ -367,6 +361,12 @@
     </ClCompile>
     <ClCompile Include="rider.cpp">
       <Filter>MainGame\GameMain\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>MainGame\GameMain\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>MainGame\GameMain\Enemy\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

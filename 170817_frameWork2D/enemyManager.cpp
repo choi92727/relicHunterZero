@@ -13,12 +13,7 @@ enemyManager::~enemyManager()
 
 HRESULT enemyManager::init()
 {
-	//테스트용 거북이
-	POINT pt1 = { 800, 200 };
-	turtle* m_turtle;
-	m_turtle = new turtle;
-	m_turtle->init(pt1);
-	m_vEnemy.push_back(m_turtle);
+	
 	return S_OK;
 }
 
@@ -38,15 +33,60 @@ void enemyManager::update()
 	{
 		(*m_viEnemy)->update();
 	}
+	//if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	//{
+	//	m_viEnemy = m_vEnemy.begin();
+	//	for (m_viEnemy; m_viEnemy != m_vEnemy.end(); m_viEnemy++)
+	//	{
+	//		(*m_viEnemy)->setHP(10);
+	//	}
+	//}
 	this->deleteEnemy();
 }
 
-void enemyManager::render()
+void enemyManager::render(POINT pt)
 {
 	m_viEnemy = m_vEnemy.begin();
 	for (m_viEnemy; m_viEnemy != m_vEnemy.end(); m_viEnemy++)
 	{
-		(*m_viEnemy)->render();
+		(*m_viEnemy)->render(pt);
+	}
+}
+
+//거북이 추가
+void enemyManager::addTurtle(POINT position)
+{
+	turtle* m_turtle;
+	m_turtle = new turtle;
+	m_turtle->init(position);
+	m_vEnemy.push_back(m_turtle);
+}
+
+//오리 추가
+void enemyManager::addDuck(POINT position)
+{
+	duck* m_duck;
+	m_duck = new duck;
+	m_duck->init(position);
+	m_vEnemy.push_back(m_duck);
+}
+
+//가미가제 추가
+void enemyManager::addKamikaze(POINT position)
+{
+	kamikaze* m_kamikaze;
+	m_kamikaze = new kamikaze;
+	m_kamikaze->init(position);
+	m_vEnemy.push_back(m_kamikaze);
+}
+
+//에너미 체력 감소
+void enemyManager::setEnemyHP(int num, int hp)
+{
+	m_viEnemy = m_vEnemy.begin();
+	for (m_viEnemy; m_viEnemy != m_vEnemy.end(); m_viEnemy++)
+	{
+		(*m_viEnemy)->setHP(hp);
 	}
 }
 

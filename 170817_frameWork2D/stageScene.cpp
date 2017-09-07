@@ -13,7 +13,20 @@ stageScene::~stageScene()
 
 HRESULT stageScene::init()
 {
+	
 	loadStage("tileMap1.map");
+
+	m_enemyManager = new enemyManager;
+	m_enemyManager->init();
+	for (int i = 0; i < ENEMYMAX; i++)
+	{
+		if (m_createEnemy[i].enm == ENM_TURTLE)	m_enemyManager->addTurtle(m_createEnemy[i].pt);
+		else if (m_createEnemy[i].enm == ENM_DUCK) m_enemyManager->addDuck(m_createEnemy[i].pt);
+		else if (m_createEnemy[i].enm == ENM_KAMIKAZE)m_enemyManager->addKamikaze(m_createEnemy[i].pt);
+		
+	}
+
+
 	testNumber = new numberDrawManager;
 	testNumber->init("총알숫자", 5);
 
@@ -32,6 +45,7 @@ HRESULT stageScene::init()
 
 	m_cm = new characterManager;
 	m_cm->init(Charcter_pt, JIMMY);
+
 	
 	m_defaultGun->setBulletManagerLink(*m_bulletManager);
 		
@@ -43,6 +57,7 @@ HRESULT stageScene::init()
 void stageScene::release()
 {
 	m_cm->release();
+	SAFE_DELETE(m_enemyManager);
 }
 
 void stageScene::update()
@@ -97,6 +112,25 @@ void stageScene::update()
 
 	m_defaultGun->update();
 	m_bulletManager->update();
+	m_enemyManager->update();
+	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
+	{
+		//플레이어가 에너미 탐지거리에 있으면 트루
+		RECT temp;
+		if (IntersectRect(&temp, &m_cm->getEnemy_hitRc(), &m_enemyManager->getVEnemy()[i]->getDetectionRect()) && !m_enemyManager->getVEnemy()[i]->getIsDetection()) m_enemyManager->getVEnemy()[i]->setIsDetection(true);
+
+		if (m_enemyManager->getVEnemy()[i]->getCurrent() != DASH_ENEMY && m_enemyManager->getVEnemy()[i]->getIsDetection())
+		{
+			//에너미 좌우 방향 정하기
+			//플레이어가 에너미 왼쪽에 있으면 에너미가 왼쪽으로 보기
+			if (m_cm->getPlayerX() < m_enemyManager->getVEnemy()[i]->getX()) m_enemyManager->getVEnemy()[i]->setIsLeft(true);
+			//플레이어가 에너미 오른쪽에 있으면 에너미가 오른쪽으로 보기
+			else m_enemyManager->getVEnemy()[i]->setIsLeft(false);
+
+			//에너미 앵글 정하기
+			m_enemyManager->getVEnemy()[i]->setAngle(getAngle(m_enemyManager->getVEnemy()[i]->getX(), m_enemyManager->getVEnemy()[i]->getY(), m_cm->getPlayerX(), m_cm->getPlayerY()));
+		}
+	}
 }
 
 void stageScene::render()
@@ -127,18 +161,13 @@ void stageScene::render()
 	}
 
 	//에너미
-	for (int i = 0; i < ENEMYMAX; i++)
-	{
-		if (m_createEnemy[i].enm == ENM_TURTLE)	IMAGEMANAGER->frameRender("거북이", getMemDC(), m_createEnemy[i].rc.left - 36 - currentCamera.x, m_createEnemy[i].rc.top - 26 - currentCamera.y, 0, 0);
-		else if (m_createEnemy[i].enm == ENM_DUCK) IMAGEMANAGER->frameRender("오리", getMemDC(), m_createEnemy[i].rc.left - 38 - currentCamera.x, m_createEnemy[i].rc.top - 30 - currentCamera.y, 0, 0);
-		else if (m_createEnemy[i].enm == ENM_KAMIKAZE) IMAGEMANAGER->frameRender("가미가제", getMemDC(), m_createEnemy[i].rc.left - 37 - currentCamera.x, m_createEnemy[i].rc.top - 51 - currentCamera.y, 0, 0);
-	}
 	
 	m_cm->render();
 	testNumber->render(WINSIZEX/2,0, 1);
 
 	m_defaultGun->render();
 	m_bulletManager->render();
+	m_enemyManager->render(currentCamera);
 }
 
 void stageScene::loadStage(char* mapName)
@@ -169,6 +198,11 @@ void stageScene::loadStage(char* mapName)
 		}
 	}
 
+}
+
+void stageScene::loadEnermy(char * mapName)
+{
+	
 }
 
 void stageScene::moveCamera(POINT characterPt)

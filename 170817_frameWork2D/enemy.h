@@ -17,16 +17,18 @@ struct tagEnemy
 {
 	image* image;
 	RECT rc;
-	RECT detection;
+	RECT detectionRc;
 	float x, y;
 	int currentHP, maxHP;
 	float speed;
 	float angle;
+	float dashAngle;						//오리, 가미가제 전용
 	int dashCoolTime, dashCoolTimeMax;		//오리, 가미가제 전용
 	float dash, acceleration;				//오리, 가미가제 전용
-	int count;
+	int count, detectionCount;
 	int currentFrameX, currentFrameY;
-	bool isDetection;
+	int detectionX;
+	bool isDetection, detection;
 	bool isLeft;
 	currentEnemy current;
 };
@@ -43,13 +45,57 @@ public:
 	virtual HRESULT init(POINT position);
 	virtual void release();
 	virtual void update();
-	virtual void render();
+	virtual void render(POINT pt);
 
+	virtual void detection();
 	virtual void animation();
+	virtual void dashCoolTime();
 	virtual bool dead();
+	virtual bool dash();
 
+	//에너미 몸체 렉트
 	virtual RECT getRect() { return m_enemy.rc; }
-	virtual RECT getDetectionRect() { return m_enemy.detection; }
+
+	//에너미 탐지거리 렉트
+	virtual RECT getDetectionRect() { return m_enemy.detectionRc; }
+
+	//에너미 X
+	virtual float getX() { return m_enemy.x; }
+
+	//에너미 Y
+	virtual float getY() { return m_enemy.y; }
+
+	//에너미 앵글
+	virtual float getAngle() { return m_enemy.angle; }
+	virtual void setAngle(float angle) { m_enemy.angle = angle; }
+
+	//에너미 현재 체력 수정
+	virtual void setHP(int hp)
+	{
+		if (m_enemy.current != DEAD_ENEMY)
+		{
+			m_enemy.currentHP -= hp;
+			m_enemy.count = 0;
+			m_enemy.currentFrameX = 0;
+			//현재 체력이 없을 경우 죽음 모션 발동
+			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			//현재 체력이 남아있을 경우 피격 모션 발동
+			else m_enemy.current = HIT_ENEMY;
+		}
+	}
+
+	//에너미 현재 체력 수정
+	virtual void setHP1(int hp) { m_enemy.currentHP = hp; }
+
+	//에너미 탐지했냐?
+	virtual bool getIsDetection() { return m_enemy.isDetection; }
+	virtual void setIsDetection(bool isDetection) { m_enemy.isDetection = isDetection; }
+
+	//에너미 왼쪽을 보고 있냐?
+	virtual void setIsLeft(bool isLeft) { m_enemy.isLeft = isLeft; }
+
+	//에너미 현재 상태
+	virtual currentEnemy getCurrent() { return m_enemy.current; }
 };
 
 //거북이 클래스
@@ -65,10 +111,55 @@ public:
 	HRESULT init(POINT position);
 	void release();
 	void update();
-	void render();
+	void render(POINT pt);
 
+	void detection();
 	void animation();
 	bool dead();
+
+	//에너미 몸체 렉트
+	RECT getRect() { return m_enemy.rc; }
+
+	//에너미 탐지거리 렉트
+	RECT getDetectionRect() { return m_enemy.detectionRc; }
+
+	//에너미 X
+	float getX() { return m_enemy.x; }
+
+	//에너미 Y
+	float getY() { return m_enemy.y; }
+
+	//에너미 앵글
+	float getAngle() { return m_enemy.angle; }
+	void setAngle(float angle) { m_enemy.angle = angle; }
+
+	//에너미 현재 체력 수정
+	void setHP(int hp)
+	{
+		if (m_enemy.current != DEAD_ENEMY)
+		{
+			m_enemy.currentHP -= hp;
+			m_enemy.count = 0;
+			m_enemy.currentFrameX = 0;
+			//현재 체력이 없을 경우 죽음 모션 발동
+			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			//현재 체력이 남아있을 경우 피격 모션 발동
+			else m_enemy.current = HIT_ENEMY;
+		}
+	}
+
+	//에너미 현재 체력 수정
+	virtual void setHP1(int hp) { m_enemy.currentHP = hp; }
+
+	//에너미 탐지했냐?
+	bool getIsDetection() { return m_enemy.isDetection; }
+	void setIsDetection(bool isDetection) { m_enemy.isDetection = isDetection; }
+
+	//에너미 왼쪽을 보고 있냐?
+	void setIsLeft(bool isLeft) { m_enemy.isLeft = isLeft; }
+
+	//에너미 현재 상태
+	currentEnemy getCurrent() { return m_enemy.current; }
 };
 
 //오리 클래스
@@ -84,12 +175,57 @@ public:
 	HRESULT init(POINT position);
 	void release();
 	void update();
-	void render();
+	void render(POINT pt);
 
+	void detection();
 	void animation();
 	void dashCoolTime();
 	bool dash();
 	bool dead();
+
+	//에너미 몸체 렉트
+	RECT getRect() { return m_enemy.rc; }
+
+	//에너미 탐지거리 렉트
+	RECT getDetectionRect() { return m_enemy.detectionRc; }
+
+	//에너미 X
+	float getX() { return m_enemy.x; }
+
+	//에너미 Y
+	float getY() { return m_enemy.y; }
+
+	//에너미 앵글
+	float getAngle() { return m_enemy.angle; }
+	void setAngle(float angle) { m_enemy.angle = angle; }
+
+	//에너미 현재 체력 수정
+	void setHP(int hp)
+	{
+		if (m_enemy.current != DEAD_ENEMY)
+		{
+			m_enemy.currentHP -= hp;
+			m_enemy.count = 0;
+			m_enemy.currentFrameX = 0;
+			//현재 체력이 없을 경우 죽음 모션 발동
+			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			//현재 체력이 남아있을 경우 피격 모션 발동
+			else m_enemy.current = HIT_ENEMY;
+		}
+	}
+
+	//에너미 현재 체력 수정
+	virtual void setHP1(int hp) { m_enemy.currentHP = hp; }
+
+	//에너미 탐지했냐?
+	bool getIsDetection() { return m_enemy.isDetection; }
+	void setIsDetection(bool isDetection) { m_enemy.isDetection = isDetection; }
+
+	//에너미 왼쪽을 보고 있냐?
+	void setIsLeft(bool isLeft) { m_enemy.isLeft = isLeft; }
+
+	//에너미 현재 상태
+	currentEnemy getCurrent() { return m_enemy.current; }
 };
 
 //가미가제 클래스
@@ -105,10 +241,55 @@ public:
 	HRESULT init(POINT position);
 	void release();
 	void update();
-	void render();
+	void render(POINT pt);
 
+	void detection();
 	void animation();
 	void dashCoolTime();
 	bool dash();
 	bool dead();
+
+	//에너미 몸체 렉트
+	RECT getRect() { return m_enemy.rc; }
+
+	//에너미 탐지거리 렉트
+	RECT getDetectionRect() { return m_enemy.detectionRc; }
+
+	//에너미 X
+	float getX() { return m_enemy.x; }
+	
+	//에너미 Y
+	float getY() { return m_enemy.y; }
+
+	//에너미 앵글
+	float getAngle() { return m_enemy.angle; }
+	void setAngle(float angle) { m_enemy.angle = angle; }
+
+	//에너미 현재 체력 수정
+	void setHP(int hp)
+	{
+		if (m_enemy.current != DEAD_ENEMY)
+		{
+			m_enemy.currentHP -= hp;
+			m_enemy.count = 0;
+			m_enemy.currentFrameX = 0;
+			//현재 체력이 없을 경우 죽음 모션 발동
+			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			//현재 체력이 남아있을 경우 피격 모션 발동
+			else m_enemy.current = HIT_ENEMY;
+		}
+	}
+
+	//에너미 현재 체력 수정
+	virtual void setHP1(int hp) { m_enemy.currentHP = hp; }
+
+	//에너미 탐지했냐?
+	bool getIsDetection() { return m_enemy.isDetection; }
+	void setIsDetection(bool isDetection) { m_enemy.isDetection = isDetection; }
+
+	//에너미 왼쪽을 보고 있냐?
+	void setIsLeft(bool isLeft) { m_enemy.isLeft = isLeft; }
+
+	//에너미 현재 상태
+	currentEnemy getCurrent() { return m_enemy.current; }
 };

@@ -791,11 +791,11 @@ void mapTool::saveLoad()
 	}
 }
 
+
 void mapTool::pushEnemyMemory()
 {
 	HANDLE file;
 	DWORD read;
-
 	file = CreateFile("tileMap1.map",
 		GENERIC_READ,
 		0,
@@ -803,11 +803,15 @@ void mapTool::pushEnemyMemory()
 		OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL,
 		NULL);
-
+	//타일 불러오기
+	ReadFile(file, tile, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 	ReadFile(file, m_createEnemy, sizeof(tagCreateEnemy) * ENEMYMAX, &read, NULL);
 	for (int i = 0; i < ENEMYMAX; i++)
 	{
-		//if(m_createEnemy[i].enm == ENM_TURTLE) 
+		if (m_createEnemy[i].enm == ENM_TURTLE) m_enemyManager->addTurtle(m_createEnemy[i].pt);
+		else if (m_createEnemy[i].enm == ENM_DUCK) m_enemyManager->addDuck(m_createEnemy[i].pt);
+		else if (m_createEnemy[i].enm == ENM_KAMIKAZE) m_enemyManager->addKamikaze(m_createEnemy[i].pt);
+		ZeroMemory(&m_createEnemy[i], sizeof(m_createEnemy[i]));
 	}
 	CloseHandle(file);
 }

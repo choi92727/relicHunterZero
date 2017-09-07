@@ -44,14 +44,14 @@ void progressBar::update()
 		m_y + m_progressBarBack->getHeight() / 2, m_progressBarBack->getWidth(), m_progressBarBack->getHeight());
 }
 
-void progressBar::render()
+void progressBar::render(POINT pt)
 {
 	//if (showBar)
 	{
 		//프로그래스바 백이미지(변경될 필요 없다.)
-		m_progressBarBack->render(getMemDC(), m_rcProgress.left + 1, m_y + 1, 0, 0, m_progressBarBack->getWidth(), m_progressBarBack->getHeight());
+		m_progressBarBack->render(getMemDC(), m_rcProgress.left + 1-pt.x, m_y + 1 - pt.y, 0, 0, m_progressBarBack->getWidth(), m_progressBarBack->getHeight());
 		//프로그래스바 프론즈 이미지(가로길이가 변경 되어야 한다.)
-		m_progressBarFront->render(getMemDC(), m_rcProgress.left - 1, m_y - 1, 0, 0, m_width, m_progressBarBack->getHeight());
+		m_progressBarFront->render(getMemDC(), m_rcProgress.left - 1-pt.x, m_y - 1 - pt.y, 0, 0, m_width, m_progressBarBack->getHeight());
 
 		//IMAGEMANAGER->render("백이미지", getMemDC(), m_rcProgress.left, m_y, 0, 0, m_progressBarBack->getWidth(), m_progressBarBack->getHeight());
 		//IMAGEMANAGER->render("프론트이미지", getMemDC(), m_rcProgress.left, m_y, 0, 0, m_width, m_progressBarBack->getHeight());

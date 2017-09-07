@@ -6,6 +6,7 @@
 #include "gunInterface.h"
 #include "defaultGun.h"
 #include "characterManager.h"
+#include "enemyManager.h"
 
 class stageScene :
 	public gameNode
@@ -23,6 +24,7 @@ private:
 	bulletManager *m_bulletManager;//ºÒ·¿ ¸Å´ÏÀú
 	gunInterface *m_defaultGun;
 	characterManager *m_cm;
+	enemyManager* m_enemyManager;
 
 	numberDrawManager *testNumber;
 public:
@@ -35,6 +37,7 @@ public:
 	void render();
 
 	void loadStage(char* mapName);
+	void loadEnermy(char* mapName);
 
 	void moveCamera(POINT characterPt);
 };

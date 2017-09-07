@@ -1,6 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include "tileNode.h"
+#include "enemyManager.h"
 
 class mapTool : public gameNode
 {
@@ -27,6 +28,7 @@ private:
 
 	bool sampleTile, sampleObject, sampleEnemy;
 	bool loookSample;
+	enemyManager* m_enemyManager;
 public:
 	mapTool();
 	~mapTool();
@@ -51,5 +53,8 @@ public:
 	void saveLoad();
 
 	void pushEnemyMemory();
+	
+
+		
 };
 

@@ -43,6 +43,7 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addFrameImage("라이더", "Images/rider.bmp", 2736, 1792, 24, 16, true, RGB(255, 0, 255));
 
 	//에너미
+	IMAGEMANAGER->addFrameImage("에너미_탐지", "Images/exclamation.bmp", 126, 34, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("가미가제", "Images/가미가제.bmp", 1824, 940, 16, 10, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("거북이", "Images/거북이.bmp", 1596, 752, 14, 8, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("오리", "Images/오리.bmp", 1482, 940, 13, 10, true, RGB(255, 0, 255));
