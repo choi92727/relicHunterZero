@@ -210,18 +210,6 @@
     <ClInclude Include="gunInterface.h">
       <Filter>MainGame\GameMain\Weapon\Guns</Filter>
     </ClInclude>
-    <ClInclude Include="bulletInterface.h">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="bulletManager.h">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="defaultGun.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="defaultBullet.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="characterInterface.h">
       <Filter>MainGame\GameMain\Character</Filter>
     </ClInclude>
@@ -236,6 +224,18 @@
     </ClInclude>
     <ClInclude Include="characterClassic.h">
       <Filter>MainGame\GameMain\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultBullet.h">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultGun.h">
+      <Filter>MainGame\GameMain\Weapon\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletInterface.h">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>MainGame\GameMain\Weapon\bullet\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,18 +344,6 @@
     <ClCompile Include="gunInterface.cpp">
       <Filter>MainGame\GameMain\Weapon\Guns</Filter>
     </ClCompile>
-    <ClCompile Include="bulletInterface.cpp">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="bulletManager.cpp">
-      <Filter>MainGame\GameMain\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="defaultGun.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="defaultBullet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="characterInterface.cpp">
       <Filter>MainGame\GameMain\Character</Filter>
     </ClCompile>
@@ -367,6 +355,18 @@
     </ClCompile>
     <ClCompile Include="rider.cpp">
       <Filter>MainGame\GameMain\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultBullet.cpp">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultGun.cpp">
+      <Filter>MainGame\GameMain\Weapon\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletInterface.cpp">
+      <Filter>MainGame\GameMain\Weapon\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>MainGame\GameMain\Weapon\bullet\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

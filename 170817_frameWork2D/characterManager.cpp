@@ -37,7 +37,7 @@ void characterManager::update()
 	m_player->update();
 }
 
-void characterManager::render()
+void characterManager::render(POINT pt)
 {
-	m_player->render();
+	m_player->render(pt);
 }

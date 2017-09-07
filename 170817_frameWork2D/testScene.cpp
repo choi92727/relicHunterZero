@@ -30,5 +30,5 @@ void testScene::update()
 
 void testScene::render()
 {
-	m_player->render();
+	//m_player->render();
 }

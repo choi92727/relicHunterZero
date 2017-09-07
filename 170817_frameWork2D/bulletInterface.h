@@ -28,6 +28,7 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+	virtual void render(POINT pt);
 	float getDamage() { return m_damage; }
 	float getRange() { return m_range; }
 	float getWidth() { return m_width; }

@@ -52,6 +52,28 @@ void defaultBullet::render()
 
 	DrawPng(m_bulletImage, m_graphics, m_x, m_y - m_width / 2, m_height, m_width, m_angle);
 
+	char text[64];
+
+	wsprintf(text, "%d,%d", m_x, m_y);
+
+	TextOut(getMemDC(), m_x, m_y, text, strlen(text));
+
+
+}
+
+void defaultBullet::render(POINT pt)
+{
+	Rectangle(getMemDC(), m_x, m_y, m_x + m_width, m_y + m_height / 2);
+
+
+	DrawPng(m_bulletImage, m_graphics, m_x - pt.x, m_y - m_width / 2 - pt.y, m_height, m_width, m_angle);
+
+	char text[64];
+
+	wsprintf(text, "%d,%d", m_x, m_y);
+
+	TextOut(getMemDC(), m_x - pt.x, m_y - pt.y, text, strlen(text));
+
 }
 
 

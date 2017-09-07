@@ -14,7 +14,7 @@ defaultGun::~defaultGun()
 HRESULT defaultGun::init(CHARACTER playerType)
 {
 	m_damage = 10.0f;
-	m_speed = 15.0f;
+	m_speed = 5.0f;
 	m_angle = 0;
 	m_x = 0;
 	m_y = 0;
@@ -58,7 +58,26 @@ void defaultGun::render()
 	sprintf(text, "%.2f", getFireDelay());
 
 	TextOut(getMemDC(), 10, 100, text, strlen(text));
+	
 
+}
+
+void defaultGun::render(POINT pt)
+{
+	if (WINSIZEX/2 <= ptMouse.x) {
+		DrawPng(m_gunImage[0], m_graphics, m_x - pt.x, m_y - pt.y,
+			22, 60, m_angle);
+	}
+	else
+	{
+		DrawPng(m_gunImage[1], m_graphics, m_x - pt.x, m_y - pt.y,
+			22, 60, m_angle);
+	}
+
+	char text[64];
+	sprintf(text, "%.2f", getFireDelay());
+
+	TextOut(getMemDC(), 10, 100, text, strlen(text));
 
 }
 
@@ -77,7 +96,7 @@ void defaultGun::fire()
 
 void defaultGun::setAngle()
 {
-	m_angle = getAngle(m_x, m_y, ptMouse.x, ptMouse.y);
+	m_angle = getAngle(WINSIZEX/2,WINSIZEY/2,ptMouse.x, ptMouse.y);
 }
 
 void defaultGun::setPosition(int x, int y)

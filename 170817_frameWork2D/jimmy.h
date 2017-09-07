@@ -12,7 +12,7 @@ public:
 	HRESULT init(POINT position);
 	void release();
 	void update();
-	void render();
+	void render(POINT pt);
 	
 	void animation();
 	void move();

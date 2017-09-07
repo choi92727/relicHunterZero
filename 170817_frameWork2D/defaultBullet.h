@@ -12,7 +12,7 @@ public:
 	void release();
 	void update();
 	void render();
-
+	void render(POINT pt);
 
 };
 

@@ -81,7 +81,7 @@ public:
 	virtual HRESULT init(POINT position);
 	virtual void release();
 	virtual void update();
-	virtual void render();
+	virtual void render(POINT pt);
 
 	virtual void animation();
 	virtual void move();
