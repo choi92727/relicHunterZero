@@ -18,6 +18,7 @@ private:
 	RECT Character_Rc;
 	POINT Charcter_pt;
 	POINT currentCamera;
+	POINT Charcter_Real_pt;
 	RECT camera_rc;
 	bulletManager *m_bulletManager;//불렛 매니저
 	gunInterface *m_defaultGun;

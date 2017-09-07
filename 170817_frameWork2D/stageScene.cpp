@@ -31,8 +31,8 @@ HRESULT stageScene::init()
 	m_defaultGun->init(CHAR_PLAYER);
 	
 	m_defaultGun->setBulletManagerLink(*m_bulletManager);
-		
-	m_defaultGun->setPosition(WINSIZEX/2,WINSIZEY/2);
+	Charcter_Real_pt = { Charcter_pt.x - currentCamera.x, Charcter_pt.y - currentCamera.y };
+	
 
 	return S_OK;
 }
@@ -69,6 +69,7 @@ void stageScene::update()
 	//currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
 	moveCamera(Charcter_pt);
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
+	m_defaultGun->setPosition(Charcter_Real_pt.x+IMAGEMANAGER->findImage("지미")->getFrameWidth()/2, Charcter_Real_pt.y+(IMAGEMANAGER->findImage("지미")->getFrameHeight() / 2));
 
 	RECT temp;
 	for (int y = 0; y < TILEY; y++)
