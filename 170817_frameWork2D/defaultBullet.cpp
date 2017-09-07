@@ -52,8 +52,6 @@ void defaultBullet::render()
 
 	DrawPng(m_bulletImage, m_graphics, m_x, m_y-m_width/2, m_height, m_width, m_angle);
 
-
-
 }
 
 

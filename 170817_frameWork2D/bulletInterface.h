@@ -8,8 +8,8 @@ protected:
 	float m_angle;
 	float m_damage;
 	float m_range;
-	float m_width;
-	float m_height;
+	float m_width;//높이
+	float m_height;//넓이
 	float m_isGravity;
 	float m_gravity;
 	int m_x, m_y;
@@ -18,7 +18,7 @@ protected:
 	image* m_image;//수업떄 배웠던 image클래스를 상속받아서 만드는 이미지
 
 	Image* m_bulletImage;//drawPng를 사용하기 위한 클래스 위에 대문자로 시작함.
-	Graphics* m_graphics;
+	Graphics* m_graphics;//drawPng를 사용하기 위한 변수
 
 public:	
 	bulletInterface();
@@ -35,7 +35,9 @@ public:
 	CHARACTER getPlayerType() { return m_playerType; }
 	int getX() { return m_x; }
 	int getY() { return m_y; }
-
+	RECT getRect() {
+		return RectMake(m_x, m_y,m_width,m_height / 2);
+	}
 	
 };
 

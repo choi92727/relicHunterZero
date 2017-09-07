@@ -40,23 +40,6 @@ void defaultGun::release()
 void defaultGun::update()
 {
 	setAngle();
-	if (m_fire)
-	{
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-		{
-			fire();
-			m_fire = false;
-		}
-	}
-	else
-	{
-		m_isDelay--;
-		if (m_isDelay < 0)
-		{
-			m_isDelay = m_fireDelay;
-			m_fire = true;
-		}
-	}
 }
 
 void defaultGun::render()

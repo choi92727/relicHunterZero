@@ -16,7 +16,7 @@ public:
 	void update();
 	void render();
 	void addBullet(bulletInterface &m_bullet);//총알을 넣어줄 함수
-	void checkBullet();//총알 충돌체크
+	bool enemyCollisionCheck(RECT &_rc);
 	void deleteBullet(viBulletList &m_bullet);//총알 제거함수
 };
 

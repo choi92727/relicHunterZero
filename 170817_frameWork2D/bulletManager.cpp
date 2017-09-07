@@ -54,10 +54,29 @@ void bulletManager::addBullet(bulletInterface &m_bullet)
 	m_vBulletList.push_back(&m_bullet);
 }
 
-void bulletManager::checkBullet()
+bool bulletManager::enemyCollisionCheck(RECT & _rc)
 {
+	//for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
+	//{
+	//	if ((*m_viBulletList)->getPlayerType() == CHAR_ENEMY)
+	//	{
+	//		m_viBulletList++;
+	//		continue;
+	//	}
 
+	//	if ()
+	//	{
+	//		deleteBullet(m_viBulletList);
+	//	}
+	//	else
+	//	{
+	//		m_viBulletList++;
+	//	}
+	//}
+	return false;
 }
+
+
 
 void bulletManager::deleteBullet(viBulletList &m_bullet)
 {

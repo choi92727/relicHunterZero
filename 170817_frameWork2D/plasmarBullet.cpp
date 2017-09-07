@@ -41,15 +41,33 @@ void plasmarBullet::release()
 
 void plasmarBullet::update()
 {
-	m_x += cos(m_angle) * m_speed;
-	m_y += -sin(m_angle) * m_speed;
+
+	if (m_range < 300)
+	{
+		m_x += cos(m_angle) * (m_speed/2);
+		m_y += -sin(m_angle) * (m_speed/2);
+
+	}
+	else
+	{
+		m_x += cos(m_angle) * m_speed;
+		m_y += -sin(m_angle) * m_speed;
+	}
+
+	
 	m_range -= m_speed;
+
+
+
 	m_ani->start();
 
 }
 
 void plasmarBullet::render()
 {
+
+	Rectangle(getMemDC(), m_x, m_y, m_x + m_image->getFrameWidth(), m_y + m_image->getFrameHeight());
+
 	m_image->aniRender(getMemDC(), m_x, m_y, m_ani);
 }
 

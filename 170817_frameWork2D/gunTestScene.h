@@ -16,6 +16,9 @@ private:
 	CHARACTER m_character;
 	POINT pt_list[20];
 	bulletManager* m_bulletManager;
+	float fireDelay;
+	float isDelay;
+	bool fire;
 public:
 	gunTestScene();
 	~gunTestScene();
