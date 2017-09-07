@@ -48,7 +48,11 @@ HRESULT stageScene::init()
 
 	
 	m_defaultGun->setBulletManagerLink(*m_bulletManager);
+<<<<<<< HEAD
+	Charcter_Real_pt = { Charcter_pt.x - currentCamera.x, Charcter_pt.y - currentCamera.y };
+=======
 		
+>>>>>>> 809e3dbc0f3d6817469103caa0b655a379ddd766
 	
 
 	return S_OK;
@@ -89,10 +93,15 @@ void stageScene::update()
 	moveCamera(Charcter_pt);
 	Character_Rc = RectMakeCenter(Charcter_pt.x, Charcter_pt.y, 50, 100);
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
+<<<<<<< HEAD
+	m_defaultGun->setPosition(Charcter_Real_pt.x+IMAGEMANAGER->findImage("지미")->getFrameWidth()/2, Charcter_Real_pt.y+(IMAGEMANAGER->findImage("지미")->getFrameHeight() / 2));
+
+=======
 	m_defaultGun->setPosition(m_cm->getPlayerX(), m_cm->getPlayerY());
 	m_cm->update();
 	m_cm->setPlayerX((float)(Charcter_pt.x));
 	m_cm->setPlayerY((float)(Charcter_pt.y));
+>>>>>>> 809e3dbc0f3d6817469103caa0b655a379ddd766
 	RECT temp;
 	for (int y = 0; y < TILEY; y++)
 	{
