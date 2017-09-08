@@ -14,7 +14,6 @@ public:
 	void render();
 	void render(POINT pt);
 	void fire();
-	void setAngle();
 	void setPosition(int x, int y);
 
 

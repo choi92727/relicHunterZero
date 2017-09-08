@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "enemyManager.h"
-
+#include "bulletManager.h"
 
 enemyManager::enemyManager()
 {
@@ -13,7 +13,7 @@ enemyManager::~enemyManager()
 
 HRESULT enemyManager::init()
 {
-	
+	addNumber = 1;
 	return S_OK;
 }
 
@@ -59,7 +59,24 @@ void enemyManager::addTurtle(POINT position)
 	turtle* m_turtle;
 	m_turtle = new turtle;
 	m_turtle->init(position);
+	
+	m_turtle->setEnemyNumber(addNumber);
+	addNumber++;
 	m_vEnemy.push_back(m_turtle);
+}
+
+void enemyManager::addTurtle(POINT position, bulletManager & _bulletManager)
+{
+	/*turtle* m_turtle;
+	m_turtle = new turtle;
+	m_turtle->init(position);
+	m_turtle->setisGun(true);
+	if (m_turtle->getisGun()) {
+		m_turtle->setGun(GUN_DEFAULT);
+		m_turtle->setBulletLink(_bulletManager);
+	}
+	m_vEnemy.push_back(m_turtle);*/
+
 }
 
 //오리 추가
@@ -68,6 +85,9 @@ void enemyManager::addDuck(POINT position)
 	duck* m_duck;
 	m_duck = new duck;
 	m_duck->init(position);
+
+	m_duck->setEnemyNumber(addNumber);
+	addNumber++;
 	m_vEnemy.push_back(m_duck);
 }
 
@@ -77,6 +97,9 @@ void enemyManager::addKamikaze(POINT position)
 	kamikaze* m_kamikaze;
 	m_kamikaze = new kamikaze;
 	m_kamikaze->init(position);
+
+	m_kamikaze->setEnemyNumber(addNumber);
+	addNumber++;
 	m_vEnemy.push_back(m_kamikaze);
 }
 

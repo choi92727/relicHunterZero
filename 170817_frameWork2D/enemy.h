@@ -2,6 +2,9 @@
 #include "gameNode.h"
 #include "progressBar.h"
 
+class gunInterface;
+
+
 //에너미 현재 상태
 enum currentEnemy
 {
@@ -31,7 +34,12 @@ struct tagEnemy
 	bool isDetection, detection;
 	bool isLeft;
 	currentEnemy current;
-	RECT collisionRc;
+	//총알 발사 변수
+	bool fire = true;
+	float fireDelay= 1.5f * 60.0f;//총알 발사 대기시간
+	bool fireEnemy = false;//총을 쏘는 에너미인지
+	int enemyNumber = 0;//현재 에너미의 숫자값
+
 };
 
 class enemy :public gameNode
@@ -60,19 +68,27 @@ public:
 	//에너미 탐지거리 렉트
 	virtual RECT getDetectionRect() { return m_enemy.detectionRc; }
 
-	virtual RECT getCollisionRect() { return m_enemy.collisionRc; }
-
 	//에너미 X
 	virtual float getX() { return m_enemy.x; }
-	virtual void setX(float x) { m_enemy.x = x; }
 
 	//에너미 Y
 	virtual float getY() { return m_enemy.y; }
-	virtual void setY(float y) { m_enemy.y = y; }
 
 	//에너미 앵글
 	virtual float getAngle() { return m_enemy.angle; }
 	virtual void setAngle(float angle) { m_enemy.angle = angle; }
+
+	//문광현 추가한 함수
+	 bool getFire() { return m_enemy.fire; }
+	 void setFire(bool _fire) { m_enemy.fire = _fire; }
+	 float getFireDelay() { return m_enemy.fireDelay; }
+	 void setFireDelay(float _delay) { m_enemy.fireDelay = _delay; }
+	
+	 int getEnemyNumber() { return m_enemy.enemyNumber; }
+	 void setEnemyNumber(int _number) { m_enemy.enemyNumber = _number; }
+
+	 bool getFireEnemy() { return m_enemy.fireEnemy; }
+	 virtual bool fireCheck();
 
 	//에너미 현재 체력 수정
 	virtual void setHP(int hp)
@@ -101,11 +117,6 @@ public:
 
 	//에너미 현재 상태
 	virtual currentEnemy getCurrent() { return m_enemy.current; }
-	virtual void setCurrent(currentEnemy current)
-	{
-		m_enemy.current = current;
-		m_enemy.count = m_enemy.currentFrameX = 0;
-	}
 };
 
 //거북이 클래스
@@ -133,15 +144,11 @@ public:
 	//에너미 탐지거리 렉트
 	RECT getDetectionRect() { return m_enemy.detectionRc; }
 
-	RECT getCollisionRect() { return m_enemy.collisionRc; }
-
 	//에너미 X
 	float getX() { return m_enemy.x; }
-	void setX(float x) { m_enemy.x = x; }
 
 	//에너미 Y
 	float getY() { return m_enemy.y; }
-	void setY(float y) { m_enemy.y = y; }
 
 	//에너미 앵글
 	float getAngle() { return m_enemy.angle; }
@@ -174,11 +181,18 @@ public:
 
 	//에너미 현재 상태
 	currentEnemy getCurrent() { return m_enemy.current; }
-	void setCurrent(currentEnemy current)
-	{
-		m_enemy.current = current;
-		m_enemy.count = m_enemy.currentFrameX = 0;
-	}
+
+	//추가 함수->상단에 설명추가
+	bool getFire() { return m_enemy.fire; }
+	void setFire(bool _fire) { m_enemy.fire = _fire; }
+	float getFireDelay() { return m_enemy.fireDelay; }
+	void setFireDelay(float _delay) { m_enemy.fireDelay = _delay; }
+
+	int getEnemyNumber() { return m_enemy.enemyNumber; }
+	void setEnemyNumber(int _number) { m_enemy.enemyNumber = _number; }
+
+	bool getFireEnemy() { return m_enemy.fireEnemy; }
+	bool fireCheck();
 };
 
 //오리 클래스
@@ -208,15 +222,11 @@ public:
 	//에너미 탐지거리 렉트
 	RECT getDetectionRect() { return m_enemy.detectionRc; }
 
-	RECT getCollisionRect() { return m_enemy.collisionRc; }
-
 	//에너미 X
 	float getX() { return m_enemy.x; }
-	void setX(float x) { m_enemy.x = x; }
 
 	//에너미 Y
 	float getY() { return m_enemy.y; }
-	void setY(float y) { m_enemy.y = y; }
 
 	//에너미 앵글
 	float getAngle() { return m_enemy.angle; }
@@ -249,11 +259,17 @@ public:
 
 	//에너미 현재 상태
 	currentEnemy getCurrent() { return m_enemy.current; }
-	void setCurrent(currentEnemy current)
-	{
-		m_enemy.current = current;
-		m_enemy.count = m_enemy.currentFrameX = 0;
-	}
+
+	//추가 함수->상단에 설명추가
+	bool getFire() { return m_enemy.fire; }
+	void setFire(bool _fire) { m_enemy.fire = _fire; }
+	float getFireDelay() { return m_enemy.fireDelay; }
+	void setFireDelay(float _delay) { m_enemy.fireDelay = _delay; }
+
+	int getEnemyNumber() { return m_enemy.enemyNumber; }
+	void setEnemyNumber(int _number) { m_enemy.enemyNumber = _number; }
+
+	bool getFireEnemy() { return m_enemy.fireEnemy; }
 };
 
 //가미가제 클래스
@@ -283,15 +299,11 @@ public:
 	//에너미 탐지거리 렉트
 	RECT getDetectionRect() { return m_enemy.detectionRc; }
 
-	RECT getCollisionRect() { return m_enemy.collisionRc; }
-
 	//에너미 X
 	float getX() { return m_enemy.x; }
-	void setX(float x) { m_enemy.x = x; }
-
+	
 	//에너미 Y
 	float getY() { return m_enemy.y; }
-	void setY(float y) { m_enemy.y = y; }
 
 	//에너미 앵글
 	float getAngle() { return m_enemy.angle; }
@@ -324,9 +336,15 @@ public:
 
 	//에너미 현재 상태
 	currentEnemy getCurrent() { return m_enemy.current; }
-	void setCurrent(currentEnemy current)
-	{
-		m_enemy.current = current;
-		m_enemy.count = m_enemy.currentFrameX = 0;
-	}
+
+	//추가 함수->상단에 설명추가
+	bool getFire() { return m_enemy.fire; }
+	void setFire(bool _fire) { m_enemy.fire = _fire; }
+	float getFireDelay() { return m_enemy.fireDelay; }
+	void setFireDelay(float _delay) { m_enemy.fireDelay = _delay; }
+
+	int getEnemyNumber() { return m_enemy.enemyNumber; }
+	void setEnemyNumber(int _number) { m_enemy.enemyNumber = _number; }
+
+	bool getFireEnemy() { return m_enemy.fireEnemy; }
 };

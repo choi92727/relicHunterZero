@@ -17,7 +17,6 @@ struct tagObject
 	int count;
 	int currentFrameX;
 	currentObject current;
-	bool isTeleport;
 };
 
 class object : public gameNode
@@ -41,9 +40,6 @@ public:
 	
 	//오브젝트 렉트
 	virtual RECT getRect() { return m_object.rc; }
-
-	//오브젝트 텔레포트냐?
-	virtual bool getIsTeleport() { return m_object.isTeleport; }
 };
 
 class box1 : public object
@@ -64,9 +60,6 @@ public:
 
 	//오브젝트 렉트
 	RECT getRect() { return m_object.rc; }
-
-	//오브젝트 텔레포트냐?
-	bool getIsTeleport() { return m_object.isTeleport; }
 };
 
 class box2 : public object
@@ -87,9 +80,6 @@ public:
 
 	//오브젝트 렉트
 	RECT getRect() { return m_object.rc; }
-
-	//오브젝트 텔레포트냐?
-	bool getIsTeleport() { return m_object.isTeleport; }
 };
 
 class root1 : public object
@@ -110,9 +100,6 @@ public:
 
 	//오브젝트 렉트
 	RECT getRect() { return m_object.rc; }
-
-	//오브젝트 텔레포트냐?
-	bool getIsTeleport() { return m_object.isTeleport; }
 };
 
 class root2 : public object
@@ -133,9 +120,6 @@ public:
 
 	//오브젝트 렉트
 	RECT getRect() { return m_object.rc; }
-
-	//오브젝트 텔레포트냐?
-	bool getIsTeleport() { return m_object.isTeleport; }
 };
 
 class teleport : public object
@@ -150,7 +134,4 @@ public:
 
 	//오브젝트 렉트
 	RECT getRect() { return m_object.rc; }
-
-	//오브젝트 텔레포트냐?
-	bool getIsTeleport() { return m_object.isTeleport; }
 };

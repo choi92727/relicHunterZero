@@ -5,6 +5,9 @@
 #include "bulletManager.h"
 #include "gunInterface.h"
 #include "defaultGun.h"
+#include "shotGun.h"
+#include "plasmaGun.h"
+#include "machineGun.h"
 #include "characterManager.h"
 #include "enemyManager.h"
 #include "objectManager.h"
@@ -31,6 +34,8 @@ private:
 	objectManager* m_objectManager;
 
 	numberDrawManager *testNumber;
+
+	vector<gunInterface*> m_enemyGun;
 	
 	
 	int testX ;
@@ -50,10 +55,12 @@ public:
 	void moveCamera(POINT characterPt);
 
 	void collision_tile_character();
-	void collision_tile_Enemy();
+	void collision_tile_Eneermy();
 	void collision_Object_character();
-	void collision_Object_Enemy();
 	
+	void enemyGunRender();
+	void enemyGunSetPosition();
+	void enemyShotGun();
 	
 };
 

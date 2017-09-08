@@ -42,7 +42,7 @@ void plasmaGun::release()
 
 void plasmaGun::update()
 {
-	setAngle();
+
 	m_currentDraw.update(m_currentBullet);
 	m_totalDraw.update(m_totalBullet);
 
@@ -88,14 +88,6 @@ void plasmaGun::fire()
 		m_currentBullet--;
 	}
 }
-
-void plasmaGun::setAngle()
-{
-
-	m_angle = getAngle(WINSIZEX / 2, WINSIZEY / 2, ptMouse.x, ptMouse.y);
-
-}
-
 void plasmaGun::setPosition(int x, int y)
 {
 	m_x = x;

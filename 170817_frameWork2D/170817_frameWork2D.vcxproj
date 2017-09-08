@@ -169,6 +169,7 @@
     <ClInclude Include="loadingGame.h" />
     <ClInclude Include="loadingScene.h" />
     <ClInclude Include="machineBullet.h" />
+    <ClInclude Include="machineGun.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="mainMenu.h" />
     <ClInclude Include="mapTool.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="loadingGame.cpp" />
     <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="machineBullet.cpp" />
+    <ClCompile Include="machineGun.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="mapTool.cpp" />

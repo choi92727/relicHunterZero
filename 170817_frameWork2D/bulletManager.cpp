@@ -25,6 +25,9 @@ void bulletManager::update()
 {
 	bulletMove();
 	wallCollsionCheck();
+	enemyCollisionCheck();
+	objectCollisionCheck();
+	CharCollisionCheck();
 }
 
 void bulletManager::render()
@@ -72,28 +75,80 @@ void bulletManager::bulletMove()
 	}
 }
 
-bool bulletManager::enemyCollisionCheck(RECT & _rc)
+void bulletManager::enemyCollisionCheck()
 {
-	//for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
-	//{
-	//	if ((*m_viBulletList)->getPlayerType() == CHAR_ENEMY)
-	//	{
-	//		m_viBulletList++;
-	//		continue;
-	//	}
-
-	//	if ()
-	//	{
-	//		deleteBullet(m_viBulletList);
-	//	}
-	//	else
-	//	{
-	//		m_viBulletList++;
-	//	}
-	//}
-	return false;
+	vector<enemy*> m_vEnemy = m_enemyManager->getVEnemy();
+	vector<enemy*>::iterator m_viEnemy = m_vEnemy.begin();
+	for (m_viEnemy; m_viEnemy != m_vEnemy.end(); m_viEnemy++)
+	{
+		for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
+		{
+			if ((*m_viBulletList)->getPlayerType() == CHAR_PLAYER) {
+				RECT temp;
+				if (IntersectRect(&temp, &(*m_viEnemy)->getRect(), &(*m_viBulletList)->getRect()))
+				{
+					(*m_viEnemy)->setHP((*m_viBulletList)->getDamage());
+					deleteBullet(m_viBulletList);
+				}
+				else
+				{
+					m_viBulletList++;
+				}
+			}
+			else
+			{
+				m_viBulletList++;
+			}
+		}
+	}
 }
- 
+
+void bulletManager::objectCollisionCheck()
+{
+	vector<object*> m_vObj = m_objectManager->getVObject();
+	vector<object*>::iterator m_viObj = m_vObj.begin();
+	for (m_viObj; m_viObj != m_vObj.end(); m_viObj++)
+	{
+		for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
+		{
+			RECT temp;
+			if (IntersectRect(&temp, &(*m_viObj)->getRect(), &(*m_viBulletList)->getRect()))
+			{
+				(*m_viObj)->setHP((*m_viBulletList)->getDamage());
+				deleteBullet(m_viBulletList);
+			}
+			else
+			{
+				m_viBulletList++;
+			}
+		}
+	}
+}
+
+void bulletManager::CharCollisionCheck()
+{
+	for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
+	{
+		if ((*m_viBulletList)->getPlayerType() == CHAR_ENEMY) {
+			RECT temp;
+			if (IntersectRect(&temp, &m_character->getEnemy_hitRc(), &(*m_viBulletList)->getRect()))
+			{
+				m_character->setCurrentHP(m_character->getCurrentHP() - (*m_viBulletList)->getDamage());
+				deleteBullet(m_viBulletList);
+			}
+			else
+			{
+				m_viBulletList++;
+			}
+		}
+		else
+		{
+			m_viBulletList++;
+		}
+	}
+}
+
+
 void bulletManager::wallCollsionCheck()
 {
 	for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
@@ -146,4 +201,6 @@ void bulletManager::loadTile(char* mapName)
 		}
 	}
 }
+
+
 

@@ -97,13 +97,13 @@ void jimmy::update(POINT pt)
 	
 	hpFaceInfo();
 
-	move();			//이동명령에 관한 함수
 
 	m_player.enemy_hitRc = RectMakeCenter(m_player.x, m_player.y, 34, 56);		//적에게 피격당하는 렉트 생성	x,y기준으로 생성
 	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y + 22, 34, 21);	//벽에 부딪히는 렉트 생성
 
 
 
+	move();			//이동명령에 관한 함수
 
 	command();		//커맨드 (부모클래스에있음 더블연타시 대쉬를 출력함)
 
@@ -148,8 +148,8 @@ void jimmy::render(POINT pt)
 	MyPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 	OldPen = (HPEN)SelectObject(getMemDC(), MyPen);
 
-	/*Rectangle(getMemDC(), m_player.enemy_hitRc.left -pt.x, m_player.enemy_hitRc.top-pt.y,
-		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);*/
+	Rectangle(getMemDC(), m_player.enemy_hitRc.left, m_player.enemy_hitRc.top,
+		m_player.enemy_hitRc.right, m_player.enemy_hitRc.bottom);
 	Rectangle(getMemDC(), m_player.wall_hitRc.left-pt.x, m_player.wall_hitRc.top-pt.y,
 		m_player.wall_hitRc.right-pt.x, m_player.wall_hitRc.bottom-pt.y);
 

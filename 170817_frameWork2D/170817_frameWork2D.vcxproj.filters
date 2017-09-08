@@ -150,6 +150,9 @@
     <ClCompile Include="rider.cpp">
       <Filter>MainGame\character</Filter>
     </ClCompile>
+    <ClCompile Include="machineGun.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameNode.h">
@@ -318,6 +321,9 @@
     </ClInclude>
     <ClInclude Include="characterClassic.h">
       <Filter>MainGame\character</Filter>
+    </ClInclude>
+    <ClInclude Include="machineGun.h">
+      <Filter>MainGame\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

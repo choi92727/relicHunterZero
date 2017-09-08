@@ -18,7 +18,7 @@ void defaultBullet::fire(int x, int y, float angle, float speed, CHARACTER playe
 	m_width = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getWidth();
 	m_height = IMAGEMANAGER->findImage("±âº» ÃÑ¾Ë")->getHeight();
 	m_damage = 15;
-	m_range = 600;
+	m_range = 4000;
 	m_speed = speed;
 	m_angle = angle;
 	m_playerType = playerType;
@@ -50,7 +50,7 @@ void defaultBullet::render()
 	Rectangle(getMemDC(), m_x, m_y, m_x + m_width, m_y + m_height / 2);
 
 
-	DrawPng(m_bulletImage, m_graphics, m_x, m_y - m_width / 2, m_height, m_width, m_angle);
+	DrawPng(m_bulletImage, m_graphics, m_x, m_y, m_height, m_width, m_angle);
 
 	char text[64];
 
@@ -65,9 +65,8 @@ void defaultBullet::render(POINT pt)
 {
 	Rectangle(getMemDC(), m_x, m_y, m_x + m_width, m_y + m_height / 2);
 
-
 	DrawPng(m_bulletImage, m_graphics, m_x - pt.x, m_y - m_width / 2 - pt.y, m_height, m_width, m_angle);
-
+	
 	char text[64];
 
 	wsprintf(text, "%d,%d", m_x, m_y);

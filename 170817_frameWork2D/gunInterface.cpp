@@ -36,10 +36,6 @@ void gunInterface::fire()
 {
 }
 
-void gunInterface::setAngle()
-{
-}
-
 void gunInterface::setPosition(int x, int y)
 {
 }

@@ -46,56 +46,86 @@ void defaultGun::release()
 
 void defaultGun::update()
 {
-	setAngle();
-	m_currentDraw.update(m_currentBullet);
-	m_totalDraw.update(m_totalBullet);
+	if (m_playerType == CHAR_PLAYER) {
+		m_currentDraw.update(m_currentBullet);
+		m_totalDraw.update(m_totalBullet);
+	}
+	if (CHAR_ENEMY)
+	{
+		if (!m_enemy_fire)
+		{
+			m_enemyfireDelay -= 1.0f;
+			if (m_enemyfireDelay < 0)
+			{
+				m_enemy_fire = true;
+				m_enemyfireDelay = 1.5f * 60.0f;
+			}
+		}
+	}
 
 }
 
 void defaultGun::render()
 {
-	if (m_x <= ptMouse.x) {
-		DrawPng(m_gunImage[0], m_graphics, m_x, m_y,
-			22, 60, m_angle);
-	}
-	else
-	{
-		DrawPng(m_gunImage[1], m_graphics, m_x, m_y,
-			22, 60, m_angle);
-	}
+	
+		if (m_x <= ptMouse.x) {
+			DrawPng(m_gunImage[0], m_graphics, m_x, m_y,
+				22, 60, m_angle);
+		}
+		else
+		{
+			DrawPng(m_gunImage[1], m_graphics, m_x, m_y,
+				22, 60, m_angle);
+		}
 
-	char text[64];
-	sprintf(text, "%.2f", getFireDelay());
+		char text[64];
+		sprintf(text, "%.2f", getFireDelay());
 
-	TextOut(getMemDC(), 10, 100, text, strlen(text));
+		TextOut(getMemDC(), 10, 100, text, strlen(text));
 	
 
 }
 
 void defaultGun::render(POINT pt)
 {
-	if (WINSIZEX/2 <= ptMouse.x) {
-		DrawPng(m_gunImage[0], m_graphics, m_x - pt.x, m_y - pt.y,
-			22, 60, m_angle);
+	
+	if (CHAR_PLAYER) {
+		if (WINSIZEX / 2 <= ptMouse.x) {
+			DrawPng(m_gunImage[0], m_graphics, m_x - pt.x, m_y - pt.y,
+				22, 60, m_angle);
+		}
+		else
+		{
+			DrawPng(m_gunImage[1], m_graphics, m_x - pt.x, m_y - pt.y,
+				22, 60, m_angle);
+		}
 	}
-	else
-	{
-		DrawPng(m_gunImage[1], m_graphics, m_x - pt.x, m_y - pt.y,
-			22, 60, m_angle);
+
+	if (CHAR_ENEMY) {
+		if (m_angle > 0) {
+			DrawPng(m_gunImage[0], m_graphics, m_x - pt.x, m_y - pt.y,
+				22, 60, m_angle);
+		}
+		else
+		{
+			DrawPng(m_gunImage[1], m_graphics, m_x - pt.x, m_y - pt.y,
+				22, 60, m_angle);
+		}
 	}
 
-	char text[64];
-	sprintf(text, "%.2f", getFireDelay());
+		if (m_playerType == CHAR_PLAYER) {
 
-	TextOut(getMemDC(), 10, 100, text, strlen(text));
+		char text[64];
+		sprintf(text, "%.2f", getFireDelay());
 
-
-	IMAGEMANAGER->render("±ÇÃÑ½Ç·ç¿§", getMemDC(), 10, WINSIZEY - 50);
-
-	m_currentDraw.render(150, WINSIZEY - 70,15);
-	m_totalDraw.render(230, WINSIZEY - 100, 15);
+		TextOut(getMemDC(), 10, 100, text, strlen(text));
 
 
+		IMAGEMANAGER->render("±ÇÃÑ½Ç·ç¿§", getMemDC(), 10, WINSIZEY - 50);
+
+		m_currentDraw.render(150, WINSIZEY - 70, 15);
+		m_totalDraw.render(230, WINSIZEY - 100, 15);
+	}
 
 }
 
@@ -115,10 +145,7 @@ void defaultGun::fire()
 		
 }
 
-void defaultGun::setAngle()
-{
-	m_angle = getAngle(WINSIZEX/2,WINSIZEY/2,ptMouse.x, ptMouse.y);
-}
+
 
 void defaultGun::setPosition(int x, int y)
 {

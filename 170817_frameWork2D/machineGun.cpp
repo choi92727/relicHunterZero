@@ -45,7 +45,6 @@ void machineGun::release()
 
 void machineGun::update()
 {
-	setAngle();
 	m_currentDraw.update(m_currentBullet);
 	m_totalDraw.update(m_totalBullet);
 
@@ -92,10 +91,6 @@ void machineGun::fire()
 	}
 }
 
-void machineGun::setAngle()
-{
-	m_angle = getAngle(WINSIZEX / 2, WINSIZEY / 2, ptMouse.x, ptMouse.y);
-}
 
 void machineGun::setPosition(int x, int y)
 {

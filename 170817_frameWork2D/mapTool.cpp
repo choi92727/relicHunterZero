@@ -59,7 +59,7 @@ HRESULT mapTool::init()
 
 	loookSample = false;
 
-	//pushEnemyMemory();
+	pushEnemyMemory();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
