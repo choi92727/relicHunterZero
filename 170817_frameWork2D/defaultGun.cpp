@@ -25,6 +25,13 @@ HRESULT defaultGun::init(CHARACTER playerType)
 	m_gunImage[1] = new Image(L"images/spr_pistol_jimmy_1.png");
 	m_fire = true;
 	m_playerType = playerType;
+	m_gunType = GUN_DEFAULT;
+	m_currentBullet = 30;
+	m_maxBullet = 30;
+	m_totalBullet = 270;
+	m_currentDraw.init("ÃÑ¾Ë¼ýÀÚ", 2);
+	m_totalDraw.init("º°¼ýÀÚ", 3);
+
 
 
 	return S_OK;
@@ -40,6 +47,9 @@ void defaultGun::release()
 void defaultGun::update()
 {
 	setAngle();
+	m_currentDraw.update(m_currentBullet);
+	m_totalDraw.update(m_totalBullet);
+
 }
 
 void defaultGun::render()
@@ -79,19 +89,30 @@ void defaultGun::render(POINT pt)
 
 	TextOut(getMemDC(), 10, 100, text, strlen(text));
 
+
+	IMAGEMANAGER->render("±ÇÃÑ½Ç·ç¿§", getMemDC(), 10, WINSIZEY - 50);
+
+	m_currentDraw.render(150, WINSIZEY - 70,15);
+	m_totalDraw.render(230, WINSIZEY - 100, 15);
+
+
+
 }
 
 void defaultGun::fire()
 {
-	m_bullet = new defaultBullet;
-	m_bullet->init();
-	m_bullet->fire(
-		m_x,
-		m_y + IMAGEMANAGER->findImage("±ÇÃÑ")->getHeight() / 2
-		, m_angle, m_speed, m_playerType);
+	if (m_currentBullet > 0) {
+		m_bullet = new defaultBullet;
+		m_bullet->init();
+		m_bullet->fire(
+			m_x,
+			m_y + IMAGEMANAGER->findImage("±ÇÃÑ")->getHeight() / 2
+			, m_angle, m_speed, m_playerType);
 
-	m_bulletManager->addBullet(*m_bullet);
-
+		m_bulletManager->addBullet(*m_bullet);
+		m_currentBullet--;
+	}
+		
 }
 
 void defaultGun::setAngle()

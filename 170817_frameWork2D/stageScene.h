@@ -7,6 +7,7 @@
 #include "defaultGun.h"
 #include "characterManager.h"
 #include "enemyManager.h"
+#include "objectManager.h"
 
 class stageScene :
 	public gameNode
@@ -14,6 +15,7 @@ class stageScene :
 private:
 	tagTile tile[TILEY][TILEX];
 	tagCreateEnemy m_createEnemy[ENEMYMAX];
+	tagCreateObject m_createObject[OBJECTMAX];
 	bool tileOn[TILEY][TILEX];
 
 	int speed;
@@ -26,8 +28,13 @@ private:
 	gunInterface *m_defaultGun;
 	characterManager *m_cm;
 	enemyManager* m_enemyManager;
+	objectManager* m_objectManager;
 
 	numberDrawManager *testNumber;
+	
+	
+	int testX ;
+	int tileX, tileY;
 public:
 	stageScene();
 	~stageScene();
@@ -41,5 +48,12 @@ public:
 	void loadEnermy(char* mapName);
 
 	void moveCamera(POINT characterPt);
+
+	void collision_tile_character();
+	void collision_tile_Eneermy();
+	void collision_Object_character();
+	
+	
+	
 };
 

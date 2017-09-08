@@ -9,6 +9,9 @@
 #define SAMPLETILEX 47
 #define SAMPLETILEY 3
 
+//오브젝트
+#define OBJECTMAX 100
+
 //에너미
 #define ENEMYMAX 100
 
@@ -29,14 +32,10 @@ enum OBJECT
 {
 	OBJ_NONE,
 	OBJ_BOX1,
-	OBJ_BOX2_1,
-	OBJ_BOX2_2,
-	OBJ_ROOT1_1,
-	OBJ_ROOT1_2,
-	OBJ_ROOT1_3,
-	OBJ_ROOT2_1,
-	OBJ_ROOT2_2,
-	OBJ_ROOT2_3
+	OBJ_BOX2,
+	OBJ_ROOT1,
+	OBJ_ROOT2,
+	OBJ_TELEPORT
 };
 
 //에너미
@@ -52,13 +51,19 @@ enum ENEMY
 struct tagTile
 {
 	TERRAIN terrain;
-	OBJECT obj = OBJ_NONE;
 	RECT rc;
 	int terrainFrameX;
 	int terrainFrameY;
 	int objFrameX;
 	int objFrameY;
 	DWORD attribute;
+};
+
+struct tagCreateObject
+{
+	OBJECT obj = OBJ_NONE;
+	RECT rc;
+	POINT pt;
 };
 
 struct tagCreateEnemy

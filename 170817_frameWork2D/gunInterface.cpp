@@ -43,3 +43,21 @@ void gunInterface::setAngle()
 void gunInterface::setPosition(int x, int y)
 {
 }
+
+void gunInterface::reload()
+{
+	if (m_maxBullet > m_currentBullet)
+	{
+		if (m_totalBullet <= m_maxBullet)
+		{
+			m_currentBullet += m_totalBullet;
+			m_totalBullet = 0;
+		}
+		else
+		{
+			m_totalBullet -= (m_maxBullet - m_currentBullet);
+			m_currentBullet += (m_maxBullet - m_currentBullet);
+			
+		}
+	}
+}

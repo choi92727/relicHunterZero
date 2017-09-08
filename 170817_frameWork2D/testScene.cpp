@@ -25,7 +25,7 @@ void testScene::release()
 
 void testScene::update()
 {
-	m_player->update();
+//	m_player->update();
 }
 
 void testScene::render()

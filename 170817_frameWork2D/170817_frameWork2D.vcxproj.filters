@@ -1,104 +1,408 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="addImage.cpp" />
-    <ClCompile Include="addSounds.cpp" />
-    <ClCompile Include="animation.cpp" />
-    <ClCompile Include="animationManager.cpp" />
-    <ClCompile Include="bulletInterface.cpp" />
-    <ClCompile Include="bulletManager.cpp" />
-    <ClCompile Include="characterInterface.cpp" />
-    <ClCompile Include="characterManager.cpp" />
-    <ClCompile Include="creditScene.cpp" />
-    <ClCompile Include="cursorDraw.cpp" />
-    <ClCompile Include="defaultBullet.cpp" />
-    <ClCompile Include="defaultGun.cpp" />
-    <ClCompile Include="effect.cpp" />
-    <ClCompile Include="effectManager.cpp" />
-    <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="enemyManager.cpp" />
-    <ClCompile Include="gameNode.cpp" />
-    <ClCompile Include="gunInterface.cpp" />
-    <ClCompile Include="image.cpp" />
-    <ClCompile Include="imageManager.cpp" />
-    <ClCompile Include="jimmy.cpp" />
-    <ClCompile Include="keyManager.cpp" />
-    <ClCompile Include="loading.cpp" />
-    <ClCompile Include="loadingGame.cpp" />
-    <ClCompile Include="loadingScene.cpp" />
-    <ClCompile Include="mainGame.cpp" />
-    <ClCompile Include="mainMenu.cpp" />
-    <ClCompile Include="mapTool.cpp" />
-    <ClCompile Include="numberDrawManager.cpp" />
-    <ClCompile Include="progressBar.cpp" />
-    <ClCompile Include="rider.cpp" />
-    <ClCompile Include="sceneManager.cpp" />
-    <ClCompile Include="selectScene.cpp" />
-    <ClCompile Include="soundManager.cpp" />
-    <ClCompile Include="stageScene.cpp" />
-    <ClCompile Include="teleport.cpp" />
-    <ClCompile Include="testScene.cpp" />
-    <ClCompile Include="timeManager.cpp" />
-    <ClCompile Include="timer.cpp" />
-    <ClCompile Include="txtData.cpp" />
-    <ClCompile Include="util.cpp" />
-    <ClCompile Include="winMain.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="alphaTest.cpp" />
+    <ClCompile Include="gameNode.cpp">
+      <Filter>frameWork2D</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>frameWork2D\image</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>frameWork2D\image</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>frameWork2D\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="animationManager.cpp">
+      <Filter>frameWork2D\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>frameWork2D\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>frameWork2D\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="keyManager.cpp">
+      <Filter>frameWork2D\keyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="loading.cpp">
+      <Filter>frameWork2D\loadingGame</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingScene.cpp">
+      <Filter>frameWork2D\loadingGame</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>frameWork2D\sceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="progressBar.cpp">
+      <Filter>frameWork2D\progressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>frameWork2D\soundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="txtData.cpp">
+      <Filter>frameWork2D\txtData</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>frameWork2D\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>frameWork2D\timer</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>frameWork2D\util</Filter>
+    </ClCompile>
+    <ClCompile Include="addImage.cpp">
+      <Filter>frameWork2D\image</Filter>
+    </ClCompile>
+    <ClCompile Include="addSounds.cpp">
+      <Filter>frameWork2D\soundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="alphaTest.cpp">
+      <Filter>MainGame\scene\test</Filter>
+    </ClCompile>
+    <ClCompile Include="testScene.cpp">
+      <Filter>MainGame\scene\test</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스파일</Filter>
+    </ClCompile>
+    <ClCompile Include="winMain.cpp">
+      <Filter>소스파일</Filter>
+    </ClCompile>
+    <ClCompile Include="creditScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingGame.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mainMenu.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="selectScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="stageScene.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultGun.cpp">
+      <Filter>MainGame\총</Filter>
+    </ClCompile>
+    <ClCompile Include="gunInterface.cpp">
+      <Filter>MainGame\총</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTool.cpp">
+      <Filter>MainGame\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>MainGame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
+      <Filter>MainGame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="numberDrawManager.cpp">
+      <Filter>MainGame\그리는 클래스</Filter>
+    </ClCompile>
+    <ClCompile Include="cursorDraw.cpp">
+      <Filter>MainGame\그리는 클래스</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp" />
+    <ClCompile Include="objectManager.cpp" />
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="plasmaGun.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="plasmarBullet.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="defaultBullet.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="shotGun.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="shotBullet.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="machineBullet.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletInterface.cpp">
+      <Filter>MainGame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="characterInterface.cpp">
+      <Filter>MainGame\character</Filter>
+    </ClCompile>
+    <ClCompile Include="characterManager.cpp">
+      <Filter>MainGame\character</Filter>
+    </ClCompile>
+    <ClCompile Include="characterProgressBar.cpp">
+      <Filter>MainGame\character</Filter>
+    </ClCompile>
+    <ClCompile Include="jimmy.cpp">
+      <Filter>MainGame\character</Filter>
+    </ClCompile>
+    <ClCompile Include="rider.cpp">
+      <Filter>MainGame\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="addImage.h" />
-    <ClInclude Include="addSounds.h" />
-    <ClInclude Include="animation.h" />
-    <ClInclude Include="animationManager.h" />
-    <ClInclude Include="bulletInterface.h" />
-    <ClInclude Include="bulletManager.h" />
-    <ClInclude Include="characterClassic.h" />
-    <ClInclude Include="characterInterface.h" />
-    <ClInclude Include="characterManager.h" />
-    <ClInclude Include="commonMacroFunction.h" />
-    <ClInclude Include="creditScene.h" />
-    <ClInclude Include="cursorDraw.h" />
-    <ClInclude Include="defaultBullet.h" />
-    <ClInclude Include="defaultGun.h" />
-    <ClInclude Include="effect.h" />
-    <ClInclude Include="effectManager.h" />
-    <ClInclude Include="enemy.h" />
-    <ClInclude Include="enemyManager.h" />
-    <ClInclude Include="gameNode.h" />
-    <ClInclude Include="gunInterface.h" />
-    <ClInclude Include="image.h" />
-    <ClInclude Include="imageManager.h" />
-    <ClInclude Include="jimmy.h" />
-    <ClInclude Include="keyManager.h" />
-    <ClInclude Include="loading.h" />
-    <ClInclude Include="loadingGame.h" />
-    <ClInclude Include="loadingScene.h" />
-    <ClInclude Include="mainGame.h" />
-    <ClInclude Include="mainMenu.h" />
-    <ClInclude Include="mapTool.h" />
-    <ClInclude Include="numberDrawManager.h" />
-    <ClInclude Include="progressBar.h" />
-    <ClInclude Include="randomFunction.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="rider.h" />
-    <ClInclude Include="sceneManager.h" />
-    <ClInclude Include="selectScene.h" />
-    <ClInclude Include="soundManager.h" />
-    <ClInclude Include="stageScene.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="tags.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="teleport.h" />
-    <ClInclude Include="testScene.h" />
-    <ClInclude Include="tileNode.h" />
-    <ClInclude Include="timeManager.h" />
-    <ClInclude Include="timer.h" />
-    <ClInclude Include="txtData.h" />
-    <ClInclude Include="util.h" />
-    <ClInclude Include="alphaTest.h" />
+    <ClInclude Include="gameNode.h">
+      <Filter>frameWork2D</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>frameWork2D\image</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>frameWork2D\image</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>frameWork2D\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="animationManager.h">
+      <Filter>frameWork2D\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>frameWork2D\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>frameWork2D\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="keyManager.h">
+      <Filter>frameWork2D\keyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="loading.h">
+      <Filter>frameWork2D\loadingGame</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingScene.h">
+      <Filter>frameWork2D\loadingGame</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>frameWork2D\sceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="progressBar.h">
+      <Filter>frameWork2D\progressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>frameWork2D\soundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="txtData.h">
+      <Filter>frameWork2D\txtData</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>frameWork2D\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>frameWork2D\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>frameWork2D\util</Filter>
+    </ClInclude>
+    <ClInclude Include="addImage.h">
+      <Filter>frameWork2D\image</Filter>
+    </ClInclude>
+    <ClInclude Include="addSounds.h">
+      <Filter>frameWork2D\soundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="alphaTest.h">
+      <Filter>MainGame\scene\test</Filter>
+    </ClInclude>
+    <ClInclude Include="testScene.h">
+      <Filter>MainGame\scene\test</Filter>
+    </ClInclude>
+    <ClInclude Include="commonMacroFunction.h">
+      <Filter>헤더파일</Filter>
+    </ClInclude>
+    <ClInclude Include="randomFunction.h">
+      <Filter>헤더파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더파일</Filter>
+    </ClInclude>
+    <ClInclude Include="tags.h">
+      <Filter>헤더파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더파일</Filter>
+    </ClInclude>
+    <ClInclude Include="creditScene.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingGame.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="mainMenu.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="selectScene.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="stageScene.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="tileNode.h">
+      <Filter>헤더파일\렐릭헌터</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultGun.h">
+      <Filter>MainGame\총</Filter>
+    </ClInclude>
+    <ClInclude Include="gunInterface.h">
+      <Filter>MainGame\총</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>MainGame\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>MainGame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>MainGame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="numberDrawManager.h">
+      <Filter>MainGame\그리는 클래스</Filter>
+    </ClInclude>
+    <ClInclude Include="cursorDraw.h">
+      <Filter>MainGame\그리는 클래스</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h" />
+    <ClInclude Include="objectManager.h" />
+    <ClInclude Include="bulletManager.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="plasmarBullet.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="defaultBullet.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="plasmaGun.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="shotGun.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="shotBullet.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="machineBullet.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletInterface.h">
+      <Filter>MainGame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="rider.h">
+      <Filter>MainGame\character</Filter>
+    </ClInclude>
+    <ClInclude Include="characterInterface.h">
+      <Filter>MainGame\character</Filter>
+    </ClInclude>
+    <ClInclude Include="characterManager.h">
+      <Filter>MainGame\character</Filter>
+    </ClInclude>
+    <ClInclude Include="characterProgressBar.h">
+      <Filter>MainGame\character</Filter>
+    </ClInclude>
+    <ClInclude Include="jimmy.h">
+      <Filter>MainGame\character</Filter>
+    </ClInclude>
+    <ClInclude Include="characterClassic.h">
+      <Filter>MainGame\character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
+    <Filter Include="frameWork2D">
+      <UniqueIdentifier>{6561ad95-5d2a-46e7-9bf9-89c07c0d5f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\animation">
+      <UniqueIdentifier>{f84a37ab-355a-490b-aead-0a1f96cbcc8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\effect">
+      <UniqueIdentifier>{a8657b18-5dcc-4bc9-ad8c-605542fd6e28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\image">
+      <UniqueIdentifier>{ee5d7d28-dcfd-4569-8f77-b3ffeca362c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\keyManager">
+      <UniqueIdentifier>{48de85fc-3faa-4215-8978-bf5e3f268594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\loadingGame">
+      <UniqueIdentifier>{8ffb1699-dd75-4bf5-8a18-95fe121e80ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\pixelCollision">
+      <UniqueIdentifier>{677aeb8a-26b0-4ba8-b833-4e4251e4991d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\progressBar">
+      <UniqueIdentifier>{a5bc445f-d63f-4830-ad3c-598518b6cd87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\sceneManager">
+      <UniqueIdentifier>{471bddfa-08c4-482f-bd4b-6530f5fa8daa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\soundManager">
+      <UniqueIdentifier>{b7dbd14c-60bc-4245-92a4-3ef06e85f51a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\timer">
+      <UniqueIdentifier>{d321c3f7-53f7-4588-b88b-f387f6fb5298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\txtData">
+      <UniqueIdentifier>{aa5c0a04-63b9-4d66-a27c-a424b94a3dab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="frameWork2D\util">
+      <UniqueIdentifier>{17b11fb9-3b06-4bb4-b2c9-643039575ac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{7859ad6d-599a-4026-b50a-82dc917e42f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\scene">
+      <UniqueIdentifier>{ab36eeeb-aade-46ec-8d90-fc4a1ec0216d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\scene\test">
+      <UniqueIdentifier>{e1d4f0ae-4a1b-49ee-b2c4-d71b2d49c171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\bullet">
+      <UniqueIdentifier>{7c3f4108-9b82-42d7-9210-f8cf67979314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\character">
+      <UniqueIdentifier>{5214a2dc-aa7a-48e0-a5b7-63ef0854c79d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스파일">
+      <UniqueIdentifier>{ec7aa5c0-72cc-41cb-ad5f-25bc0897e5bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더파일">
+      <UniqueIdentifier>{5db41bfc-4932-428f-aa13-967d8f8f762e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스파일">
+      <UniqueIdentifier>{0478e92e-aa87-4000-8eec-f509e5597de6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더파일\렐릭헌터">
+      <UniqueIdentifier>{7eedaa56-64c5-4945-877c-76fc801a1ab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\총">
+      <UniqueIdentifier>{e74c5a39-e9f7-40ba-b534-64e810a09404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\enemy">
+      <UniqueIdentifier>{e831c2bd-fbd8-4d53-b8ac-778f4632f72c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\그리는 클래스">
+      <UniqueIdentifier>{320c304b-eabb-49ac-a9dc-c96e0430adcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\object">
+      <UniqueIdentifier>{e1cacee4-41a8-404d-b5cd-108f8a609d8f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>frameWork2D</Filter>
+    </Text>
   </ItemGroup>
 </Project>

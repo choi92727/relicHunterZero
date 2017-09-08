@@ -13,8 +13,12 @@ mapTool::~mapTool()
 
 HRESULT mapTool::init()
 {
+	m_objectManager = new objectManager;
+	m_objectManager->init();
+
+	m_enemyManager = new enemyManager;
+	m_enemyManager->init();
 	
-	SOUNDMANAGER->play("할아버지의11월", 0.5f);
 	for (int y = 0; y < TILEY; y++)
 	{
 		for (int x = 0; x < TILEX; x++)
@@ -54,12 +58,20 @@ HRESULT mapTool::init()
 	sampleObject = sampleEnemy = false;
 
 	loookSample = false;
+
+	pushEnemyMemory();
+
+	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	{
+		m_enemyManager->update();
+	}
 	return S_OK;
 }
 
 void mapTool::release()
 {
-	SOUNDMANAGER->stop("할아버지의11월");
+	SAFE_DELETE(m_objectManager);
+	SAFE_DELETE(m_enemyManager);
 }
 
 void mapTool::update()
@@ -80,6 +92,8 @@ void mapTool::update()
 	{
 		moveSample_left();
 	}
+
+	
 }
 
 void mapTool::render()
@@ -93,7 +107,8 @@ void mapTool::render()
 			if (tileOn[y][x])
 			{
 				IMAGEMANAGER->frameRender("맵툴", getMemDC(), tile[y][x].rc.left, tile[y][x].rc.top, tile[y][x].terrainFrameX, tile[y][x].terrainFrameY);
-				if (tile[y][x].terrain == TR_NONE) sprintf(str, "%d, %d", x, y);
+				//if (tile[y][x].terrain == TR_NONE) sprintf(str, "%d, %d", x, y);
+				sprintf(str, "%d, %d", x, y);
 				if (loookSample)
 				{
 					Rectangle(getMemDC(), tile[y][x].rc.left, tile[y][x].rc.top, tile[y][x].rc.right, tile[y][x].rc.bottom);
@@ -104,15 +119,13 @@ void mapTool::render()
 	}
 
 	//오브젝트
-	for (int y = 0; y < TILEY; y++)
+	for (int i = 0; i < OBJECTMAX; i++)
 	{
-		for (int x = 0; x < TILEX; x++)
-		{
-			if (tile[y][x].obj == OBJ_BOX1) IMAGEMANAGER->frameRender("박스1", getMemDC(), tile[y][x].rc.left - 42, tile[y][x].rc.top - 40, 0, 0);
-			else if (tile[y][x].obj == OBJ_BOX2_1) IMAGEMANAGER->frameRender("박스2", getMemDC(), tile[y][x].rc.left - 10, tile[y][x].rc.top - 40, 0, 0);
-			else if (tile[y][x].obj == OBJ_ROOT1_1) IMAGEMANAGER->frameRender("루트1", getMemDC(), tile[y][x].rc.left - 32, tile[y][x].rc.top - 38, 0, 0);
-			else if (tile[y][x].obj == OBJ_ROOT2_1) IMAGEMANAGER->frameRender("루트2", getMemDC(), tile[y][x].rc.left - 32, tile[y][x].rc.top - 38, 0, 0);
-		}
+		if (m_createObject[i].obj == OBJ_BOX1) IMAGEMANAGER->frameRender("박스1", getMemDC(), m_createObject[i].rc.left - 42, m_createObject[i].rc.top - 17, 0, 0);
+		else if (m_createObject[i].obj == OBJ_BOX2) IMAGEMANAGER->frameRender("박스2", getMemDC(), m_createObject[i].rc.left - 12, m_createObject[i].rc.top - 17, 0, 0);
+		else if (m_createObject[i].obj == OBJ_ROOT1) IMAGEMANAGER->frameRender("루트1", getMemDC(), m_createObject[i].rc.left - 47, m_createObject[i].rc.top - 32, 0, 0);
+		else if (m_createObject[i].obj == OBJ_ROOT2) IMAGEMANAGER->frameRender("루트2", getMemDC(), m_createObject[i].rc.left - 40, m_createObject[i].rc.top - 30, 0, 0);
+		else if (m_createObject[i].obj == OBJ_TELEPORT) IMAGEMANAGER->render("텔레포트", getMemDC(), m_createObject[i].rc.left - 30, m_createObject[i].rc.top - 72);
 	}
 
 	//에너미
@@ -142,9 +155,10 @@ void mapTool::render()
 	else if (sampleObject)
 	{
 		if (currentTile.x == 0 && currentTile.y == 0) IMAGEMANAGER->frameRender("박스1", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("박스1")->getFrameWidth() / 2, ptMouse.y - IMAGEMANAGER->findImage("박스1")->getFrameHeight() / 2, 0, 0);
-		else if (currentTile.x == 1 && currentTile.y == 0 || currentTile.x == 2 && currentTile.y == 0) IMAGEMANAGER->frameRender("박스2", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("박스2")->getFrameWidth() / 4, ptMouse.y - IMAGEMANAGER->findImage("박스2")->getFrameHeight() / 2, 0, 0);
-		else if (currentTile.x >= 3 && currentTile.x <= 5 && currentTile.y == 0) IMAGEMANAGER->frameRender("루트1", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("루트1")->getFrameWidth() / 4, ptMouse.y - IMAGEMANAGER->findImage("루트1")->getFrameHeight() / 2, 0, 0);
-		else if (currentTile.x >= 6 && currentTile.x <= 8 && currentTile.y == 0) IMAGEMANAGER->frameRender("루트2", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("루트2")->getFrameWidth() / 4, ptMouse.y - IMAGEMANAGER->findImage("루트1")->getFrameHeight() / 2, 0, 0);
+		else if (currentTile.x == 1 && currentTile.y == 0 || currentTile.x == 2 && currentTile.y == 0) IMAGEMANAGER->frameRender("박스2", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("박스2")->getFrameWidth() / 2, ptMouse.y - IMAGEMANAGER->findImage("박스2")->getFrameHeight() / 2, 0, 0);
+		else if (currentTile.x >= 3 && currentTile.x <= 5 && currentTile.y == 0) IMAGEMANAGER->frameRender("루트1", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("루트1")->getFrameWidth() / 2, ptMouse.y - IMAGEMANAGER->findImage("루트1")->getFrameHeight() / 2, 0, 0);
+		else if (currentTile.x >= 6 && currentTile.x <= 8 && currentTile.y == 0) IMAGEMANAGER->frameRender("루트2", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("루트2")->getFrameWidth() / 2, ptMouse.y - IMAGEMANAGER->findImage("루트1")->getFrameHeight() / 2, 0, 0);
+		else if (currentTile.x == 9 && currentTile.y == 0 || currentTile.x == 10 && currentTile.y == 0) IMAGEMANAGER->render("텔레포트", getMemDC(), ptMouse.x - IMAGEMANAGER->findImage("텔레포트")->getWidth() / 2, ptMouse.y - 84);
 	}
 	else if (sampleEnemy)
 	{
@@ -154,6 +168,8 @@ void mapTool::render()
 	}
 
 	IMAGEMANAGER->render("맵툴 버튼", getMemDC(), buttonUI.left, buttonUI.top);
+	//m_objectManager->render();
+	//m_enemyManager->render();
 }
 
 //타일 움직이기
@@ -177,6 +193,13 @@ void mapTool::tileMove()
 			m_createEnemy[i].rc.left -= 10;
 			m_createEnemy[i].rc.right -= 10;
 		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.left -= 10;
+			m_createObject[i].rc.right -= 10;
+		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 	{
@@ -195,6 +218,13 @@ void mapTool::tileMove()
 			if (m_createEnemy[i].enm == ENM_NONE) continue;
 			m_createEnemy[i].rc.top -= 10;
 			m_createEnemy[i].rc.bottom -= 10;
+		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.top -= 10;
+			m_createObject[i].rc.bottom -= 10;
 		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
@@ -215,6 +245,13 @@ void mapTool::tileMove()
 			m_createEnemy[i].rc.left += 10;
 			m_createEnemy[i].rc.right += 10;
 		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.left += 10;
+			m_createObject[i].rc.right += 10;
+		}
 	}
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 	{
@@ -233,6 +270,13 @@ void mapTool::tileMove()
 			if (m_createEnemy[i].enm == ENM_NONE) continue;
 			m_createEnemy[i].rc.top += 10;
 			m_createEnemy[i].rc.bottom += 10;
+		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.top += 10;
+			m_createObject[i].rc.bottom += 10;
 		}
 	}
 
@@ -262,6 +306,13 @@ void mapTool::tileMove()
 			m_createEnemy[i].rc.left -= 10;
 			m_createEnemy[i].rc.right -= 10;
 		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.left -= 10;
+			m_createObject[i].rc.right -= 10;
+		}
 	}
 	if (tile[0][0].rc.top > 0)
 	{
@@ -287,6 +338,13 @@ void mapTool::tileMove()
 			if (m_createEnemy[i].enm == ENM_NONE) continue;
 			m_createEnemy[i].rc.top -= 10;
 			m_createEnemy[i].rc.bottom -= 10;
+		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.top -= 10;
+			m_createObject[i].rc.bottom -= 10;
 		}
 	}
 	if (tile[TILEY - 1][TILEX - 1].rc.right < WINSIZEX)
@@ -314,6 +372,13 @@ void mapTool::tileMove()
 			m_createEnemy[i].rc.left += 10;
 			m_createEnemy[i].rc.right += 10;
 		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.left += 10;
+			m_createObject[i].rc.right += 10;
+		}
 	}
 	if (tile[TILEY - 1][TILEX - 1].rc.bottom < WINSIZEY - 192)
 	{
@@ -339,6 +404,13 @@ void mapTool::tileMove()
 			if (m_createEnemy[i].enm == ENM_NONE) continue;
 			m_createEnemy[i].rc.top += 10;
 			m_createEnemy[i].rc.bottom += 10;
+		}
+
+		for (int i = 0; i < OBJECTMAX; i++)
+		{
+			if (m_createObject[i].obj == OBJ_NONE) continue;
+			m_createObject[i].rc.top += 10;
+			m_createObject[i].rc.bottom += 10;
 		}
 	}
 }
@@ -491,6 +563,24 @@ void mapTool::tileClick()
 					}
 				}
 			}
+			//오브젝트 지우기
+			if (sampleObject)
+			{
+				for (int i = 0; i < OBJECTMAX; i++)
+				{
+					if (PtInRect(&m_createObject[i].rc, ptMouse) && m_createObject[i].rc.left >= 0 && m_createObject[i].rc.top >= 0 && m_createObject[i].rc.right <= WINSIZEX && m_createObject[i].rc.bottom <= WINSIZEY - 192)
+					{
+						ZeroMemory(&m_createObject[i], sizeof(m_createObject[i]));
+
+						for (int j = i; j < ENEMYMAX; j++)
+						{
+							m_createObject[j] = m_createObject[j + 1];
+							if (j == OBJECTMAX - 1) ZeroMemory(&m_createObject[j], sizeof(m_createObject[j]));
+						}
+						break;
+					}
+				}
+			}
 			//에너미 지우기
 			if (sampleEnemy)
 			{
@@ -556,37 +646,57 @@ void mapTool::createObject()
 {
 	if (sampleObject)
 	{
-		for (int y = 0; y < TILEY; y++)
+		for (int i = 0; i < OBJECTMAX; i++)
 		{
-			for (int x = 0; x < TILEX; x++)
+			if (currentTile.x == 0 && currentTile.y == 0)
 			{
-				if (PtInRect(&tile[y][x].rc, ptMouse))
-				{
-					if (currentTile.x == 0 && currentTile.y == 0)
-					{
-						tile[y][x].obj = OBJ_BOX1;
-					}
-					else if (currentTile.x == 1 && currentTile.y == 0 || currentTile.x == 2 && currentTile.y == 0)
-					{
-						if (x == TILEX - 1) return;
-						tile[y][x].obj = OBJ_BOX2_1;
-						tile[y][x + 1].obj = OBJ_BOX2_2;
-					}
-					else if (currentTile.x >= 3 && currentTile.x <= 5 && currentTile.y == 0)
-					{
-						if (x >= TILEX - 2) return;
-						tile[y][x].obj = OBJ_ROOT1_1;
-						tile[y][x + 1].obj = OBJ_ROOT1_2;
-						tile[y][x + 2].obj = OBJ_ROOT1_3;
-					}
-					else if (currentTile.x >= 6 && currentTile.x <= 8 && currentTile.y == 0)
-					{
-						if (x >= TILEX - 2) return;
-						tile[y][x].obj = OBJ_ROOT2_1;
-						tile[y][x + 1].obj = OBJ_ROOT2_2;
-						tile[y][x + 2].obj = OBJ_ROOT2_3;
-					}
-				}
+				if (m_createObject[i].obj != OBJ_NONE) continue;
+
+				m_createObject[i].obj = OBJ_BOX1;
+				m_createObject[i].pt = ptMouse;
+				m_createObject[i].rc = RectMakeCenter(m_createObject[i].pt.x, m_createObject[i].pt.y, 64, 96);
+
+				break;
+			}
+			else if (currentTile.x == 1 && currentTile.y == 0 || currentTile.x == 2 && currentTile.y == 0)
+			{
+				if (m_createObject[i].obj != OBJ_NONE) continue;
+
+				m_createObject[i].obj = OBJ_BOX2;
+				m_createObject[i].pt = ptMouse;
+				m_createObject[i].rc = RectMakeCenter(m_createObject[i].pt.x, m_createObject[i].pt.y, 124, 96);
+
+				break;
+			}
+			else if (currentTile.x >= 3 && currentTile.x <= 5 && currentTile.y == 0)
+			{
+				if (m_createObject[i].obj != OBJ_NONE) continue;
+
+				m_createObject[i].obj = OBJ_ROOT1;
+				m_createObject[i].pt = ptMouse;
+				m_createObject[i].rc = RectMakeCenter(m_createObject[i].pt.x, m_createObject[i].pt.y, 160, 70);
+
+				break;
+			}
+			else if (currentTile.x >= 6 && currentTile.x <= 8 && currentTile.y == 0)
+			{
+				if (m_createObject[i].obj != OBJ_NONE) continue;
+
+				m_createObject[i].obj = OBJ_ROOT2;
+				m_createObject[i].pt = ptMouse;
+				m_createObject[i].rc = RectMakeCenter(m_createObject[i].pt.x, m_createObject[i].pt.y, 174, 74);
+
+				break;
+			}
+			else if (currentTile.x == 9 && currentTile.y == 0 || currentTile.x == 10 && currentTile.y == 0)
+			{
+				if (m_createObject[i].obj != OBJ_NONE) continue;
+
+				m_createObject[i].obj = OBJ_TELEPORT;
+				m_createObject[i].pt = ptMouse;
+				m_createObject[i].rc = RectMakeCenter(m_createObject[i].pt.x, m_createObject[i].pt.y, 90, 24);
+
+				break;
 			}
 		}
 	}
@@ -719,6 +829,8 @@ void mapTool::saveLoad()
 				//타일 저장
 				WriteFile(file, tile, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
 				//에너미 저장
+				WriteFile(file, m_createObject, sizeof(tagCreateObject) * OBJECTMAX, &write, NULL);
+				//에너미 저장
 				WriteFile(file, m_createEnemy, sizeof(tagCreateEnemy) * ENEMYMAX, &write, NULL);
 				CloseHandle(file);
 				break;
@@ -771,6 +883,8 @@ void mapTool::saveLoad()
 				//타일 불러오기
 				ReadFile(file, tile, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 				//에너미 불러오기
+				ReadFile(file, m_createObject, sizeof(tagCreateObject) * OBJECTMAX, &read, NULL);
+				//에너미 불러오기
 				ReadFile(file, m_createEnemy, sizeof(tagCreateEnemy) * ENEMYMAX, &read, NULL);
 				CloseHandle(file);
 
@@ -791,11 +905,11 @@ void mapTool::saveLoad()
 	}
 }
 
-
 void mapTool::pushEnemyMemory()
 {
 	HANDLE file;
 	DWORD read;
+
 	file = CreateFile("tileMap1.map",
 		GENERIC_READ,
 		0,
@@ -803,9 +917,24 @@ void mapTool::pushEnemyMemory()
 		OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL,
 		NULL);
+
 	//타일 불러오기
+
 	ReadFile(file, tile, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	ReadFile(file, m_createObject, sizeof(tagCreateObject) * OBJECTMAX, &read, NULL);
 	ReadFile(file, m_createEnemy, sizeof(tagCreateEnemy) * ENEMYMAX, &read, NULL);
+
+	for (int i = 0; i < OBJECTMAX; i++)
+	{
+		if (m_createObject[i].obj == OBJ_BOX1) m_objectManager->addBox1(m_createEnemy[i].pt);
+		else if (m_createObject[i].obj == OBJ_BOX2) m_objectManager->addBox2(m_createEnemy[i].pt);
+		else if (m_createObject[i].obj == OBJ_ROOT1) m_objectManager->addRoot1(m_createEnemy[i].pt);
+		else if (m_createObject[i].obj == OBJ_ROOT2) m_objectManager->addRoot2(m_createEnemy[i].pt);
+		else if (m_createObject[i].obj == OBJ_TELEPORT) m_objectManager->addTeleport(m_createEnemy[i].pt);
+
+		ZeroMemory(&m_createObject[i], sizeof(m_createObject[i]));
+	}
+
 	for (int i = 0; i < ENEMYMAX; i++)
 	{
 		if (m_createEnemy[i].enm == ENM_TURTLE) m_enemyManager->addTurtle(m_createEnemy[i].pt);
@@ -813,5 +942,6 @@ void mapTool::pushEnemyMemory()
 		else if (m_createEnemy[i].enm == ENM_KAMIKAZE) m_enemyManager->addKamikaze(m_createEnemy[i].pt);
 		ZeroMemory(&m_createEnemy[i], sizeof(m_createEnemy[i]));
 	}
+
 	CloseHandle(file);
 }

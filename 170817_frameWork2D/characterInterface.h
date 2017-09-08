@@ -1,5 +1,7 @@
 #pragma once
 #include "gameNode.h"
+#include "characterProgressBar.h"
+#include "numberDrawManager.h"
 
 class characterInterface : public gameNode
 {
@@ -29,12 +31,13 @@ protected:
 	struct tagPlayer
 	{
 		image* img;			//이미지
+		image* faceImg;		//얼굴이미지
 		RECT enemy_hitRc;	//적에게 맞는 히트박스
 		RECT wall_hitRc;
 		float x, y;
 		int currentHP, maxHP;			//체력
 		int currentShield, maxShield;	//쉴드
-		int staminaAll, staminaDash;	//총스테미너 , 대쉬가 가능한 스테미너
+		int currentStamina, maxStamina;	//스테미너
 		float speed;
 		float angle;
 		currentAnimation animation;
@@ -43,16 +46,32 @@ protected:
 		int frameCount;
 		int frameX, frameY;
 
-		
 		bool life;
 		bool isLeft;
+
+		
+		bool meleeAtk;//근접공격 렉트생성
+		bool meleeAtkOnce;//한번만실행
+
+		bool run;	//달리기중인지 확인
+
 		bool dash;		//대쉬 중인지 확인
 		bool melee;		//근접공격 중인지 확인
 		bool hit;		//대미지를 받았는지 확인
+
+		bool die; //게임을끝내는 불값
 		tagCharacter nowCharacter;
 	};
 
 	tagPlayer m_player;
+
+	characterProgressBar* hpBar;
+	characterProgressBar* shieldBar;
+	characterProgressBar* staminaBar;
+	
+	numberDrawManager* hpNumDraw;
+	numberDrawManager* shieldNumDraw;
+
 
 
 
@@ -71,7 +90,7 @@ protected:
 	float _fCommandTime;
 	float _fCommandClear;
 
-
+	bool dashOnce;
 	bool once = true;	//한번만실행되게 하는 bool 변수
 
 public:
@@ -80,16 +99,19 @@ public:
 
 	virtual HRESULT init(POINT position);
 	virtual void release();
-	virtual void update();
+	virtual void update(POINT pt);
 	virtual void render(POINT pt);
 
 	virtual void animation();
 	virtual void move();
 	virtual void command();
-	virtual void melee();
+	virtual void melee(POINT pt);
 	virtual void hit();
 	virtual void dead();
 	virtual void fire();
+
+	virtual void run();
+	virtual void hpFaceInfo();
 
 
 	float getPlayerX() { return m_player.x; }			//플레이어 X Y 겟셋

@@ -20,12 +20,14 @@ HRESULT rider::init(POINT position)
 	ZeroMemory(&m_player, sizeof(m_player));
 
 	m_player.img = IMAGEMANAGER->findImage("라이더");		//라이더 이미지를넣음
+	m_player.faceImg = IMAGEMANAGER->findImage("라이더상태얼굴");		//체력에따른 라이더얼굴
 	m_player.x = position.x;
 	m_player.y = position.y;
 	m_player.enemy_hitRc = RectMakeCenter(m_player.x, m_player.y, 34, 72);	//적에게 피격가능한 렉트
 	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y + 32, 56, 22);	//벽에 부딪치는 렉트
 	m_player.currentHP = m_player.maxHP = 100;
 	m_player.currentShield = m_player.maxShield = 50;
+	m_player.currentStamina = m_player.maxStamina = 100;	//
 	m_player.speed = 5.0f;													//플레이어 이동속도
 	m_player.frameCount = 0;
 	m_player.frameX = 0;
@@ -41,38 +43,99 @@ HRESULT rider::init(POINT position)
 	m_player.dash = false;
 	m_player.melee = false;
 	m_player.hit = false;
+	m_player.run = false;	//
+
+
+	m_player.meleeAtk = false;		//근접공격 렉트생성확인
+	m_player.meleeAtkOnce = false;	//렉트생성 한번만실행
+	m_player.die = false;		//캐릭터 죽음 애니메이션 후에 진짜죽게만드는값
 
 	m_player.img->setFrameY(4);		//4번은 IDLE 애니메이션임
+
+									//체력바
+	hpBar = new characterProgressBar;
+	hpBar->init("체력바앞", "체력바뒤", 98, 42, 172, 52);
+
+	shieldBar = new characterProgressBar;
+	shieldBar->init("쉴드바앞", "쉴드바뒤", 92, 72, 158, 29);
+
+	staminaBar = new characterProgressBar;
+	staminaBar->init("스테미너바앞", "스테미너바뒤", 95, 101, 153, 6);
+
+	hpNumDraw = new numberDrawManager;
+	hpNumDraw->init("별숫자", 3);
+
+	shieldNumDraw = new numberDrawManager;
+	shieldNumDraw->init("별숫자", 2);
+
 	return S_OK;
 }
 
 void rider::release()
 {
+	SAFE_DELETE(hpBar);
+	SAFE_DELETE(shieldBar);
+	SAFE_DELETE(staminaBar);
+	SAFE_DELETE(hpNumDraw);
+	SAFE_DELETE(shieldNumDraw);
 }
 
-void rider::update()
+void rider::update(POINT pt)
 {
+	//프로그래스바
+	hpBar->setGauge(m_player.currentHP, m_player.maxHP);
+	hpBar->update();
+
+	hpNumDraw->update(m_player.currentHP);
+	shieldNumDraw->update(m_player.currentShield);
+
+
+	shieldBar->setGauge(m_player.currentShield, m_player.maxShield);
+	shieldBar->update();
+
+	staminaBar->setGauge(m_player.currentStamina, m_player.maxStamina);
+	staminaBar->update();
+
+	hpFaceInfo();
+
+
 	m_player.enemy_hitRc = RectMakeCenter(m_player.x, m_player.y, 34, 72);			//적에게 피격당하는 렉트생성 x,y기준으로 생성
 	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y + 32, 56, 22);		//벽에 부딪히는 렉트생성
 
 	move();			//이동명령에 관한 함수
-	animation();	//애니메이션 함수
+
+	command();		//커맨드 (부모클래스에있음 더블연타시 대쉬를 출력함)
+
 
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && !m_player.dash)	//대쉬중이 아니고 클릭시 파이어
 	{
+		//m_player.currentHP -= 1;		//테스트용
+		//m_player.currentShield -= 1;	//테스트용
 		fire();
 	}
-	melee();	//근접공격
+	melee(pt);	//근접공격
+	
+	run();		//달리기
 
 	hit();		//피격
 
 	dead();		//사망
 
-	command();		//커맨드 (부모클래스에있음 더블연타시 대쉬를 출력함)
+	animation();	//애니메이션 함수
+
 }
 
 void rider::render(POINT pt)
 {
+	//프로그래스 바
+	hpBar->render();
+	shieldBar->render();
+	staminaBar->render();
+	hpNumDraw->render(200, 45, 1);
+	shieldNumDraw->render(210, 75, 1);
+	m_player.faceImg->frameRender(getMemDC(), 1, 16);
+
+
 	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left - 38 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y);	
 
 	HBRUSH MyBrush, OldBrush;
@@ -91,19 +154,24 @@ void rider::render(POINT pt)
 	SelectObject(getMemDC(), OldBrush);
 	SelectObject(getMemDC(), OldPen);
 	DeleteObject(MyPen);
+	TextOut(getMemDC(), m_player.x, m_player.y - 100, _str, lstrlen(_str));		//텍스트 출력용
+	TCHAR str[128];
+	switch (m_player.nowCharacter)		//nowCharcher 는 현재캐릭터를 알려줌
+	{
+	case JIMMY:
+		wsprintf(str, TEXT("현재 캐릭터 : 지미"));
+		break;
+	case RIDER:
+		wsprintf(str, TEXT("현재 캐릭터 : 라이더"));
+		break;
+	}
+	sprintf(str, TEXT("%f"), m_player.angle);
+	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, lstrlen(str));
 
-	//TextOut(getMemDC(), m_player.x, m_player.y-100, _str, lstrlen(_str));
-	//TCHAR str[128];
-	//switch (m_player.nowCharacter)		//nowCharcher 는 현재캐릭터를 알려줌
-	//{
-	//case JIMMY:
-	//	wsprintf(str, TEXT("현재 캐릭터 : 지미"));
-	//	break;
-	//case RIDER:
-	//	wsprintf(str, TEXT("현재 캐릭터 : 라이더"));
-	//	break;
-	//}
-	//TextOut(getMemDC(), WINSIZEX / 2, 100, str, lstrlen(str));
+	LineMake(getMemDC(), m_player.x, m_player.y, m_player.x + cosf(m_player.angle) * 100, m_player.y + (-sinf(m_player.angle) * 100));
+
+	sprintf(str, TEXT("x : %f, y : %f"), m_player.x, m_player.y);
+	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2 + 40, str, lstrlen(str));
 }
 
 void rider::animation()
@@ -133,6 +201,11 @@ void rider::animation()
 			m_player.frameCount = 0;
 			m_player.frameX++;
 			if (m_player.frameX > 10) m_player.frameX = 0;
+
+			if (m_player.frameX == 10)	//     죽었을때 마지막프레임에 도달시 진짜죽음실행
+			{
+				m_player.die = true;
+			}
 		}
 		m_player.isLeft ? m_player.frameY = 9 : m_player.frameY = 1;
 		
@@ -224,32 +297,30 @@ void rider::animation()
 void rider::move()
 {
 	//마우스보다 커지거나 작아지면 좌우 값을 바꿈
-	if (ptMouse.x < m_player.x)m_player.isLeft = true;
+	if (ptMouse.x < WINSIZEX / 2)m_player.isLeft = true;
 	else m_player.isLeft = false;
 
-	if (KEYMANAGER->isStayKeyDown('A'))
+	if (KEYMANAGER->isStayKeyDown('A') && !m_player.melee)
 	{
 		m_player.x -= m_player.speed;
 		if (!m_player.dash && !m_player.hit) m_player.animation = WALK;
 
 	}
-	if (KEYMANAGER->isStayKeyDown('D'))
+	if (KEYMANAGER->isStayKeyDown('D') && !m_player.melee)
 	{
 		m_player.x += m_player.speed;
 		if (!m_player.dash && !m_player.hit) m_player.animation = WALK;
 	}
-	if (KEYMANAGER->isStayKeyDown('W'))
+	if (KEYMANAGER->isStayKeyDown('W') && !m_player.melee)
 	{
 		m_player.y -= m_player.speed;
 		if (!m_player.dash && !m_player.hit) m_player.animation = WALK;
 	}
-	if (KEYMANAGER->isStayKeyDown('S'))
+	if (KEYMANAGER->isStayKeyDown('S') && !m_player.melee)
 	{
 		m_player.y += m_player.speed;
 		if (!m_player.dash && !m_player.hit) m_player.animation = WALK;
 	}
-
-
 	if (!KEYMANAGER->isStayKeyDown('A') &&
 		!KEYMANAGER->isStayKeyDown('D') &&
 		!KEYMANAGER->isStayKeyDown('W') &&
@@ -262,7 +333,7 @@ void rider::move()
 	//아무것도 눌리지 않았을때 기본 애니메이션으로 변경
 }
 
-void rider::melee()
+void rider::melee(POINT pt)
 {
 	float endX = (float)ptMouse.x;
 	float endY = (float)ptMouse.y;
@@ -321,4 +392,60 @@ void rider::dead()
 
 void rider::fire()
 {
+}
+
+void rider::hpFaceInfo()
+{
+	if ((m_player.maxHP / 3) * 2 < m_player.currentHP)
+	{
+		m_player.faceImg->setFrameX(0);
+	}
+	else if (m_player.maxHP / 3 < m_player.currentHP)
+	{
+		m_player.faceImg->setFrameX(1);
+	}
+	else if (m_player.maxHP / 3 > m_player.currentHP)
+	{
+		m_player.faceImg->setFrameX(2);
+	}
+}
+
+void rider::run()
+{
+	if (KEYMANAGER->isStayKeyDown(VK_LSHIFT) && !m_player.melee && !m_player.dash)
+	{
+		if (m_player.currentStamina > 0)	//스테미너가 0보다 많을경우 달리기실행
+		{
+			m_player.run = true;
+		}
+		else          //아니면 달리기 종료
+		{
+			m_player.run = false;
+			m_player.speed = 5.0f;	//고정값으로 해줌
+		}
+
+		if (m_player.run)
+		{
+			m_player.animation = RUN;
+			m_player.speed = 7.5f;	//이동속도 50%증가
+			runDelay++;
+			if (runDelay % 2 == 0)
+			{
+				m_player.currentStamina--;	//달릴때 스테미너감소
+			}
+		}
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LSHIFT))	//쉬프트키를 떼면 달리기종료
+	{
+		m_player.run = false;
+		m_player.speed = 5.0f;
+	}
+	if (m_player.currentStamina < 100 && !m_player.run)	//스테미너가 100보다 작고 달리는중이 아니라면
+	{
+		runDelay++;
+		if (runDelay % 3 == 0)
+		{
+			m_player.currentStamina++;	//스테미너 회복
+		}
+	}
 }

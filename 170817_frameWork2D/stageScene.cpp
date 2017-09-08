@@ -38,6 +38,19 @@ HRESULT stageScene::init()
 
 	m_bulletManager = new bulletManager;
 	m_bulletManager->init();
+	m_bulletManager->loadTile("tileMap1.map");
+
+	m_objectManager = new objectManager;
+	m_objectManager->init();
+	for (int i = 0; i < OBJECTMAX; i++)
+	{
+		if (m_createObject[i].obj == OBJ_BOX1)	m_objectManager->addBox1(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_BOX2) m_objectManager->addBox2(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_ROOT1)m_objectManager->addRoot1(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_ROOT2)m_objectManager->addRoot2(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_TELEPORT)m_objectManager->addTeleport(m_createObject[i].pt);
+
+	}
 
 	m_defaultGun = new defaultGun;
 
@@ -52,7 +65,7 @@ HRESULT stageScene::init()
 	Charcter_Real_pt = { Charcter_pt.x - currentCamera.x, Charcter_pt.y - currentCamera.y };
 
 		
-
+	testX = 0;
 	
 
 	return S_OK;
@@ -61,7 +74,10 @@ HRESULT stageScene::init()
 void stageScene::release()
 {
 	m_cm->release();
+	//m_enemyManager->release();
 	SAFE_DELETE(m_enemyManager);
+	//m_objectManager->release();
+	SAFE_DELETE(m_objectManager);
 }
 
 void stageScene::update()
@@ -90,7 +106,8 @@ void stageScene::update()
 	}
 	
 	//currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
-	m_cm->update();
+	m_cm->update(currentCamera);
+	collision_tile_character();
 	Charcter_pt = { (int)m_cm->getPlayerX(),(int)m_cm->getPlayerY() };
 	moveCamera(Charcter_pt);
 	Character_Rc = RectMakeCenter(Charcter_pt.x, Charcter_pt.y, 50, 100);
@@ -115,11 +132,12 @@ void stageScene::update()
 			}
 		}
 	}
-	testNumber->update(Charcter_pt.x);
+	testNumber->update(testX);
 
 	m_defaultGun->update();
 	m_bulletManager->update();
 	m_enemyManager->update();
+	m_objectManager->update();
 	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
 		//플레이어가 에너미 탐지거리에 있으면 트루
@@ -148,6 +166,7 @@ void stageScene::render()
 		{
 			if (tileOn[y][x])
 			{
+				//if (tile[y][x].terrain == TR_WALL)continue;
 				IMAGEMANAGER->frameRender("맵툴", getMemDC(), tile[y][x].rc.left- currentCamera.x, tile[y][x].rc.top - currentCamera.y, tile[y][x].terrainFrameX, tile[y][x].terrainFrameY);
 				
 				
@@ -156,31 +175,31 @@ void stageScene::render()
 	}
 
 	//오브젝트
-	for (int y = 0; y < TILEY; y++)
-	{
-		for (int x = 0; x < TILEX; x++)
-		{
-			if (tile[y][x].obj == OBJ_BOX1) IMAGEMANAGER->frameRender("박스1", getMemDC(), tile[y][x].rc.left - 42 - currentCamera.x, tile[y][x].rc.top - 40 - currentCamera.y, 0, 0);
-			else if (tile[y][x].obj == OBJ_BOX2_1) IMAGEMANAGER->frameRender("박스2", getMemDC(), tile[y][x].rc.left - 10 - currentCamera.x, tile[y][x].rc.top - 40 - currentCamera.y, 0, 0);
-			else if (tile[y][x].obj == OBJ_ROOT1_1) IMAGEMANAGER->frameRender("루트1", getMemDC(), tile[y][x].rc.left - 32 - currentCamera.x, tile[y][x].rc.top - 38 - currentCamera.y, 0, 0);
-			else if (tile[y][x].obj == OBJ_ROOT2_1) IMAGEMANAGER->frameRender("루트2", getMemDC(), tile[y][x].rc.left - 32 - currentCamera.x, tile[y][x].rc.top - 38 - currentCamera.y, 0, 0);
-		}
-	}
+	//for (int y = 0; y < TILEY; y++)
+	//{
+	//	for (int x = 0; x < TILEX; x++)
+	//	{
+	//		if (tile[y][x].obj == OBJ_BOX1) IMAGEMANAGER->frameRender("박스1", getMemDC(), tile[y][x].rc.left - 42 - currentCamera.x, tile[y][x].rc.top - 40 - currentCamera.y, 0, 0);
+	//		else if (tile[y][x].obj == OBJ_BOX2_1) IMAGEMANAGER->frameRender("박스2", getMemDC(), tile[y][x].rc.left - 10 - currentCamera.x, tile[y][x].rc.top - 40 - currentCamera.y, 0, 0);
+	//		else if (tile[y][x].obj == OBJ_ROOT1_1) IMAGEMANAGER->frameRender("루트1", getMemDC(), tile[y][x].rc.left - 32 - currentCamera.x, tile[y][x].rc.top - 38 - currentCamera.y, 0, 0);
+	//		else if (tile[y][x].obj == OBJ_ROOT2_1) IMAGEMANAGER->frameRender("루트2", getMemDC(), tile[y][x].rc.left - 32 - currentCamera.x, tile[y][x].rc.top - 38 - currentCamera.y, 0, 0);
+	//	}
+	//}
 
 	//에너미
-	
+	m_objectManager->render(currentCamera);
+	m_bulletManager->render(currentCamera);
+	m_enemyManager->render(currentCamera);
 	m_cm->render(currentCamera);
+	m_defaultGun->render(currentCamera);
 	testNumber->render(WINSIZEX/2,0, 1);
 
 
 	
 
-	m_enemyManager->render(currentCamera);
 
 
 	
-	m_defaultGun->render(currentCamera);
-	m_bulletManager->render(currentCamera);
 
 
 }
@@ -200,7 +219,10 @@ void stageScene::loadStage(char* mapName)
 	ReadFile(file, tile, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 	//에너미 불러오기
 	ReadFile(file, m_createEnemy, sizeof(tagCreateEnemy) * ENEMYMAX, &read, NULL);
+	//오브젝트 불러오기
+	ReadFile(file, m_createObject, sizeof(tagCreateObject) * OBJECTMAX, &read, NULL);
 	CloseHandle(file);
+
 	for (int y = 0; y < TILEY; y++)
 	{
 		for (int x = 0; x < TILEX; x++)
@@ -241,4 +263,33 @@ void stageScene::moveCamera(POINT characterPt)
 	currentCamera.y = characterPt.y + (ptMouse.y - WINSIZEY / 2) / 6 - WINSIZEY / 2;
 }
 
+void stageScene::collision_tile_character()
+{
+	RECT temp;
+	for (int y = 0; y < TILEY; y++)
+	{
+		for (int x = 0; x < TILEX; x++)
+		{
+			if (IntersectRect(&temp, &m_cm->getWall_hitRc(), &tile[y][x].rc))
+			{
+				if (tile[y][x].attribute == ATTR_UNMOVE)
+				{
+					testX = 1;
+					return;
+				}
+
+			}
+		}
+	}
+	testX = 0;
+
+}
+
+void stageScene::collision_tile_Eneermy()
+{
+}
+
+void stageScene::collision_Object_character()
+{
+}
 

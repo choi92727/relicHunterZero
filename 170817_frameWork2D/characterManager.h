@@ -15,7 +15,7 @@ public:
 
 	HRESULT init(POINT position, selectCharacter chara);
 	void release();
-	void update();
+	void update(POINT pt);
 	void render(POINT pt);
 
 	float getPlayerX() { return m_player->getPlayerX(); }			//플레이어 X Y 겟셋

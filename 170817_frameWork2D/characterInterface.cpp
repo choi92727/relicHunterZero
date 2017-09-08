@@ -20,7 +20,7 @@ void characterInterface::release()
 {
 }
 
-void characterInterface::update()
+void characterInterface::update(POINT pt)
 {
 }
 
@@ -64,6 +64,7 @@ void characterInterface::command()
 	{
 		_fCommandTime = 0;
 		_vCOMMAND.clear();
+		dashOnce = true;
 	}
 
 	if (_vCOMMAND.size() == 0)	//대쉬 종료시 기본애니메이션으로 변경
@@ -79,32 +80,56 @@ void characterInterface::command()
 
 	if (_vCOMMAND.size() > 1) if (_vCOMMAND[0] == key_left && _vCOMMAND[1] == key_left)
 	{
-		m_player.dash = true;
-		wsprintf(_str, TEXT("왼쪽대쉬"));
-		m_player.x -= m_player.speed+5.0f;
-		m_player.animation = DASH;		//대쉬애니메이션
+		if (m_player.currentStamina >= 50 && dashOnce)
+		{
+			m_player.currentStamina -= 50;
+			dashOnce = false;
+
+			m_player.dash = true;
+			wsprintf(_str, TEXT("왼쪽대쉬"));
+			m_player.x -= m_player.speed + 5.0f;
+			m_player.animation = DASH;		//대쉬애니메이션
+		}
+
 	}
 	if (_vCOMMAND.size() > 1) if (_vCOMMAND[0] == key_right && _vCOMMAND[1] == key_right)
 	{
-		m_player.dash = true;
-		wsprintf(_str, TEXT("오른쪽대쉬"));
-		m_player.x += m_player.speed + 5.0f;
-		m_player.animation = DASH;
+		if (m_player.currentStamina >= 50 && dashOnce)
+		{
+			m_player.currentStamina -= 50;
+			dashOnce = false;
+
+			m_player.dash = true;
+			wsprintf(_str, TEXT("오른쪽대쉬"));
+			m_player.x += m_player.speed + 5.0f;
+			m_player.animation = DASH;
+		}
 	}
 	if (_vCOMMAND.size() > 1) if (_vCOMMAND[0] == key_up && _vCOMMAND[1] == key_up)
 	{
+		if (m_player.currentStamina >= 50 && dashOnce)
+		{
+			m_player.currentStamina -= 50;
+			dashOnce = false;
 
-		m_player.dash = true;
-		wsprintf(_str, TEXT("위쪽대쉬"));
-		m_player.y -= m_player.speed + 5.0f;
-		m_player.animation = DASH;
+			m_player.dash = true;
+			wsprintf(_str, TEXT("위쪽대쉬"));
+			m_player.y -= m_player.speed + 5.0f;
+			m_player.animation = DASH;
+		}
 	}
 	if (_vCOMMAND.size() > 1) if (_vCOMMAND[0] == key_down && _vCOMMAND[1] == key_down)
 	{
-		m_player.dash = true;
-		wsprintf(_str, TEXT("아래쪽대쉬"));
-		m_player.y += m_player.speed + 5.0f;
-		m_player.animation = DASH;
+		if (m_player.currentStamina >= 50 && dashOnce)
+		{
+			m_player.currentStamina -= 50;
+			dashOnce = false;
+
+			m_player.dash = true;
+			wsprintf(_str, TEXT("아래쪽대쉬"));
+			m_player.y += m_player.speed + 5.0f;
+			m_player.animation = DASH;
+		}
 	}
 
 	if (m_player.dash && once)	//대쉬가 실행됬을때 프레임X 를 0으로 한번만 바꿔줌  
@@ -114,7 +139,7 @@ void characterInterface::command()
 	}
 }
 
-void characterInterface::melee()
+void characterInterface::melee(POINT pt)
 {
 }
 
@@ -127,6 +152,14 @@ void characterInterface::dead()
 }
 
 void characterInterface::fire()
+{
+}
+
+void characterInterface::run()
+{
+}
+
+void characterInterface::hpFaceInfo()
 {
 }
 

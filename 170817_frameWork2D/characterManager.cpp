@@ -32,9 +32,9 @@ void characterManager::release()
 	SAFE_DELETE(m_player);
 }
 
-void characterManager::update()
+void characterManager::update(POINT pt)
 {
-	m_player->update();
+	m_player->update(pt);
 }
 
 void characterManager::render(POINT pt)

@@ -1,5 +1,6 @@
 #pragma once
 #include "bulletInterface.h"
+#include "tileNode.h"
 class bulletManager
 {
 private:
@@ -8,6 +9,7 @@ private:
 	vector<bulletInterface*> m_vBulletList;//총알 인터페이스를 담을 벡터<총알벡터>
 	vector<bulletInterface*>::iterator m_viBulletList;
 	int cnt;
+	tagTile m_tagTile[TILEY][TILEX];
 public:
 	bulletManager();
 	~bulletManager();
@@ -17,7 +19,10 @@ public:
 	void render();
 	void render(POINT pt);
 	void addBullet(bulletInterface &m_bullet);//총알을 넣어줄 함수
+	void bulletMove();
 	bool enemyCollisionCheck(RECT &_rc);
-	void deleteBullet(viBulletList &m_bullet);//총알 제거함수
+	void wallCollsionCheck();
+	void deleteBullet(viBulletList &m_bullet);//총알 제거함수s
+	void loadTile(char* mapName);
 };
 

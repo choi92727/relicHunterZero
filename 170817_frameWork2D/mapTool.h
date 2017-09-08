@@ -2,16 +2,16 @@
 #include "gameNode.h"
 #include "tileNode.h"
 #include "enemyManager.h"
+#include "objectManager.h"
 
 class mapTool : public gameNode
 {
 private:
 	tagTile tile[TILEY][TILEX];
+	tagCreateObject m_createObject[OBJECTMAX];
 	tagCreateEnemy m_createEnemy[ENEMYMAX];
 	bool tileOn[TILEY][TILEX];
-
 	tagSampleTile sampleButton[SAMPLETILEY][SAMPLETILEX];
-
 	int currentTileButton;
 	tagCurrentTile currentTile;
 
@@ -28,6 +28,8 @@ private:
 
 	bool sampleTile, sampleObject, sampleEnemy;
 	bool loookSample;
+
+	objectManager* m_objectManager;
 	enemyManager* m_enemyManager;
 public:
 	mapTool();
@@ -53,8 +55,5 @@ public:
 	void saveLoad();
 
 	void pushEnemyMemory();
-	
-
-		
 };
 
