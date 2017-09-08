@@ -16,6 +16,17 @@ HRESULT stageScene::init()
 	
 	loadStage("tileMap1.map");
 
+	m_objectManager = new objectManager;
+	m_objectManager->init();
+	for (int i = 0; i < OBJECTMAX; i++)
+	{
+		if (m_createObject[i].obj == OBJ_BOX1)	m_objectManager->addBox1(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_BOX2) m_objectManager->addBox2(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_ROOT1)m_objectManager->addRoot1(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_ROOT2)m_objectManager->addRoot2(m_createObject[i].pt);
+		else if (m_createObject[i].obj == OBJ_TELEPORT)m_objectManager->addTeleport(m_createObject[i].pt);
+
+	}
 	m_enemyManager = new enemyManager;
 	m_enemyManager->init();
 	for (int i = 0; i < ENEMYMAX; i++)
@@ -23,7 +34,6 @@ HRESULT stageScene::init()
 		if (m_createEnemy[i].enm == ENM_TURTLE)	m_enemyManager->addTurtle(m_createEnemy[i].pt);
 		else if (m_createEnemy[i].enm == ENM_DUCK) m_enemyManager->addDuck(m_createEnemy[i].pt);
 		else if (m_createEnemy[i].enm == ENM_KAMIKAZE)m_enemyManager->addKamikaze(m_createEnemy[i].pt);
-		
 	}
 
 
@@ -39,18 +49,6 @@ HRESULT stageScene::init()
 	m_bulletManager = new bulletManager;
 	m_bulletManager->init();
 	m_bulletManager->loadTile("tileMap1.map");
-
-	m_objectManager = new objectManager;
-	m_objectManager->init();
-	for (int i = 0; i < OBJECTMAX; i++)
-	{
-		if (m_createObject[i].obj == OBJ_BOX1)	m_objectManager->addBox1(m_createObject[i].pt);
-		else if (m_createObject[i].obj == OBJ_BOX2) m_objectManager->addBox2(m_createObject[i].pt);
-		else if (m_createObject[i].obj == OBJ_ROOT1)m_objectManager->addRoot1(m_createObject[i].pt);
-		else if (m_createObject[i].obj == OBJ_ROOT2)m_objectManager->addRoot2(m_createObject[i].pt);
-		else if (m_createObject[i].obj == OBJ_TELEPORT)m_objectManager->addTeleport(m_createObject[i].pt);
-
-	}
 
 	m_defaultGun = new defaultGun;
 
@@ -82,23 +80,7 @@ void stageScene::release()
 
 void stageScene::update()
 {
-	/*if (KEYMANAGER->isStayKeyDown('A'))
-	{
-		Charcter_pt.x-= speed;
-
-	}
-	if (KEYMANAGER->isStayKeyDown('D'))
-	{
-		Charcter_pt.x += speed;
-	}
-	if (KEYMANAGER->isStayKeyDown('W'))
-	{
-		Charcter_pt.y -= speed;
-	}
-	if (KEYMANAGER->isStayKeyDown('S'))
-	{
-		Charcter_pt.y += speed;
-	}*/
+	
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
@@ -108,9 +90,10 @@ void stageScene::update()
 	//currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
 	m_cm->update(currentCamera);
 	collision_tile_character();
+	collision_Object_character();
 	Charcter_pt = { (int)m_cm->getPlayerX(),(int)m_cm->getPlayerY() };
 	moveCamera(Charcter_pt);
-	Character_Rc = RectMakeCenter(Charcter_pt.x, Charcter_pt.y, 50, 100);
+	
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
 
 	m_defaultGun->setPosition(Charcter_Real_pt.x+IMAGEMANAGER->findImage("지미")->getFrameWidth()/2, Charcter_Real_pt.y+(IMAGEMANAGER->findImage("지미")->getFrameHeight() / 2));
@@ -137,6 +120,8 @@ void stageScene::update()
 	m_defaultGun->update();
 	m_bulletManager->update();
 	m_enemyManager->update();
+	//collision_tile_Enemy();
+	collision_Object_Enemy();
 	m_objectManager->update();
 	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
@@ -166,32 +151,27 @@ void stageScene::render()
 		{
 			if (tileOn[y][x])
 			{
-				//if (tile[y][x].terrain == TR_WALL)continue;
 				IMAGEMANAGER->frameRender("맵툴", getMemDC(), tile[y][x].rc.left- currentCamera.x, tile[y][x].rc.top - currentCamera.y, tile[y][x].terrainFrameX, tile[y][x].terrainFrameY);
+				if (tile[y][x].terrain == TR_WALL)Rectangle(getMemDC(), tile[y][x].rc.left - currentCamera.x, tile[y][x].rc.top - currentCamera.y, tile[y][x].rc.right - currentCamera.x, tile[y][x].rc.bottom - currentCamera.y);
 				
 				
 			}
 		}
 	}
 
-	//오브젝트
-	//for (int y = 0; y < TILEY; y++)
-	//{
-	//	for (int x = 0; x < TILEX; x++)
-	//	{
-	//		if (tile[y][x].obj == OBJ_BOX1) IMAGEMANAGER->frameRender("박스1", getMemDC(), tile[y][x].rc.left - 42 - currentCamera.x, tile[y][x].rc.top - 40 - currentCamera.y, 0, 0);
-	//		else if (tile[y][x].obj == OBJ_BOX2_1) IMAGEMANAGER->frameRender("박스2", getMemDC(), tile[y][x].rc.left - 10 - currentCamera.x, tile[y][x].rc.top - 40 - currentCamera.y, 0, 0);
-	//		else if (tile[y][x].obj == OBJ_ROOT1_1) IMAGEMANAGER->frameRender("루트1", getMemDC(), tile[y][x].rc.left - 32 - currentCamera.x, tile[y][x].rc.top - 38 - currentCamera.y, 0, 0);
-	//		else if (tile[y][x].obj == OBJ_ROOT2_1) IMAGEMANAGER->frameRender("루트2", getMemDC(), tile[y][x].rc.left - 32 - currentCamera.x, tile[y][x].rc.top - 38 - currentCamera.y, 0, 0);
-	//	}
-	//}
+	
 
-	//에너미
+	//오브젝트
 	m_objectManager->render(currentCamera);
+	//총알
 	m_bulletManager->render(currentCamera);
+	//적
 	m_enemyManager->render(currentCamera);
+	//캐릭터
 	m_cm->render(currentCamera);
+	//총
 	m_defaultGun->render(currentCamera);
+	//숫자
 	testNumber->render(WINSIZEX/2,0, 1);
 
 
@@ -217,10 +197,10 @@ void stageScene::loadStage(char* mapName)
 		NULL);
 	//타일 불러오기
 	ReadFile(file, tile, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
-	//에너미 불러오기
-	ReadFile(file, m_createEnemy, sizeof(tagCreateEnemy) * ENEMYMAX, &read, NULL);
 	//오브젝트 불러오기
 	ReadFile(file, m_createObject, sizeof(tagCreateObject) * OBJECTMAX, &read, NULL);
+	//에너미 불러오기
+	ReadFile(file, m_createEnemy, sizeof(tagCreateEnemy) * ENEMYMAX, &read, NULL);
 	CloseHandle(file);
 
 	for (int y = 0; y < TILEY; y++)
@@ -231,6 +211,7 @@ void stageScene::loadStage(char* mapName)
 			{
 				tile[y][x].terrain = TR_WALL;
 			}
+			
 			if (tile[y][x].terrain == TR_WALL) tile[y][x].attribute = ATTR_UNMOVE;
 			else tile[y][x].attribute = ATTR_POSITION;
 		}
@@ -266,6 +247,7 @@ void stageScene::moveCamera(POINT characterPt)
 void stageScene::collision_tile_character()
 {
 	RECT temp;
+	
 	for (int y = 0; y < TILEY; y++)
 	{
 		for (int x = 0; x < TILEX; x++)
@@ -274,22 +256,226 @@ void stageScene::collision_tile_character()
 			{
 				if (tile[y][x].attribute == ATTR_UNMOVE)
 				{
-					testX = 1;
-					return;
+					SetRect(&temp, 0, 0, temp.right - temp.left, temp.bottom - temp.top);
+					//상, 하 충돌
+					if (temp.bottom < temp.right)
+					{
+						//위 충돌
+						if ((tile[y][x].rc.top + tile[y][x].rc.bottom) / 2 < (m_cm->getWall_hitRc().top + m_cm->getWall_hitRc().bottom) / 2)
+						{
+							m_cm->setPlayerY(m_cm->getPlayerY()+(temp.bottom-temp.top));
+						}
+						//아래 충돌
+						else
+						{
+							m_cm->setPlayerY(m_cm->getPlayerY() - (temp.bottom - temp.top));
+						}
+					}
+					//좌, 우 충돌
+					else
+					{
+						//왼쪽 충돌
+						if ((tile[y][x].rc.left + tile[y][x].rc.right) / 2 < (m_cm->getWall_hitRc().left + m_cm->getWall_hitRc().right) / 2)
+						{
+							m_cm->setPlayerX(m_cm->getPlayerX() + (temp.right - temp.left));
+						}
+						//오른쪽 충돌
+						else
+						{
+							m_cm->setPlayerX(m_cm->getPlayerX() - (temp.right - temp.left));
+						}
+					}
+					
 				}
 
 			}
 		}
 	}
-	testX = 0;
+	
 
 }
 
-void stageScene::collision_tile_Eneermy()
+void stageScene::collision_tile_Enemy()
 {
+	RECT temp;
+	RECT enemy_collision_rc;
+	bool collisionTB;
+	bool collisionRL;
+	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
+	{
+		enemy_collision_rc = m_enemyManager->getVEnemy()[i]->getCollisionRect();
+		
+		for (int y = 0; y < TILEY; y++)
+		{
+			for (int x = 0; x < TILEX; x++)
+			{
+				if (IntersectRect(&temp, &enemy_collision_rc, &tile[y][x].rc))
+				{
+					if (tile[y][x].attribute == ATTR_UNMOVE)
+					{
+						SetRect(&temp, 0, 0, temp.right - temp.left, temp.bottom - temp.top);
+						//상, 하 충돌
+						if (temp.bottom < temp.right)
+						{
+							//위 충돌
+							if ((tile[y][x].rc.top + tile[y][x].rc.bottom) / 2 < (enemy_collision_rc.top + enemy_collision_rc.bottom) / 2)
+							{
+								m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() + (temp.bottom - temp.top));
+								
+							}
+							//아래 충돌
+							else
+							{
+								m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() - (temp.bottom - temp.top));
+							
+							}
+							
+						}
+						//좌, 우 충돌
+						if (temp.bottom >= temp.right)
+						{
+							//왼쪽 충돌
+							if ((tile[y][x].rc.left + tile[y][x].rc.right) / 2 < (enemy_collision_rc.left + enemy_collision_rc.right) / 2)
+							{
+								m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() + (temp.right - temp.left));
+								
+								
+							}
+							//오른쪽 충돌
+							else
+							{
+								m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() - (temp.right - temp.left));
+								
+								
+							}
+							
+						}
+						m_enemyManager->getVEnemy()[i]->setCurrent(STOP_ENEMY);
+						
+					}
+				}
+			}
+		}
+	}
 }
+
 
 void stageScene::collision_Object_character()
 {
+	RECT temp;
+	RECT tempObject;
+
+	for (int i = 0; i < m_objectManager->getVObject().size(); i++)
+	{
+		if (m_objectManager->getVObject()[i]->getIsTeleport())continue;
+
+			tempObject = m_objectManager->getVObject()[i]->getRect();
+		tempObject = { tempObject.left,tempObject.top - 14,tempObject.right,tempObject.bottom };
+		if (IntersectRect(&temp, &m_cm->getWall_hitRc(), &tempObject))
+		{
+			SetRect(&temp, 0, 0, temp.right - temp.left, temp.bottom - temp.top);
+			//상, 하 충돌
+			if (temp.bottom < temp.right)
+			{
+				//위 충돌
+				if ((tempObject.top + tempObject.bottom) / 2 < (m_cm->getWall_hitRc().top + m_cm->getWall_hitRc().bottom) / 2)
+				{
+					m_cm->setPlayerY(m_cm->getPlayerY() + (temp.bottom - temp.top));
+				}
+				//아래 충돌
+				else
+				{
+					m_cm->setPlayerY(m_cm->getPlayerY() - (temp.bottom - temp.top));
+				}
+			}
+			//좌, 우 충돌
+			else
+			{
+				//왼쪽 충돌
+				if ((tempObject.left + tempObject.right) / 2 < (m_cm->getWall_hitRc().left + m_cm->getWall_hitRc().right) / 2)
+				{
+					m_cm->setPlayerX(m_cm->getPlayerX() + (temp.right - temp.left));
+				}
+				//오른쪽 충돌
+				else
+				{
+					m_cm->setPlayerX(m_cm->getPlayerX() - (temp.right - temp.left));
+				}
+			}
+
+		}
+	}
+}
+
+void stageScene::collision_Object_Enemy()
+{
+	RECT temp;
+	RECT tempObject;
+	RECT enemy_collision_rc;
+	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
+	{
+		enemy_collision_rc = m_enemyManager->getVEnemy()[i]->getCollisionRect();
+		for (int i = 0; i < m_objectManager->getVObject().size(); i++)
+		{
+			if (m_objectManager->getVObject()[i]->getIsTeleport())continue;
+
+			tempObject = m_objectManager->getVObject()[i]->getRect();
+			tempObject = { tempObject.left,tempObject.top - 14,tempObject.right,tempObject.bottom };
+			if (IntersectRect(&temp, &enemy_collision_rc, &tempObject))
+			{
+				//위 충돌
+				if ((tempObject.top + tempObject.bottom) / 2 < (enemy_collision_rc.top + enemy_collision_rc.bottom) / 2)
+				{
+					m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() + 80);
+				}
+				//아래 충돌
+				if ((tempObject.top + tempObject.bottom) / 2 > (enemy_collision_rc.top + enemy_collision_rc.bottom) / 2)
+				{
+					m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() - 80);
+				}
+				//왼쪽 충돌
+				if ((tempObject.left + tempObject.right) / 2 < (enemy_collision_rc.left + enemy_collision_rc.right) / 2)
+				{
+					m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() + 80);
+				}
+				//오른쪽 충돌
+				if ((tempObject.left + tempObject.right) / 2 > (enemy_collision_rc.left + enemy_collision_rc.right) / 2)
+				{
+					m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() - 80);
+				}
+
+				//SetRect(&temp, 0, 0, temp.right - temp.left, temp.bottom - temp.top);
+				////상, 하 충돌
+				//if (temp.bottom < temp.right)
+				//{
+				//	//위 충돌
+				//	if ((tempObject.top + tempObject.bottom) / 2 < (enemy_collision_rc.top + enemy_collision_rc.bottom) / 2)
+				//	{
+				//		m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() + (temp.bottom - temp.top));
+				//	}
+				//	//아래 충돌
+				//	else
+				//	{
+				//		m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() - (temp.bottom - temp.top));
+				//	}
+				//}
+				////좌, 우 충돌
+				//else
+				//{
+				//	//왼쪽 충돌
+				//	if ((tempObject.left + tempObject.right) / 2 < (enemy_collision_rc.left + enemy_collision_rc.right) / 2)
+				//	{
+				//		m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() + (temp.right - temp.left));
+				//	}
+				//	//오른쪽 충돌
+				//	else
+				//	{
+				//		m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() - (temp.right - temp.left));
+				//	}
+				//}
+				m_enemyManager->getVEnemy()[i]->setCurrent(STOP_ENEMY);
+			}
+		}
+	}
 }
 

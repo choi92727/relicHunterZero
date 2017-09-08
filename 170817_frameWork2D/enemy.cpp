@@ -75,7 +75,7 @@ HRESULT turtle::init(POINT position)
 	m_enemy.isDetection = m_enemy.detection = false;																							//플레이어를 탐지 했냐?
 	m_enemy.current = STOP_ENEMY;																												//에너미 현재 상태
 	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
-	
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 30, 42, 5);
 	//프로그레스바
 	m_progressBar = new progressBar;
 	m_progressBar->init("Images/hpBar_front.bmp", "Images/hpBar_back.bmp", m_enemy.x - 30, m_enemy.y - 60, 61, 7);
@@ -92,7 +92,7 @@ void turtle::update()
 {
 	m_enemy.rc = RectMakeCenter(m_enemy.x, m_enemy.y, 42, 64);
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);
-
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 30, 42, 5);
 	detection();
 	animation();
 
@@ -227,7 +227,8 @@ HRESULT duck::init(POINT position)
 	m_enemy.detectionX = 0;
 	m_enemy.isDetection = m_enemy.detection = false;																							//플레이어를 탐지 했냐?
 	m_enemy.current = STOP_ENEMY;																												//에너미 현재 상태
-	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
+	m_enemy.isLeft = true;	
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 28, 38, 5);																												//에너미가 왼쪽을 보고 있냐?
 	//m_enemy.angle = RND->getFloat(360.0f);
 
 	//프로그레스바
@@ -246,7 +247,7 @@ void duck::update()
 {
 	m_enemy.rc = RectMakeCenter(m_enemy.x, m_enemy.y, 38, 60);
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);
-
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 28, 38, 5);
 	detection();
 	animation();
 	if(m_enemy.isDetection) dashCoolTime();
@@ -414,7 +415,7 @@ HRESULT kamikaze::init(POINT position)
 	m_enemy.currentHP = m_enemy.maxHP = 35;																										//현재 HP / 최대 HP
 	m_enemy.dashCoolTime = 0;																													//에너미 대쉬 쿨타임
 	m_enemy.dashCoolTimeMax = RND->getIntFromInto(100, 200);																					//에너미 대쉬 쿨타임 맥스
-	m_enemy.dash = 20.0f;																														//에너미 대쉬 속도
+	m_enemy.dash = 10.0f;																														//에너미 대쉬 속도
 	m_enemy.acceleration = 0;																													//에너미 대쉬 감속
 	m_enemy.speed = 3.0f;																														//에너미 이동 속도
 	m_enemy.count = m_enemy.detectionCount = 0;
@@ -424,7 +425,9 @@ HRESULT kamikaze::init(POINT position)
 	m_enemy.isDetection = m_enemy.detection = false;																							//플레이어를 탐지 했냐?
 	m_enemy.current = STOP_ENEMY;																												//에너미 현재 상태
 	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
-	//m_enemy.angle = RND->getFloat(360.0f);
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 20, 38, 5);
+																																				//m_enemy.angle = RND->getFloat(360.0f);
+
 
 	//프로그레스바
 	m_progressBar = new progressBar;
@@ -442,7 +445,7 @@ void kamikaze::update()
 {
 	m_enemy.rc = RectMakeCenter(m_enemy.x, m_enemy.y, 38, 38);
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);
-
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 20, 38, 5);
 	detection();
 	animation();
 	if (m_enemy.isDetection) dashCoolTime();
@@ -561,7 +564,7 @@ bool kamikaze::dash()
 	}
 	else
 	{
-		m_enemy.dash = 20.0f;
+		m_enemy.dash = 10.0f;
 		m_enemy.acceleration = 0;
 		m_enemy.dashAngle = m_enemy.angle + RND->getFloatFromInto(-0.5f, 0.5f);
 	}

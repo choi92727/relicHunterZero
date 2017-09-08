@@ -31,7 +31,7 @@ HRESULT mainGame::init()
 	SCENEMANAGER->addScene("alphaTest", new alphaTest);
 
 
-	SCENEMANAGER->changeScene("stageScene");
+	SCENEMANAGER->changeScene("mapTool");
 
 
 	
