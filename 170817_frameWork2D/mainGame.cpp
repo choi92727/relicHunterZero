@@ -28,6 +28,7 @@ HRESULT mainGame::init()
 	SCENEMANAGER->addScene("selectScene", new selectScene);
 	SCENEMANAGER->addScene("stageScene", new stageScene);
 	SCENEMANAGER->addScene("testScene", new testScene);
+	SCENEMANAGER->addScene("alphaTest", new alphaTest);
 
 
 	SCENEMANAGER->changeScene("loadingGame");

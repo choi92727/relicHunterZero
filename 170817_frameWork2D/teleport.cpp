@@ -35,7 +35,7 @@ void teleport::update()
 void teleport::render()
 {
 	IMAGEMANAGER->render("메인메뉴배경화면", getMemDC());
-	m_im->aniRender(getMemDC(), m_rc.left, m_rc.top, m_ani);
+	m_im->aniAlphaRender(getMemDC(), m_rc.left, m_rc.top, m_ani,100);
 	
 	IMAGEMANAGER->render("텔레포트", getMemDC(), m_rc.left, m_rc.top);
 }

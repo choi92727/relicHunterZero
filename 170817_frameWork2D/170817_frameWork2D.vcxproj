@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="addImage.h" />
     <ClInclude Include="addSounds.h" />
+    <ClInclude Include="alphaTest.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="bulletInterface.h" />
@@ -192,6 +193,7 @@
   <ItemGroup>
     <ClCompile Include="addImage.cpp" />
     <ClCompile Include="addSounds.cpp" />
+    <ClCompile Include="alphaTest.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
     <ClCompile Include="bulletInterface.cpp" />

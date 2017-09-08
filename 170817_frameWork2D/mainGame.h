@@ -10,6 +10,7 @@
 #include "stageScene.h"
 #include "addSounds.h"
 #include "testScene.h"
+#include "alphaTest.h"
 
 
 

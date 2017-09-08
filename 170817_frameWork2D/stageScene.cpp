@@ -48,11 +48,11 @@ HRESULT stageScene::init()
 
 	
 	m_defaultGun->setBulletManagerLink(*m_bulletManager);
-<<<<<<< HEAD
+
 	Charcter_Real_pt = { Charcter_pt.x - currentCamera.x, Charcter_pt.y - currentCamera.y };
-=======
+
 		
->>>>>>> 809e3dbc0f3d6817469103caa0b655a379ddd766
+
 	
 
 	return S_OK;
@@ -66,7 +66,7 @@ void stageScene::release()
 
 void stageScene::update()
 {
-	if (KEYMANAGER->isStayKeyDown('A'))
+	/*if (KEYMANAGER->isStayKeyDown('A'))
 	{
 		Charcter_pt.x-= speed;
 
@@ -82,7 +82,7 @@ void stageScene::update()
 	if (KEYMANAGER->isStayKeyDown('S'))
 	{
 		Charcter_pt.y += speed;
-	}
+	}*/
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
@@ -90,18 +90,16 @@ void stageScene::update()
 	}
 	
 	//currentCamera = { Charcter_pt.x - 640,Charcter_pt.y - 360 };
+	m_cm->update();
+	Charcter_pt = { (int)m_cm->getPlayerX(),(int)m_cm->getPlayerY() };
 	moveCamera(Charcter_pt);
 	Character_Rc = RectMakeCenter(Charcter_pt.x, Charcter_pt.y, 50, 100);
 	camera_rc = RectMake(currentCamera.x, currentCamera.y, 1280, 720);
-<<<<<<< HEAD
+
 	m_defaultGun->setPosition(Charcter_Real_pt.x+IMAGEMANAGER->findImage("지미")->getFrameWidth()/2, Charcter_Real_pt.y+(IMAGEMANAGER->findImage("지미")->getFrameHeight() / 2));
 
-=======
 	m_defaultGun->setPosition(m_cm->getPlayerX(), m_cm->getPlayerY());
-	m_cm->update();
-	m_cm->setPlayerX((float)(Charcter_pt.x));
-	m_cm->setPlayerY((float)(Charcter_pt.y));
->>>>>>> 809e3dbc0f3d6817469103caa0b655a379ddd766
+	
 	RECT temp;
 	for (int y = 0; y < TILEY; y++)
 	{
