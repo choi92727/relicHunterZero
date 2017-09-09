@@ -29,12 +29,15 @@ HRESULT stageScene::init()
 		else if (m_createEnemy[i].enm == ENM_DUCK) m_enemyManager->addDuck(m_createEnemy[i].pt);
 		else if (m_createEnemy[i].enm == ENM_KAMIKAZE)m_enemyManager->addKamikaze(m_createEnemy[i].pt);
 
-		gunInterface* temp = new defaultGun;
-		temp->init(CHAR_ENEMY);
-		temp->setBulletManagerLink(*m_bulletManager);
-		temp->setPosition(m_createEnemy[i].pt.x, m_createEnemy[i].pt.y-50);
 
-		m_enemyGun.push_back(temp);
+		if (m_createEnemy[i].enm != ENM_KAMIKAZE) {
+			gunInterface* temp = new defaultGun;
+			temp->init(CHAR_ENEMY);
+			temp->setBulletManagerLink(*m_bulletManager);
+			temp->setPosition(m_createEnemy[i].pt.x, m_createEnemy[i].pt.y - 50);
+
+			m_enemyGun.push_back(temp);
+		}
 	}
 
 

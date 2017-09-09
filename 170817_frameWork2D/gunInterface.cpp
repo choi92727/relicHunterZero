@@ -36,6 +36,10 @@ void gunInterface::fire()
 {
 }
 
+void gunInterface::melee()
+{
+}
+
 void gunInterface::setPosition(int x, int y)
 {
 }

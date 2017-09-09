@@ -44,6 +44,7 @@ public:
 	virtual void render();
 	virtual void render(POINT pt);
 	virtual void fire();
+	virtual void melee();
 	void setAngle(float angle) { m_angle = angle; }//앵글을 새로 넣어준다
 	virtual void setPosition(int x, int y);//포지션 재설정
 	float getFireDelay() { return m_fireDelay; }

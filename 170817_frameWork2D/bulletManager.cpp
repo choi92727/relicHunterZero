@@ -109,17 +109,19 @@ void bulletManager::objectCollisionCheck()
 	vector<object*>::iterator m_viObj = m_vObj.begin();
 	for (m_viObj; m_viObj != m_vObj.end(); m_viObj++)
 	{
-		for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
-		{
-			RECT temp;
-			if (IntersectRect(&temp, &(*m_viObj)->getRect(), &(*m_viBulletList)->getRect()))
+		if (!(*m_viObj)->getIsTeleport()) {
+			for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end();)
 			{
-				(*m_viObj)->setHP((*m_viBulletList)->getDamage());
-				deleteBullet(m_viBulletList);
-			}
-			else
-			{
-				m_viBulletList++;
+				RECT temp;
+				if (IntersectRect(&temp, &(*m_viObj)->getRect(), &(*m_viBulletList)->getRect()))
+				{
+					(*m_viObj)->setHP((*m_viBulletList)->getDamage());
+					deleteBullet(m_viBulletList);
+				}
+				else
+				{
+					m_viBulletList++;
+				}
 			}
 		}
 	}
