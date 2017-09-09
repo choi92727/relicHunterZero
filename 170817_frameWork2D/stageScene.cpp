@@ -96,9 +96,14 @@ void stageScene::release()
 
 void stageScene::update()
 {
-	float m_pAngle = getAngle(WINSIZEX / 2, WINSIZEY / 2, ptMouse.x, ptMouse.y);
-	m_defaultGun->setAngle(m_pAngle);
-
+	if (m_cm->getMeleeAtk()) {
+		m_defaultGun->setAngle(180 * (PI / 180));
+	}
+	else
+	{
+		float m_pAngle = getAngle(WINSIZEX / 2, WINSIZEY / 2, ptMouse.x, ptMouse.y);
+		m_defaultGun->setAngle(m_pAngle);
+	}
 
 	/*if (KEYMANAGER->isStayKeyDown('A'))
 	{
