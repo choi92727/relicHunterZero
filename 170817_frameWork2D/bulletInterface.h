@@ -25,7 +25,7 @@ public:
 	~bulletInterface();
 	virtual void fire(int x, int y, float angle, float speed, CHARACTER playerType);
 	virtual HRESULT init();
-	virtual	HRESULT init(CHARACTER _char, RECT rc, float damage);
+	virtual HRESULT init(CHARACTER _char, RECT rc, float damage, float angle, float speed, float range);
 	virtual void release();
 	virtual void update();
 	virtual void render();
@@ -37,7 +37,7 @@ public:
 	CHARACTER getPlayerType() { return m_playerType; }
 	int getX() { return m_x; }
 	int getY() { return m_y; }
-	 RECT getRect() {
+	virtual RECT getRect() {
 		return RectMake(m_x, m_y, m_width, m_height / 2);
 	}
 

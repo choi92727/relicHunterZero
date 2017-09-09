@@ -19,10 +19,12 @@ HRESULT bulletInterface::init()
 	return E_NOTIMPL;
 }
 
-HRESULT bulletInterface::init(CHARACTER _char, RECT rc, float damage)
+HRESULT bulletInterface::init(CHARACTER _char, RECT rc, float damage, float angle, float speed, float range)
 {
 	return E_NOTIMPL;
 }
+
+
 
 void bulletInterface::release()
 {
