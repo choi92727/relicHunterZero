@@ -480,7 +480,7 @@ HRESULT kamikaze::init(POINT position)
 	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
 	//m_enemy.angle = RND->getFloat(360.0f);
 
-	m_enemy.fire = true;
+	m_enemy.fire = false;
 	m_enemy.fireDelay = 1.0f * 60.0f;//총알 발사 대기시간
 	m_enemy.fireEnemy = false;//총을 쏘는 에너미인지
 	m_enemy.enemyNumber = 0;//현재 에너미의 숫자값

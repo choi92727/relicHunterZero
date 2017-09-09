@@ -32,8 +32,6 @@ HRESULT defaultGun::init(CHARACTER playerType)
 	m_currentDraw.init("총알숫자", 2);
 	m_totalDraw.init("별숫자", 3);
 
-
-
 	return S_OK;
 }
 
@@ -89,7 +87,7 @@ void defaultGun::render()
 void defaultGun::render(POINT pt)
 {
 	
-	if (CHAR_PLAYER) {
+	if (m_playerType == CHAR_PLAYER) {
 		if (WINSIZEX / 2 <= ptMouse.x) {
 			DrawPng(m_gunImage[0], m_graphics, m_x - pt.x, m_y - pt.y,
 				22, 60, m_angle);
@@ -100,8 +98,7 @@ void defaultGun::render(POINT pt)
 				22, 60, m_angle);
 		}
 	}
-
-	if (CHAR_ENEMY) {
+	else if (m_playerType == CHAR_ENEMY) {
 		if (m_angle > 0) {
 			DrawPng(m_gunImage[0], m_graphics, m_x - pt.x, m_y - pt.y,
 				22, 60, m_angle);

@@ -30,14 +30,15 @@ HRESULT stageScene::init()
 		else if (m_createEnemy[i].enm == ENM_KAMIKAZE)m_enemyManager->addKamikaze(m_createEnemy[i].pt);
 
 
-		if (m_createEnemy[i].enm != ENM_KAMIKAZE) {
+
+		
 			gunInterface* temp = new defaultGun;
 			temp->init(CHAR_ENEMY);
 			temp->setBulletManagerLink(*m_bulletManager);
 			temp->setPosition(m_createEnemy[i].pt.x, m_createEnemy[i].pt.y - 50);
 
 			m_enemyGun.push_back(temp);
-		}
+	
 	}
 
 
@@ -292,9 +293,12 @@ void stageScene::moveCamera(POINT characterPt)
 
 void stageScene::enemyGunRender()
 {
-	for (auto i = m_enemyGun.begin(); i != m_enemyGun.end(); i++)
+	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
-		(*i)->render(currentCamera);
+		if (m_enemyManager->getVEnemy()[i]->getFireEnemy())
+		{
+			m_enemyGun[i]->render();
+		}
 	}
 }
 
@@ -302,7 +306,7 @@ void stageScene::enemyShotGun()
 {
 	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
-		if (m_enemyManager->getVEnemy()[i]->getIsDetection() && m_enemyGun[i]->getEnemyFireTriger())
+		if (m_enemyManager->getVEnemy()[i]->getIsDetection() && m_enemyGun[i]->getEnemyFireTriger() && m_enemyManager->getVEnemy()[i]->getFireEnemy())
 		{
 			m_enemyGun[i]->setEnemyFireTriger(false);
 			m_enemyGun[i]->fire();
