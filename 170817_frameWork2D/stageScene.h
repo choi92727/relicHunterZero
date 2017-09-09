@@ -55,9 +55,10 @@ public:
 	void moveCamera(POINT characterPt);
 
 	void collision_tile_character();
-	void collision_tile_Eneermy();
+	void collision_tile_Enemy();
 	void collision_Object_character();
-	
+	void collision_Object_Enemy();
+
 	void enemyGunRender();
 	void enemyGunSetPosition();
 	void enemyShotGun();

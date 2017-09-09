@@ -73,9 +73,11 @@ public:
 
 	//에너미 X
 	virtual float getX() { return m_enemy.x; }
+	virtual void setX(float x) { m_enemy.x = x; }
 
 	//에너미 Y
 	virtual float getY() { return m_enemy.y; }
+	virtual void setY(float y) { m_enemy.y = y; }
 
 	//에너미 앵글
 	virtual float getAngle() { return m_enemy.angle; }
@@ -120,6 +122,11 @@ public:
 
 	//에너미 현재 상태
 	virtual currentEnemy getCurrent() { return m_enemy.current; }
+	virtual void setCurrent(currentEnemy current)
+	{
+		m_enemy.current = current;
+		m_enemy.count = m_enemy.currentFrameX = 0;
+	}
 };
 
 //거북이 클래스
@@ -150,9 +157,11 @@ public:
 	RECT getCollisionRect() { return m_enemy.collisionRc; }
 	//에너미 X
 	float getX() { return m_enemy.x; }
+	void setX(float x) { m_enemy.x = x; }
 
 	//에너미 Y
 	float getY() { return m_enemy.y; }
+	void setY(float y) { m_enemy.y = y; }
 
 	//에너미 앵글
 	float getAngle() { return m_enemy.angle; }
@@ -185,6 +194,11 @@ public:
 
 	//에너미 현재 상태
 	currentEnemy getCurrent() { return m_enemy.current; }
+	void setCurrent(currentEnemy current)
+	{
+		m_enemy.current = current;
+		m_enemy.count = m_enemy.currentFrameX = 0;
+	}
 
 	//추가 함수->상단에 설명추가
 	bool getFire() { return m_enemy.fire; }
@@ -229,9 +243,11 @@ public:
 	RECT getCollisionRect() { return m_enemy.collisionRc; }
 	//에너미 X
 	float getX() { return m_enemy.x; }
+	void setX(float x) { m_enemy.x = x; }
 
 	//에너미 Y
 	float getY() { return m_enemy.y; }
+	void setY(float y) { m_enemy.y = y; }
 
 	//에너미 앵글
 	float getAngle() { return m_enemy.angle; }
@@ -264,6 +280,11 @@ public:
 
 	//에너미 현재 상태
 	currentEnemy getCurrent() { return m_enemy.current; }
+	void setCurrent(currentEnemy current)
+	{
+		m_enemy.current = current;
+		m_enemy.count = m_enemy.currentFrameX = 0;
+	}
 
 	//추가 함수->상단에 설명추가
 	bool getFire() { return m_enemy.fire; }
@@ -307,9 +328,12 @@ public:
 	RECT getCollisionRect() { return m_enemy.collisionRc; }
 	//에너미 X
 	float getX() { return m_enemy.x; }
-	
+	void setX(float x) { m_enemy.x = x; }
+
 	//에너미 Y
 	float getY() { return m_enemy.y; }
+	void setY(float y) { m_enemy.y = y; }
+
 
 	//에너미 앵글
 	float getAngle() { return m_enemy.angle; }
@@ -342,6 +366,11 @@ public:
 
 	//에너미 현재 상태
 	currentEnemy getCurrent() { return m_enemy.current; }
+	void setCurrent(currentEnemy current)
+	{
+		m_enemy.current = current;
+		m_enemy.count = m_enemy.currentFrameX = 0;
+	}
 
 	//추가 함수->상단에 설명추가
 	bool getFire() { return m_enemy.fire; }

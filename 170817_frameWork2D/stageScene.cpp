@@ -285,35 +285,7 @@ void stageScene::moveCamera(POINT characterPt)
 	currentCamera.y = characterPt.y + (ptMouse.y - WINSIZEY / 2) / 6 - WINSIZEY / 2;
 }
 
-void stageScene::collision_tile_character()
-{
-	RECT temp;
-	for (int y = 0; y < TILEY; y++)
-	{
-		for (int x = 0; x < TILEX; x++)
-		{
-			if (IntersectRect(&temp, &m_cm->getWall_hitRc(), &tile[y][x].rc))
-			{
-				if (tile[y][x].attribute == ATTR_UNMOVE)
-				{
-					testX = 1;
-					return;
-				}
 
-			}
-		}
-	}
-	testX = 0;
-
-}
-
-void stageScene::collision_tile_Eneermy()
-{
-}
-
-void stageScene::collision_Object_character()
-{
-}
 
 void stageScene::enemyGunRender()
 {
@@ -331,6 +303,206 @@ void stageScene::enemyShotGun()
 		{
 			m_enemyGun[i]->setEnemyFireTriger(false);
 			m_enemyGun[i]->fire();
+		}
+	}
+}
+
+void stageScene::collision_tile_character()
+{
+	RECT temp;
+
+	for (int y = 0; y < TILEY; y++)
+	{
+		for (int x = 0; x < TILEX; x++)
+		{
+			if (IntersectRect(&temp, &m_cm->getWall_hitRc(), &tile[y][x].rc))
+			{
+
+				if (tile[y][x].attribute == ATTR_UNMOVE)
+				{
+					SetRect(&temp, 0, 0, temp.right - temp.left, temp.bottom - temp.top);
+					//상, 하 충돌
+					if (temp.bottom < temp.right)
+					{
+						//위 충돌
+						if ((tile[y][x].rc.top + tile[y][x].rc.bottom) / 2 < (m_cm->getWall_hitRc().top + m_cm->getWall_hitRc().bottom) / 2)
+						{
+							m_cm->setPlayerY(m_cm->getPlayerY() + (temp.bottom - temp.top));
+						}
+						//아래 충돌
+						else
+						{
+							m_cm->setPlayerY(m_cm->getPlayerY() - (temp.bottom - temp.top));
+						}
+					}
+					//좌, 우 충돌
+					else
+					{
+						//왼쪽 충돌
+						if ((tile[y][x].rc.left + tile[y][x].rc.right) / 2 < (m_cm->getWall_hitRc().left + m_cm->getWall_hitRc().right) / 2)
+						{
+							m_cm->setPlayerX(m_cm->getPlayerX() + (temp.right - temp.left));
+						}
+						//오른쪽 충돌
+						else
+						{
+							m_cm->setPlayerX(m_cm->getPlayerX() - (temp.right - temp.left));
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+void stageScene::collision_tile_Enemy()
+{
+	RECT temp;
+	RECT enemy_collision_rc;
+	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
+	{
+		enemy_collision_rc = m_enemyManager->getVEnemy()[i]->getCollisionRect();
+
+		for (int y = 0; y < TILEY; y++)
+		{
+			for (int x = 0; x < TILEX; x++)
+			{
+				if (IntersectRect(&temp, &enemy_collision_rc, &tile[y][x].rc))
+				{
+					if (tile[y][x].attribute == ATTR_UNMOVE)
+					{
+						POINT temp_center = { temp.left + (temp.right - temp.left) / 2,temp.top + (temp.bottom - temp.top) / 2 };
+						POINT tile_center = { tile[y][x].rc.left + (tile[y][x].rc.right - tile[y][x].rc.left) / 2,tile[y][x].rc.top + (tile[y][x].rc.bottom - tile[y][x].rc.top) / 2 };
+						if (temp.left == enemy_collision_rc.left && temp.right == enemy_collision_rc.right)// 상하 충돌
+						{
+
+							if (tile_center.y < temp_center.y)//위 충돌
+							{
+								m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() + (temp.bottom - temp.top));
+							}
+							//아래 충돌
+							else if (tile_center.y > temp_center.y)
+							{
+								m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() - (temp.bottom - temp.top));
+							}
+						}
+						else if (temp.top == enemy_collision_rc.top && temp.bottom == enemy_collision_rc.bottom)//좌우 충돌
+						{
+							//왼쪽 충돌
+							if (tile_center.x < temp_center.x)
+							{
+								//m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() + (temp.right - temp.left));
+								m_enemyManager->getVEnemy()[i]->setX(tile[y][x].rc.right + 21);
+							}
+							//오른쪽 충돌
+							else if (tile_center.x > temp_center.x)
+							{
+								//m_enemyManager->getVEnemy()[i]->setX(m_enemyManager->getVEnemy()[i]->getX() - (temp.right - temp.left));
+								m_enemyManager->getVEnemy()[i]->setX(tile[y][x].rc.left - 21);
+							}
+						}
+						m_enemyManager->getVEnemy()[i]->setCurrent(STOP_ENEMY);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+void stageScene::collision_Object_character()
+{
+	RECT temp;
+	RECT tempObject;
+
+	for (int i = 0; i < m_objectManager->getVObject().size(); i++)
+	{
+		if (m_objectManager->getVObject()[i]->getIsTeleport())continue;
+
+		tempObject = m_objectManager->getVObject()[i]->getRect();
+		tempObject = { tempObject.left,tempObject.top - 14,tempObject.right,tempObject.bottom };
+		if (IntersectRect(&temp, &m_cm->getWall_hitRc(), &tempObject))
+		{
+			SetRect(&temp, 0, 0, temp.right - temp.left, temp.bottom - temp.top);
+			//상, 하 충돌
+			if (temp.bottom < temp.right)
+			{
+				//위 충돌
+				if ((tempObject.top + tempObject.bottom) / 2 < (m_cm->getWall_hitRc().top + m_cm->getWall_hitRc().bottom) / 2)
+				{
+					m_cm->setPlayerY(m_cm->getPlayerY() + (temp.bottom - temp.top));
+				}
+				//아래 충돌
+				else
+				{
+					m_cm->setPlayerY(m_cm->getPlayerY() - (temp.bottom - temp.top));
+				}
+			}
+			//좌, 우 충돌
+			else
+			{
+				//왼쪽 충돌
+				if ((tempObject.left + tempObject.right) / 2 < (m_cm->getWall_hitRc().left + m_cm->getWall_hitRc().right) / 2)
+				{
+					m_cm->setPlayerX(m_cm->getPlayerX() + (temp.right - temp.left));
+				}
+				//오른쪽 충돌
+				else
+				{
+					m_cm->setPlayerX(m_cm->getPlayerX() - (temp.right - temp.left));
+				}
+			}
+
+		}
+	}
+}
+
+void stageScene::collision_Object_Enemy()
+{
+	RECT temp;
+	RECT enemy_collision_rc;
+	RECT object_colision_rc;
+	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
+	{
+		for (int j = 0; j < m_objectManager->getVObject().size(); j++)
+		{
+			enemy_collision_rc = m_enemyManager->getVEnemy()[i]->getCollisionRect();
+			object_colision_rc = m_objectManager->getVObject()[j]->getRect();
+			if (IntersectRect(&temp, &enemy_collision_rc, &object_colision_rc))
+			{
+				if (!m_objectManager->getVObject()[j]->getIsTeleport())
+				{
+					POINT temp_center = { temp.left + (temp.right - temp.left) / 2,temp.top + (temp.bottom - temp.top) / 2 };
+					POINT object_center = { object_colision_rc.left + (object_colision_rc.right - object_colision_rc.left) / 2, object_colision_rc.top + (object_colision_rc.bottom - object_colision_rc.top) / 2 };
+					if (temp.left == enemy_collision_rc.left && temp.right == enemy_collision_rc.right)// 상하 충돌
+					{
+
+						if (object_center.y < temp_center.y)//위 충돌
+						{
+							m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() + (temp.bottom - temp.top));
+						}
+						//아래 충돌
+						else if (object_center.y > temp_center.y)
+						{
+							m_enemyManager->getVEnemy()[i]->setY(m_enemyManager->getVEnemy()[i]->getY() - (temp.bottom - temp.top));
+						}
+					}
+					else if (temp.top == enemy_collision_rc.top && temp.bottom == enemy_collision_rc.bottom)//좌우 충돌
+					{
+						//왼쪽 충돌
+						if (object_center.x < temp_center.x)
+						{
+							m_enemyManager->getVEnemy()[i]->setX(object_colision_rc.right + 21);
+						}
+						//오른쪽 충돌
+						else if (object_center.x > temp_center.x)
+						{
+							m_enemyManager->getVEnemy()[i]->setX(object_colision_rc.left - 21);
+						}
+					}
+					m_enemyManager->getVEnemy()[i]->setCurrent(STOP_ENEMY);
+				}
+			}
 		}
 	}
 }

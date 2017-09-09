@@ -148,8 +148,8 @@ void jimmy::render(POINT pt)
 	MyPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 	OldPen = (HPEN)SelectObject(getMemDC(), MyPen);
 
-	Rectangle(getMemDC(), m_player.enemy_hitRc.left, m_player.enemy_hitRc.top,
-		m_player.enemy_hitRc.right, m_player.enemy_hitRc.bottom);
+	Rectangle(getMemDC(), m_player.enemy_hitRc.left - pt.x, m_player.enemy_hitRc.top - pt.y,
+		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
 	Rectangle(getMemDC(), m_player.wall_hitRc.left-pt.x, m_player.wall_hitRc.top-pt.y,
 		m_player.wall_hitRc.right-pt.x, m_player.wall_hitRc.bottom-pt.y);
 
@@ -171,7 +171,7 @@ void jimmy::render(POINT pt)
 	sprintf(str, TEXT("%f"), m_player.angle);
 	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, lstrlen(str));
 
-	LineMake(getMemDC(),m_player.x, m_player.y, m_player.x + cosf(m_player.angle) * 100, m_player.y + (-sinf(m_player.angle) * 100));
+	LineMake(getMemDC(),m_player.x - pt.x, m_player.y - pt.y, m_player.x + cosf(m_player.angle) * 100 - pt.x, m_player.y + (-sinf(m_player.angle) * 100) - pt.y);
 
 	sprintf(str, TEXT("x : %f, y : %f"), m_player.x, m_player.y);
 	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2 + 40, str, lstrlen(str));
