@@ -165,7 +165,8 @@ void jimmy::render(POINT pt)
 		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
 	Rectangle(getMemDC(), m_player.wall_hitRc.left - pt.x, m_player.wall_hitRc.top - pt.y,
 		m_player.wall_hitRc.right - pt.x, m_player.wall_hitRc.bottom - pt.y);
-
+	//Rectangle(getMemDC(), m_player.melee_atkRc.left - pt.x, m_player.melee_atkRc.top -pt.y,
+	//	m_player.melee_atkRc.right - pt.x, m_player.melee_atkRc.bottom - pt.y);
 	SelectObject(getMemDC(), OldBrush);
 	SelectObject(getMemDC(), OldPen);
 	DeleteObject(MyPen);
@@ -374,6 +375,8 @@ void jimmy::melee(POINT pt)
 
 	if (KEYMANAGER->isOnceKeyDown('V') && !m_player.melee)
 	{
+		m_player.meleeEnd = false;
+
 		m_player.angle = getAngle(m_player.x, m_player.y, pt.x + ptMouse.x, pt.y + ptMouse.y);
 		m_player.melee = true;
 		m_player.frameX = 0;
@@ -389,6 +392,8 @@ void jimmy::melee(POINT pt)
 
 			if (m_player.meleeAtkOnce == true)
 			{
+				m_player.melee_atkRc = RectMakeCenter(m_player.x + (cosf(m_player.angle) * 50), m_player.y + (-sinf(m_player.angle) * 50), 60, 60);
+				
 				m_player.meleeAtk = true;
 				m_player.meleeAtkOnce = false;
 			}
@@ -398,8 +403,9 @@ void jimmy::melee(POINT pt)
 		if (count % 35 == 0)
 		{
 			m_player.melee = false;
-
 			m_player.meleeAtk = false;
+			
+			m_player.meleeEnd = true;
 			count = 0;
 		}
 	}

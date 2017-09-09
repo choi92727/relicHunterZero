@@ -19,6 +19,9 @@ HRESULT collisionBullet::init(CHARACTER _char, RECT rc, float damage, float angl
 	m_angle = angle;
 	m_speed = speed;
 	m_range = range;
+
+	m_x = (m_rc.left + m_rc.right) / 2;
+	m_y = (m_rc.top + m_rc.bottom) / 2;
 	return S_OK;
 }
 void collisionBullet::release()
@@ -35,17 +38,22 @@ void collisionBullet::update()
 
 	m_range -= m_speed;
 
-
+	m_x = (m_rc.left + m_rc.right) / 2;
+	m_y = (m_rc.top + m_rc.bottom) / 2;
 }
 
 void collisionBullet::render()
 {
-	Rectangle(getMemDC(), m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
+	//Rectangle(getMemDC(), m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
 }
 
 void collisionBullet::render(POINT pt)
 {
+<<<<<<< HEAD
 	Rectangle(getMemDC(), m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
+=======
+	Rectangle(getMemDC(), m_rc.left-pt.x, m_rc.top-pt.y, m_rc.right-pt.x, m_rc.bottom-pt.y);
+>>>>>>> 01fada5b68efa63a917706d9122b338337d0aa39
 }
 
 void collisionBullet::setRect(RECT rc)

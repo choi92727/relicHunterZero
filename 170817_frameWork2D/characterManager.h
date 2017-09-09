@@ -26,6 +26,13 @@ public:
 	RECT getEnemy_hitRc() { return m_player->getEnemy_hitRc(); }//플레이어 피격히트박스 가져오기
 	RECT getWall_hitRc() { return m_player->getWall_hitRc(); }	//플레이어 벽히트박스 가져오기
 
+	bool getMeleeAtk() { return m_player->getMeleeAtk(); }
+	RECT getMelee_atkRc() { return m_player->getMelee_atkRc(); }//플레이어 근접공격 렉트 가져오기@@@@@@@@@
+	float getP_Angle() { return m_player->getP_Angle(); }
+	float getSpeed() { return m_player->getSpeed(); }
+	bool getMeleeEnd() { return m_player->getMeleeEnd(); }
+
+
 	int getMaxHP() { return m_player->getMaxHP(); }		//플레이어 총체력가져오기
 	void setMaxHP(int HP) { m_player->setMaxHP(HP); }	//총체력 셋
 	int getCurrentHP() { return m_player->getCurrentHP(); }		//플레이어 현재체력가져오기

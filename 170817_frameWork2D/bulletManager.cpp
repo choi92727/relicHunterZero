@@ -48,10 +48,12 @@ void bulletManager::render(POINT pt)
 	{
 		(*m_viBulletList)->render(pt);
 	}
-	//char text[64];
-	//wsprintf(text, "bulletSize %d",m_vBulletList.size());
 
-	//TextOut(getMemDC(), 10, 130, text, strlen(text));
+	
+	char text[64];
+	wsprintf(text, "bulletSize %d",m_vBulletList.size());
+
+	TextOut(getMemDC(), WINSIZEX/2, 130, text, strlen(text));
 }
 
 void bulletManager::addBullet(bulletInterface &m_bullet)
