@@ -1,0 +1,9 @@
+
+
+init에서
+m_x = (m_rc.left + m_rc.right)/2;
+m_y = (m_rc.top + m_rc.bottom)/2;
+
+update에서
+m_x = (m_rc.left + m_rc.right)/2;
+m_y = (m_rc.top + m_rc.bottom)/2;

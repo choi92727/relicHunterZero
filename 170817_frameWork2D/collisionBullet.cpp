@@ -45,6 +45,7 @@ void collisionBullet::render()
 
 void collisionBullet::render(POINT pt)
 {
+	Rectangle(getMemDC(), m_rc.left, m_rc.top, m_rc.right, m_rc.bottom);
 }
 
 void collisionBullet::setRect(RECT rc)
