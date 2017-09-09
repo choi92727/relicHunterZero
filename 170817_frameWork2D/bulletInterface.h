@@ -19,12 +19,13 @@ protected:
 
 	Image* m_bulletImage;//drawPng를 사용하기 위한 클래스 위에 대문자로 시작함.
 	Graphics* m_graphics;//drawPng를 사용하기 위한 변수
-
+	RECT m_rc;
 public:
 	bulletInterface();
 	~bulletInterface();
 	virtual void fire(int x, int y, float angle, float speed, CHARACTER playerType);
 	virtual HRESULT init();
+	virtual	HRESULT init(CHARACTER _char, RECT rc, float damage);
 	virtual void release();
 	virtual void update();
 	virtual void render();
@@ -36,7 +37,7 @@ public:
 	CHARACTER getPlayerType() { return m_playerType; }
 	int getX() { return m_x; }
 	int getY() { return m_y; }
-	RECT getRect() {
+	 RECT getRect() {
 		return RectMake(m_x, m_y, m_width, m_height / 2);
 	}
 

@@ -150,6 +150,7 @@
     <ClInclude Include="characterInterface.h" />
     <ClInclude Include="characterManager.h" />
     <ClInclude Include="characterProgressBar.h" />
+    <ClInclude Include="collisionBullet.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="creditScene.h" />
     <ClInclude Include="cursorDraw.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="characterInterface.cpp" />
     <ClCompile Include="characterManager.cpp" />
     <ClCompile Include="characterProgressBar.cpp" />
+    <ClCompile Include="collisionBullet.cpp" />
     <ClCompile Include="creditScene.cpp" />
     <ClCompile Include="cursorDraw.cpp" />
     <ClCompile Include="defaultBullet.cpp" />

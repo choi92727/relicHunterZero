@@ -153,6 +153,7 @@
     <ClCompile Include="machineGun.cpp">
       <Filter>MainGame\bullet</Filter>
     </ClCompile>
+    <ClCompile Include="collisionBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameNode.h">
@@ -325,6 +326,7 @@
     <ClInclude Include="machineGun.h">
       <Filter>MainGame\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="collisionBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="frameWork2D">
