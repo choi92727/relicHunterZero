@@ -18,7 +18,7 @@ public:
 	HRESULT init(char* frontImage, char* backImage, float x, float y, int width, int height);
 	void release();
 	void update();
-	void render();
+	void render(POINT pt);
 
 	//프로그래스바 게이지 셋팅!
 	void setGauge(float currentGauge, float maxGauge);

@@ -36,5 +36,7 @@ public:
 
 	//애니메이션 찾기삭제
 	void deleteAll();
+
+	
 };
 

@@ -2,7 +2,8 @@
 #include "mainGame.h"
 
 HINSTANCE hInstance;
-
+ULONG_PTR gdiplusToken;//gdiPlus토큰 생성을 위한 변수->필요변수
+GdiplusStartupInput gdiplusStartupInput;//gdiPlus사용시 필요한 변수->필요변수
 HWND hWnd;
 
 POINT ptMouse = { 0, 0 };
@@ -49,6 +50,9 @@ int APIENTRY WinMain(HINSTANCE m_hInstance, HINSTANCE hPrevInstance, LPSTR lpszC
 
 	ShowWindow(hWnd, nCmdShow);
 
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);//gdi기능 사용
+
+
 	if (FAILED(m_mainGame->init()))
 	{
 		return 0;
@@ -79,6 +83,7 @@ int APIENTRY WinMain(HINSTANCE m_hInstance, HINSTANCE hPrevInstance, LPSTR lpszC
 	}
 
 	m_mainGame->release();
+	GdiplusShutdown(gdiplusToken);//gdi토큰 삭제
 
 	UnregisterClass(WINNAME, m_hInstance);
 

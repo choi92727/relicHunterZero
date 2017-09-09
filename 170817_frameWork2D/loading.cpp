@@ -115,7 +115,7 @@ void loading::update()
 void loading::render()
 {
 	m_backGround->render(getMemDC());
-	m_loadingBar->render();
+	m_loadingBar->render({ 0,0 });
 }
 
 void loading::loadImage(string keyName, int width, int height)

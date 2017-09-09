@@ -523,6 +523,28 @@ void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sour
 
 void image::alphaRender(HDC hdc, BYTE alpha)
 {
+	////알파값 초기화
+	//m_blendFunc.SourceConstantAlpha = alpha;
+
+	////배경색(마젠타) 없앤 후 알파블렌딩 할거냐?
+	//if (m_isTrans)
+	//{
+	//	//1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지에 그려준다.
+	//	BitBlt(m_blendImage->hMemDC, 0, 0, m_blendImage->width, m_blendImage->height, hdc,
+	//		WINSIZEX, WINSIZEY, SRCCOPY);
+	//	//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타를 없애준다)
+	//	GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height,
+	//		m_imageInfo->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_transColor);
+	//	//3. 블렌드 DC를 출력해야 할 DC에 그린다.
+	//	AlphaBlend(hdc, 0, 0, m_imageInfo->width, m_imageInfo->height, m_blendImage->hMemDC,
+	//		0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+	//}
+	////원본 이미지 그대로 알파블렌딩 할거냐?
+	//else
+	//{
+	//	AlphaBlend(hdc, 0, 0, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
+	//		0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+	//}
 	//알파값 초기화
 	m_blendFunc.SourceConstantAlpha = alpha;
 
@@ -530,25 +552,50 @@ void image::alphaRender(HDC hdc, BYTE alpha)
 	if (m_isTrans)
 	{
 		//1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지에 그려준다.
-		BitBlt(m_blendImage->hMemDC, 0, 0, m_blendImage->width, m_blendImage->height, hdc,
-			WINSIZEX, WINSIZEY, SRCCOPY);
-		//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타를 없애준다)
+		BitBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, hdc,
+			0,0 ,SRCCOPY);
+		//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타값 없애줌)
 		GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height,
 			m_imageInfo->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_transColor);
 		//3. 블렌드 DC를 출력해야 할 DC에 그린다.
-		AlphaBlend(hdc, 0, 0, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
-			0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+		AlphaBlend(hdc,0,0, m_imageInfo->width, m_imageInfo->height,
+			m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
 	}
-	//원본 이미지 그대로 알파블렌딩 할거냐?
+	//원본 이미지 그대로 출력할거냐?
 	else
 	{
-		AlphaBlend(hdc, 0, 0, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
-			0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+		AlphaBlend(hdc, 0,0, m_imageInfo->width, m_imageInfo->height,
+			m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
 	}
 }
 
 void image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 {
+	////알파값 초기화
+	//m_blendFunc.SourceConstantAlpha = alpha;
+
+	////배경색(마젠타) 없앤 후 알파블렌딩 할거냐?
+	//if (m_isTrans)
+	//{
+	//	//1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지에 그려준다.
+	//	BitBlt(m_blendImage->hMemDC, 0, 0, m_blendImage->width, m_blendImage->height, hdc,
+	//		destX, destY, SRCCOPY);
+	//	//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타를 없애준다)
+	//	GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height,
+	//		m_imageInfo->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_transColor);
+	//	//3. 블렌드 DC를 출력해야 할 DC에 그린다.
+	//	AlphaBlend(hdc, destX, destY, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
+	//		0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+	//}
+	////원본 이미지 그대로 알파블렌딩 할거냐?
+	//else
+	//{
+	//	AlphaBlend(hdc, destX, destY, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
+	//		0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+	//}
+	///////////////////////////////////////////////////////////
+	
+
 	//알파값 초기화
 	m_blendFunc.SourceConstantAlpha = alpha;
 
@@ -556,25 +603,47 @@ void image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 	if (m_isTrans)
 	{
 		//1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지에 그려준다.
-		BitBlt(m_blendImage->hMemDC, 0, 0, m_blendImage->width, m_blendImage->height, hdc,
+		BitBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, hdc,
 			destX, destY, SRCCOPY);
-		//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타를 없애준다)
+		//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타값 없애줌)
 		GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height,
 			m_imageInfo->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_transColor);
 		//3. 블렌드 DC를 출력해야 할 DC에 그린다.
-		AlphaBlend(hdc, destX, destY, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
-			0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+		AlphaBlend(hdc, destX, destY, m_imageInfo->width, m_imageInfo->height,
+			m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
 	}
-	//원본 이미지 그대로 알파블렌딩 할거냐?
+	//원본 이미지 그대로 출력할거냐?
 	else
 	{
-		AlphaBlend(hdc, destX, destY, m_imageInfo->width, m_imageInfo->height, m_imageInfo->hMemDC,
-			0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
+		AlphaBlend(hdc, destX, destY, m_imageInfo->width, m_imageInfo->height,
+			m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, m_blendFunc);
 	}
 }
 
 void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
 {
+	////알파값 초기화
+	//m_blendFunc.SourceConstantAlpha = alpha;
+
+	////배경색(마젠타) 없앤 후 알파블렌딩 할거냐?
+	//if (m_isTrans)
+	//{
+	//	//1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지에 그려준다.
+	//	BitBlt(m_blendImage->hMemDC, 0, 0, m_blendImage->width, m_blendImage->height, hdc,
+	//		destX, destY, SRCCOPY);
+	//	//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타를 없애준다)
+	//	GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, sourWidth, sourHeight,
+	//		m_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, m_transColor);
+	//	//3. 블렌드 DC를 출력해야 할 DC에 그린다.
+	//	AlphaBlend(hdc, destX, destY, sourWidth, sourHeight, m_blendImage->hMemDC,
+	//		sourX, sourY, sourWidth, sourHeight, m_blendFunc);
+	//}
+	////원본 이미지 그대로 알파블렌딩 할거냐?
+	//else
+	//{
+	//	AlphaBlend(hdc, destX, destY, sourWidth, sourHeight, m_imageInfo->hMemDC,
+	//		sourX, sourY, sourWidth, sourHeight, m_blendFunc);
+	//}
 	//알파값 초기화
 	m_blendFunc.SourceConstantAlpha = alpha;
 
@@ -582,20 +651,20 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 	if (m_isTrans)
 	{
 		//1. 출력해야 될 DC에 그려져 있는 내용을 블렌드 이미지에 그려준다.
-		BitBlt(m_blendImage->hMemDC, 0, 0, m_blendImage->width, m_blendImage->height, hdc,
+		BitBlt(m_blendImage->hMemDC, 0, 0, m_imageInfo->width, m_imageInfo->height, hdc,
 			destX, destY, SRCCOPY);
-		//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타를 없애준다)
+		//2. 출력해야 될 이미지를 블렌드에 그려준다(마젠타값 없애줌)
 		GdiTransparentBlt(m_blendImage->hMemDC, 0, 0, sourWidth, sourHeight,
 			m_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, m_transColor);
 		//3. 블렌드 DC를 출력해야 할 DC에 그린다.
-		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight, m_imageInfo->hMemDC,
-			sourX, sourY, sourWidth, sourHeight, m_blendFunc);
+		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
+			m_blendImage->hMemDC, 0, 0, sourWidth, sourHeight, m_blendFunc);
 	}
-	//원본 이미지 그대로 알파블렌딩 할거냐?
+	//원본 이미지 그대로 출력할거냐?
 	else
 	{
-		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight, m_imageInfo->hMemDC,
-			sourX, sourY, sourWidth, sourHeight, m_blendFunc);
+		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
+			m_blendImage->hMemDC, 0, 0, sourWidth, sourHeight, m_blendFunc);
 	}
 }
 
@@ -815,6 +884,7 @@ void image::loopAlphaRender(HDC hdc, const LPRECT drawArea, int offsetX, int off
 			rcDest.right = rcDest.left + sourWidth;
 
 			//그려주자
+	
 			alphaRender(hdc, rcDest.left, rcDest.top, rcSour.left, rcSour.top, rcSour.right - rcSour.left, rcSour.bottom - rcSour.top, alpha);
 		}
 	}
@@ -823,4 +893,9 @@ void image::loopAlphaRender(HDC hdc, const LPRECT drawArea, int offsetX, int off
 void image::aniRender(HDC hdc, int destX, int destY, animation * ani)
 {
 	render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
+}
+
+void image::aniAlphaRender(HDC hdc, int destX, int destY, animation *ani, BYTE alpha)
+{
+	alphaRender(hdc,destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight(),alpha);
 }

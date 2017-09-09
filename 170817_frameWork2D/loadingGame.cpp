@@ -17,15 +17,21 @@ HRESULT loadingGame::init()
 	ANIMATIONMANAGER->addDefAnimation("ani1", "로딩화면", 10, false, true);
 	ANIMATIONMANAGER->start("ani1");
 	loadingAni= ANIMATIONMANAGER->findAnimation("ani1");
+	SOUNDMANAGER->play("로딩브금", 0.5f);
 	return S_OK;
 }
 
 void loadingGame::release()
 {
+	SOUNDMANAGER->stop("로딩브금");
 }
 
 void loadingGame::update()
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		SCENEMANAGER->changeScene("mainMenu");
+	}
 }
 
 void loadingGame::render()

@@ -1,0 +1,15 @@
+#pragma once
+
+enum CHARACTER
+{
+	CHAR_PLAYER,
+	CHAR_ENEMY,
+	CHAR_BOSS
+};
+enum GUNTYPE
+{
+	GUN_DEFAULT,
+	GUN_MACHINE,
+	GUN_SHOTGUN,
+	GUN_PLASMA
+};

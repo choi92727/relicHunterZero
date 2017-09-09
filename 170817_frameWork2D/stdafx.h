@@ -22,6 +22,9 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <ole2.h> //gdiplus기능 사용시 필요
+#pragma comment(lib, "gdiplus")//gdiplus기능 사용시 필요
+#include <GdiPlus.h>//gdiplus기능 사용시 필요
 
 //===================================================
 // ## 내가 만든 헤더파일 이 곳에 추가 ##
@@ -37,7 +40,7 @@
 #include "soundManager.h"
 #include "effectManager.h"
 #include "animationManager.h"
-
+#include "tags.h"//문광현 추가(불렛 이용시 필요한 enum헤더)
 //===================================================
 // ## 싱글톤 추가 ##
 //===================================================
@@ -55,6 +58,7 @@
 // ## 네임스페이스 추가 ##
 //===================================================
 using namespace MY_UTIL;
+using namespace Gdiplus;//gdiplus기능 사용시 필요
 
 //===================================================
 // ## 디파인문 추가 ## (윈도우 초기화 셋팅)
