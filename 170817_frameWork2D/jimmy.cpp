@@ -21,12 +21,20 @@ HRESULT jimmy::init(POINT position)
 
 	m_player.img = IMAGEMANAGER->findImage("지미");		//지미 이미지를 넣음
 	m_player.faceImg = IMAGEMANAGER->findImage("지미상태얼굴");		//체력에따른 지미얼굴
+																//m_player.shieldImg = IMAGEMANAGER->findImage("쉴드"); //쉴드이미지
+	m_player.shieldRender = false;
+
 	m_player.x = position.x;
 	m_player.y = position.y;
 	m_player.enemy_hitRc = RectMakeCenter(m_player.x, m_player.y, 34, 56);	//적에게 피격가능한 렉트
-	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y+22, 34, 21);	//벽에 부딪치는 렉트
+	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y + 22, 34, 21);	//벽에 부딪치는 렉트
 	m_player.currentHP = m_player.maxHP = 150;
 	m_player.currentShield = m_player.maxShield = 50;
+
+	m_player.shieldGenDealy = 2.0f;
+	m_player.shieldGenTime = 0;
+	m_player.shieldGen = false;
+
 	m_player.currentStamina = m_player.maxStamina = 100;	//
 	m_player.speed = 5.0f;													//플레이어 이동속도
 	m_player.frameCount = 0;
@@ -44,6 +52,7 @@ HRESULT jimmy::init(POINT position)
 	m_player.melee = false;
 	m_player.hit = false;
 	m_player.run = false;	// 달리기상태확인
+	m_player.runStartDelay = false;
 
 	m_player.meleeAtk = false;		//근접공격 렉트생성확인
 	m_player.meleeAtkOnce = false;	//렉트생성 한번만실행
@@ -52,7 +61,7 @@ HRESULT jimmy::init(POINT position)
 	m_player.img->setFrameY(4);		//4번은 IDLE 애니메이션임
 
 
-	//체력바
+									//체력바
 	hpBar = new characterProgressBar;
 	hpBar->init("체력바앞", "체력바뒤", 98, 42, 172, 52);
 
@@ -92,9 +101,9 @@ void jimmy::update(POINT pt)
 	shieldBar->setGauge(m_player.currentShield, m_player.maxShield);
 	shieldBar->update();
 
-	staminaBar->setGauge(m_player.currentStamina,m_player.maxStamina);
+	staminaBar->setGauge(m_player.currentStamina, m_player.maxStamina);
 	staminaBar->update();
-	
+
 	hpFaceInfo();
 
 
@@ -102,30 +111,27 @@ void jimmy::update(POINT pt)
 	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y + 22, 34, 21);	//벽에 부딪히는 렉트 생성
 
 
-
 	move();			//이동명령에 관한 함수
 
 	command();		//커맨드 (부모클래스에있음 더블연타시 대쉬를 출력함)
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)&&!m_player.dash)	//대쉬중이 아니고 클릭시 파이어
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && !m_player.dash)	//대쉬중이 아니고 클릭시 파이어
 	{
-		m_player.currentHP -= 1;		//테스트용
-		m_player.currentShield -= 1;	//테스트용
 		fire();
 	}
 	melee(pt);	//근접공격 
-	
+
 	run();		//달리기
 
 	hit();		//피격 숫자1번
 
-	dead();		//사망 2번
+	damage();
 
+	dead();		//사망 2번
 
 	animation();	//애니메이션 함수
 
-
-
+	shieldRegen();
 }
 void jimmy::render(POINT pt)
 {
@@ -133,12 +139,19 @@ void jimmy::render(POINT pt)
 	hpBar->render();
 	shieldBar->render();
 	staminaBar->render();
-	hpNumDraw->render(200,45,1);
-	shieldNumDraw->render(210,75,1);
+	hpNumDraw->render(200, 45, 1);
+	shieldNumDraw->render(210, 75, 1);
 	m_player.faceImg->frameRender(getMemDC(), 1, 16);
 
 
-	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left-40 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y);
+	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left - 40 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y);
+
+	if (m_player.shieldRender)
+	{
+		/*m_player.shieldImg->frameAlphaRender(getMemDC(), m_player.enemy_hitRc.left - 40 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y,
+		m_player.shieldImg->getFrameX(), 0, 150);*/
+		m_player.shieldImg->alphaRender(getMemDC(), m_player.enemy_hitRc.left - 40 + 28 + 8 - pt.x, m_player.enemy_hitRc.top - 30 + 35 - pt.y, 100);
+	}
 
 	HBRUSH MyBrush, OldBrush;
 	HPEN MyPen, OldPen;
@@ -150,8 +163,8 @@ void jimmy::render(POINT pt)
 
 	Rectangle(getMemDC(), m_player.enemy_hitRc.left - pt.x, m_player.enemy_hitRc.top - pt.y,
 		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
-	Rectangle(getMemDC(), m_player.wall_hitRc.left-pt.x, m_player.wall_hitRc.top-pt.y,
-		m_player.wall_hitRc.right-pt.x, m_player.wall_hitRc.bottom-pt.y);
+	Rectangle(getMemDC(), m_player.wall_hitRc.left - pt.x, m_player.wall_hitRc.top - pt.y,
+		m_player.wall_hitRc.right - pt.x, m_player.wall_hitRc.bottom - pt.y);
 
 	SelectObject(getMemDC(), OldBrush);
 	SelectObject(getMemDC(), OldPen);
@@ -171,7 +184,7 @@ void jimmy::render(POINT pt)
 	sprintf(str, TEXT("%f"), m_player.angle);
 	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, lstrlen(str));
 
-	LineMake(getMemDC(),m_player.x - pt.x, m_player.y - pt.y, m_player.x + cosf(m_player.angle) * 100 - pt.x, m_player.y + (-sinf(m_player.angle) * 100) - pt.y);
+	LineMake(getMemDC(), m_player.x, m_player.y, m_player.x + cosf(m_player.angle) * 100, m_player.y + (-sinf(m_player.angle) * 100));
 
 	sprintf(str, TEXT("x : %f, y : %f"), m_player.x, m_player.y);
 	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2 + 40, str, lstrlen(str));
@@ -204,7 +217,7 @@ void jimmy::animation()
 			m_player.frameX++;
 			if (m_player.frameX > 10) m_player.frameX = 0;
 		}
-		if (m_player.frameX ==10)		//     죽었을때 마지막프레임에 도달시 진짜죽음실행
+		if (m_player.frameX == 10)		//     죽었을때 마지막프레임에 도달시 진짜죽음실행
 		{
 			m_player.die = true;
 		}
@@ -319,14 +332,14 @@ void jimmy::animation()
 void jimmy::move()
 {
 	//마우스보다 커지거나 작아지면 좌우 값을 바꿈
-	if (ptMouse.x < WINSIZEX/2)m_player.isLeft = true;
+	if (ptMouse.x < WINSIZEX / 2)m_player.isLeft = true;
 	else m_player.isLeft = false;
 
 
-	if (KEYMANAGER->isStayKeyDown('A')&&!m_player.melee)
+	if (KEYMANAGER->isStayKeyDown('A') && !m_player.melee)
 	{
 		m_player.x -= m_player.speed;
-		if(!m_player.dash && !m_player.hit) m_player.animation = WALK;
+		if (!m_player.dash && !m_player.hit) m_player.animation = WALK;
 
 	}
 	if (KEYMANAGER->isStayKeyDown('D') && !m_player.melee)
@@ -343,7 +356,7 @@ void jimmy::move()
 	{
 		m_player.y += m_player.speed;
 		if (!m_player.dash && !m_player.hit) m_player.animation = WALK;
-	} 
+	}
 	if (!KEYMANAGER->isStayKeyDown('A') &&
 		!KEYMANAGER->isStayKeyDown('D') &&
 		!KEYMANAGER->isStayKeyDown('W') &&
@@ -359,7 +372,7 @@ void jimmy::move()
 void jimmy::melee(POINT pt)
 {
 
-	if (KEYMANAGER->isOnceKeyDown('V')&&!m_player.melee)		
+	if (KEYMANAGER->isOnceKeyDown('V') && !m_player.melee)
 	{
 		m_player.angle = getAngle(m_player.x, m_player.y, pt.x + ptMouse.x, pt.y + ptMouse.y);
 		m_player.melee = true;
@@ -373,7 +386,7 @@ void jimmy::melee(POINT pt)
 		{
 			m_player.x += cosf(m_player.angle) * m_player.speed;
 			m_player.y += -sinf(m_player.angle) * m_player.speed;
-			
+
 			if (m_player.meleeAtkOnce == true)
 			{
 				m_player.meleeAtk = true;
@@ -395,12 +408,18 @@ void jimmy::melee(POINT pt)
 
 void jimmy::hit()
 {
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		m_player.hit = true;
-		m_player.frameX = 0;
-		m_player.animation = HIT;
-	}
+	//if (KEYMANAGER->isOnceKeyDown('1'))
+	//{
+	//	m_player.hit = true;
+	//	m_player.frameX = 0;
+	//	if (m_player.currentShield <= 0)
+	//	{
+	//		m_player.animation = HIT;
+
+	//	}
+
+	//	m_player.damage = true;//데미지판정
+	//}
 	if (m_player.hit)
 	{
 		number++;
@@ -434,7 +453,7 @@ void jimmy::hpFaceInfo()
 	{
 		m_player.faceImg->setFrameX(1);
 	}
-	else if (m_player.maxHP /3 > m_player.currentHP)
+	else if (m_player.maxHP / 3 > m_player.currentHP)
 	{
 		m_player.faceImg->setFrameX(2);
 	}
@@ -442,14 +461,17 @@ void jimmy::hpFaceInfo()
 
 void jimmy::run()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_LSHIFT)&&!m_player.melee&&!m_player.dash)
+
+	if (KEYMANAGER->isStayKeyDown(VK_LSHIFT) && !m_player.melee && !m_player.dash&&
+		m_player.animation != IDLE)								//가만히있을때 달리지않음
 	{
-		if (m_player.currentStamina > 0)	//스테미너가 0보다 많을경우 달리기실행
+		if (m_player.currentStamina > 0 && !m_player.runStartDelay)	//스테미너가 0보다 많을경우 달리기실행
 		{
 			m_player.run = true;
 		}
 		else          //아니면 달리기 종료
 		{
+			m_player.runStartDelay = true;
 			m_player.run = false;
 			m_player.speed = 5.0f;	//고정값으로 해줌
 		}
@@ -467,15 +489,127 @@ void jimmy::run()
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LSHIFT))	//쉬프트키를 떼면 달리기종료
 	{
+		if (m_player.currentStamina <10)
+		{
+			m_player.runStartDelay = true;
+		}
 		m_player.run = false;
 		m_player.speed = 5.0f;
 	}
 	if (m_player.currentStamina < 100 && !m_player.run)	//스테미너가 100보다 작고 달리는중이 아니라면
 	{
 		runDelay++;
-		if (runDelay%3==0)
+		if (runDelay % 3 == 0)
 		{
 			m_player.currentStamina++;	//스테미너 회복
 		}
 	}
+	if (m_player.currentStamina > 10) m_player.runStartDelay = false;
+}
+
+void jimmy::shieldRegen()
+{
+	if (m_player.shieldGen)	//쉴드젠이 트루일때 쉴드 젠
+	{
+		if (m_player.maxShield > m_player.currentShield)
+		{
+			shieldCount++;
+			if (shieldCount % 3 == 0)
+			{
+				m_player.currentShield++;
+			}
+		}
+	}
+
+	if (m_player.shieldGenTime > m_player.shieldGenDealy)
+	{
+		m_player.shieldGen = true;
+		m_player.shieldGenTime -= 0.02f;
+	}
+	else
+	{
+		m_player.shieldGen = false;
+	}
+
+	if (m_player.hit)
+	{
+		m_player.shieldGenTime = 0;
+	}
+	else
+	{
+		m_player.shieldGenTime += 0.02f;
+	}
+}
+
+void jimmy::damage()
+{
+	if (m_player.dash)
+	{
+		bullet_damage = 0;
+	}
+	if (m_player.damage)
+	{
+		if (m_player.currentShield >0)
+		{
+			m_player.currentShield -= bullet_damage;
+			m_player.shieldRender = true;
+		}
+		else
+		{
+			m_player.currentHP -= bullet_damage;
+		}
+		m_player.damage = false;
+	}
+
+	if (m_player.shieldRender)
+	{
+		switch (shieldRenderCount)
+		{
+		case 0:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드0");
+			break;
+		case 1:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드1");
+			break;
+		case 2:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드2");
+			break;
+		case 3:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드3");
+			break;
+		case 4:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드4");
+			break;
+		case 5:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드5");
+			break;
+		}
+		//m_player.shieldImg->setFrameX(shieldRenderCount);
+		shieldRenderTemp++;
+		if (shieldRenderTemp % 5 == 0)
+		{
+			shieldRenderCount++;
+
+		}
+		if (shieldRenderCount > 5)
+		{
+			m_player.shieldRender = false;
+			shieldRenderCount = 0;
+		}
+	}
+
+}
+
+void jimmy::damageBullet(float damage)
+{
+	m_player.hit = true;
+	m_player.frameX = 0;
+	if (m_player.currentShield <= 0)
+	{
+		m_player.animation = HIT;
+	}
+
+	m_player.damage = true;//데미지판정
+
+	bullet_damage = damage;
 }

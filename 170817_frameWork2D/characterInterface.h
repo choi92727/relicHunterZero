@@ -32,11 +32,20 @@ protected:
 	{
 		image* img;			//이미지
 		image* faceImg;		//얼굴이미지
+
+		image* shieldImg;	//쉴드이미지
+		bool shieldRender;	//쉴드그려주기
+
 		RECT enemy_hitRc;	//적에게 맞는 히트박스
 		RECT wall_hitRc;
 		float x, y;
 		int currentHP, maxHP;			//체력
 		int currentShield, maxShield;	//쉴드
+
+		float shieldGenDealy;	//쉴드젠타임딜레이;
+		float shieldGenTime;	//쉴드젠타임
+		bool shieldGen;		//쉴드젠
+
 		int currentStamina, maxStamina;	//스테미너
 		float speed;
 		float angle;
@@ -49,15 +58,17 @@ protected:
 		bool life;
 		bool isLeft;
 
-		
+
 		bool meleeAtk;//근접공격 렉트생성
 		bool meleeAtkOnce;//한번만실행
 
 		bool run;	//달리기중인지 확인
+		bool runStartDelay;	//스테미너 10이상일때만달리게
 
 		bool dash;		//대쉬 중인지 확인
 		bool melee;		//근접공격 중인지 확인
-		bool hit;		//대미지를 받았는지 확인
+		bool hit;		//공격 받았는지 확인
+		bool damage;	//공격을받을시 데미지판정
 
 		bool die; //게임을끝내는 불값
 		tagCharacter nowCharacter;
@@ -68,7 +79,7 @@ protected:
 	characterProgressBar* hpBar;
 	characterProgressBar* shieldBar;
 	characterProgressBar* staminaBar;
-	
+
 	numberDrawManager* hpNumDraw;
 	numberDrawManager* shieldNumDraw;
 
@@ -86,13 +97,13 @@ protected:
 	TCHAR _str[128];
 
 	vector<BYTE > _vCOMMAND;
-	
+
 	float _fCommandTime;
 	float _fCommandClear;
 
 	bool dashOnce;
 	bool once = true;	//한번만실행되게 하는 bool 변수
-
+	bool dash;
 public:
 	characterInterface();
 	virtual ~characterInterface();
@@ -113,6 +124,9 @@ public:
 	virtual void run();
 	virtual void hpFaceInfo();
 
+	virtual void shieldRegen();
+
+	virtual void damage();
 
 	float getPlayerX() { return m_player.x; }			//플레이어 X Y 겟셋
 	void setPlayerX(float setX) { m_player.x = setX; }
@@ -131,5 +145,13 @@ public:
 	void setMaxShield(int shield) { m_player.maxShield = shield; }	//플레이어 쉴드셋
 	int getCurrentShield() { return m_player.currentShield; }		//플레이어 쉴드가져오기
 	void setCurrentShield(int shield) { m_player.currentShield = shield; }	//플레이어 쉴드셋
+
+	bool getMeleeAtk() { return m_player.meleeAtk; }
+	void setMeleeAtk(bool MeleeAtk) { m_player.meleeAtk = MeleeAtk; }
+
+	bool getIsleft() { return m_player.isLeft; }
+	void setIsleft(bool isleft) { m_player.isLeft = isleft; }
+
+	virtual void damageBullet(float damage);
 };
 

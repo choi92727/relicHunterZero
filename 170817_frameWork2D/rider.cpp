@@ -16,17 +16,24 @@ HRESULT rider::init(POINT position)
 
 	_fCommandClear = 2.5f;	//커맨드입력시간
 	_fCommandTime = 0.0f;
-	
+
 	ZeroMemory(&m_player, sizeof(m_player));
 
 	m_player.img = IMAGEMANAGER->findImage("라이더");		//라이더 이미지를넣음
 	m_player.faceImg = IMAGEMANAGER->findImage("라이더상태얼굴");		//체력에따른 라이더얼굴
+	m_player.shieldRender = false;
+
 	m_player.x = position.x;
 	m_player.y = position.y;
 	m_player.enemy_hitRc = RectMakeCenter(m_player.x, m_player.y, 34, 72);	//적에게 피격가능한 렉트
 	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y + 32, 56, 22);	//벽에 부딪치는 렉트
-	m_player.currentHP = m_player.maxHP = 100;
+	m_player.currentHP = m_player.maxHP = 150;
 	m_player.currentShield = m_player.maxShield = 50;
+
+	m_player.shieldGenDealy = 2.0f;
+	m_player.shieldGenTime = 0;
+	m_player.shieldGen = false;
+
 	m_player.currentStamina = m_player.maxStamina = 100;	//
 	m_player.speed = 5.0f;													//플레이어 이동속도
 	m_player.frameCount = 0;
@@ -43,8 +50,8 @@ HRESULT rider::init(POINT position)
 	m_player.dash = false;
 	m_player.melee = false;
 	m_player.hit = false;
-	m_player.run = false;	//
-
+	m_player.run = false;				//
+	m_player.runStartDelay = false;		//
 
 	m_player.meleeAtk = false;		//근접공격 렉트생성확인
 	m_player.meleeAtkOnce = false;	//렉트생성 한번만실행
@@ -102,27 +109,28 @@ void rider::update(POINT pt)
 	m_player.enemy_hitRc = RectMakeCenter(m_player.x, m_player.y, 34, 72);			//적에게 피격당하는 렉트생성 x,y기준으로 생성
 	m_player.wall_hitRc = RectMakeCenter(m_player.x, m_player.y + 32, 56, 22);		//벽에 부딪히는 렉트생성
 
+
 	move();			//이동명령에 관한 함수
 
 	command();		//커맨드 (부모클래스에있음 더블연타시 대쉬를 출력함)
 
-
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && !m_player.dash)	//대쉬중이 아니고 클릭시 파이어
 	{
-		//m_player.currentHP -= 1;		//테스트용
-		//m_player.currentShield -= 1;	//테스트용
 		fire();
 	}
 	melee(pt);	//근접공격
-	
+
 	run();		//달리기
 
 	hit();		//피격
+
+	damage();
 
 	dead();		//사망
 
 	animation();	//애니메이션 함수
 
+	shieldRegen();
 }
 
 void rider::render(POINT pt)
@@ -136,8 +144,12 @@ void rider::render(POINT pt)
 	m_player.faceImg->frameRender(getMemDC(), 1, 16);
 
 
-	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left - 38 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y);	
+	m_player.img->frameRender(getMemDC(), m_player.enemy_hitRc.left - 38 - pt.x, m_player.enemy_hitRc.top - 30 - pt.y);
 
+	if (m_player.shieldRender)
+	{
+		m_player.shieldImg->alphaRender(getMemDC(), m_player.enemy_hitRc.left - 40 + 28 + 8 - pt.x, m_player.enemy_hitRc.top - 30 + 35 - pt.y, 100);
+	}
 	HBRUSH MyBrush, OldBrush;
 	HPEN MyPen, OldPen;
 
@@ -154,6 +166,7 @@ void rider::render(POINT pt)
 	SelectObject(getMemDC(), OldBrush);
 	SelectObject(getMemDC(), OldPen);
 	DeleteObject(MyPen);
+
 	TextOut(getMemDC(), m_player.x, m_player.y - 100, _str, lstrlen(_str));		//텍스트 출력용
 	TCHAR str[128];
 	switch (m_player.nowCharacter)		//nowCharcher 는 현재캐릭터를 알려줌
@@ -189,7 +202,7 @@ void rider::animation()
 			if (m_player.frameX > 1) m_player.frameX = 0;
 		}
 		m_player.isLeft ? m_player.frameY = 8 : m_player.frameY = 0;
-		
+
 	}
 
 	//플레이어 사망 애니메이션
@@ -201,14 +214,12 @@ void rider::animation()
 			m_player.frameCount = 0;
 			m_player.frameX++;
 			if (m_player.frameX > 10) m_player.frameX = 0;
-
-			if (m_player.frameX == 10)	//     죽었을때 마지막프레임에 도달시 진짜죽음실행
-			{
-				m_player.die = true;
-			}
+		}
+		if (m_player.frameX == 10)	//     죽었을때 마지막프레임에 도달시 진짜죽음실행
+		{
+			m_player.die = true;
 		}
 		m_player.isLeft ? m_player.frameY = 9 : m_player.frameY = 1;
-		
 	}
 
 	//플레이어 땅파기 애니메이션
@@ -288,7 +299,14 @@ void rider::animation()
 		}
 		m_player.isLeft ? m_player.frameY = 15 : m_player.frameY = 7;
 	}
+	if (m_player.die)	//사망처리
+	{
+		m_player.frameX = 9;
 
+		m_player.isLeft ? m_player.frameY = 10 : m_player.frameY = 1;
+		Sleep(1000);
+		PostQuitMessage(0);	//사망
+	}
 	m_player.img->setFrameX(m_player.frameX);		//프레임값을 바꿔줌 X
 	m_player.img->setFrameY(m_player.frameY);		//프레임값을 바꿔줌 Y
 
@@ -335,15 +353,13 @@ void rider::move()
 
 void rider::melee(POINT pt)
 {
-	float endX = (float)ptMouse.x;
-	float endY = (float)ptMouse.y;
 
-	if (KEYMANAGER->isOnceKeyDown('V') && !m_player.melee)		
+	if (KEYMANAGER->isOnceKeyDown('V') && !m_player.melee)
 	{
-		m_player.angle = getAngle(m_player.x, m_player.y, (float)ptMouse.x, (float)ptMouse.y);
+		m_player.angle = getAngle(m_player.x, m_player.y, pt.x + ptMouse.x, pt.y + ptMouse.y);
 		m_player.melee = true;
 		m_player.frameX = 0;
-
+		m_player.meleeAtkOnce = true;
 	}
 
 	if (m_player.melee)
@@ -352,6 +368,12 @@ void rider::melee(POINT pt)
 		{
 			m_player.x += cosf(m_player.angle) * m_player.speed;
 			m_player.y += -sinf(m_player.angle) * m_player.speed;
+
+			if (m_player.meleeAtkOnce == true)
+			{
+				m_player.meleeAtk = true;
+				m_player.meleeAtkOnce = false;
+			}
 		}
 		m_player.animation = MELEE;
 		count++;
@@ -361,16 +383,11 @@ void rider::melee(POINT pt)
 			count = 0;
 		}
 	}
+
 }
 
 void rider::hit()
 {
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		m_player.hit = true;
-
-		m_player.animation = HIT;
-	}
 	if (m_player.hit)
 	{
 		number++;
@@ -412,14 +429,16 @@ void rider::hpFaceInfo()
 
 void rider::run()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_LSHIFT) && !m_player.melee && !m_player.dash)
+	if (KEYMANAGER->isStayKeyDown(VK_LSHIFT) && !m_player.melee && !m_player.dash&&
+		m_player.animation != IDLE)								//가만히있을때 달리지않음
 	{
-		if (m_player.currentStamina > 0)	//스테미너가 0보다 많을경우 달리기실행
+		if (m_player.currentStamina > 0 && !m_player.runStartDelay)	//스테미너가 0보다 많을경우 달리기실행
 		{
 			m_player.run = true;
 		}
 		else          //아니면 달리기 종료
 		{
+			m_player.runStartDelay = true;
 			m_player.run = false;
 			m_player.speed = 5.0f;	//고정값으로 해줌
 		}
@@ -437,6 +456,10 @@ void rider::run()
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LSHIFT))	//쉬프트키를 떼면 달리기종료
 	{
+		if (m_player.currentStamina <10)
+		{
+			m_player.runStartDelay = true;
+		}
 		m_player.run = false;
 		m_player.speed = 5.0f;
 	}
@@ -448,4 +471,112 @@ void rider::run()
 			m_player.currentStamina++;	//스테미너 회복
 		}
 	}
+	if (m_player.currentStamina > 10) m_player.runStartDelay = false;
+}
+
+void rider::shieldRegen()
+{
+	if (m_player.shieldGen)	//쉴드젠이 트루일때 쉴드 젠
+	{
+		if (m_player.maxShield > m_player.currentShield)
+		{
+			shieldCount++;
+			if (shieldCount % 3 == 0)
+			{
+				m_player.currentShield++;
+			}
+		}
+	}
+
+	if (m_player.shieldGenTime > m_player.shieldGenDealy)
+	{
+		m_player.shieldGen = true;
+		m_player.shieldGenTime -= 0.02f;
+	}
+	else
+	{
+		m_player.shieldGen = false;
+	}
+
+	if (m_player.hit)
+	{
+		m_player.shieldGenTime = 0;
+	}
+	else
+	{
+		m_player.shieldGenTime += 0.02f;
+	}
+}
+
+void rider::damage()
+{
+	if (m_player.dash)
+	{
+		bullet_damage = 0;
+	}
+	if (m_player.damage)
+	{
+		if (m_player.currentShield >0)
+		{
+			m_player.currentShield -= bullet_damage;
+			m_player.shieldRender = true;
+		}
+		else
+		{
+			m_player.currentHP -= bullet_damage;
+		}
+		m_player.damage = false;
+	}
+
+	if (m_player.shieldRender)
+	{
+		switch (shieldRenderCount)
+		{
+		case 0:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드0");
+			break;
+		case 1:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드1");
+			break;
+		case 2:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드2");
+			break;
+		case 3:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드3");
+			break;
+		case 4:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드4");
+			break;
+		case 5:
+			m_player.shieldImg = IMAGEMANAGER->findImage("쉴드5");
+			break;
+		}
+		//m_player.shieldImg->setFrameX(shieldRenderCount);
+		shieldRenderTemp++;
+		if (shieldRenderTemp % 5 == 0)
+		{
+			shieldRenderCount++;
+
+		}
+		if (shieldRenderCount > 5)
+		{
+			m_player.shieldRender = false;
+			shieldRenderCount = 0;
+		}
+	}
+
+}
+
+void rider::damageBullet(float damage)
+{
+	m_player.hit = true;
+	m_player.frameX = 0;
+	if (m_player.currentShield <= 0)
+	{
+		m_player.animation = HIT;
+	}
+
+	m_player.damage = true;//데미지판정
+
+	bullet_damage = damage;
 }

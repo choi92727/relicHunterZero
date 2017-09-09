@@ -91,5 +91,16 @@ HRESULT addImage::init()
 	//Ã¼·Â¾ó±¼
 	IMAGEMANAGER->addFrameImage("Áö¹Ì»óÅÂ¾ó±¼", "Images/jimmyMark.bmp", 288, 81, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("¶óÀÌ´õ»óÅÂ¾ó±¼", "Images/riderMark.bmp", 229, 81, 3, 1, true, RGB(255, 0, 255));
+	
+	//½¯µå
+	IMAGEMANAGER->addFrameImage("½¯µå", "Images/shield.bmp", 684, 94, 6, 1, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addImage("½¯µå0", "Images/shield0.bmp", 42, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("½¯µå1", "Images/shield1.bmp", 42, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("½¯µå2", "Images/shield2.bmp", 42, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("½¯µå3", "Images/shield3.bmp", 42, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("½¯µå4", "Images/shield4.bmp", 42, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("½¯µå5", "Images/shield5.bmp", 42, 46, true, RGB(255, 0, 255));
+
 	return S_OK;
 }

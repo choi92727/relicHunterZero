@@ -36,5 +36,6 @@ public:
 	int getCurrentShield() { return m_player->getCurrentShield(); }		//플레이어 쉴드가져오기
 	void setCurrentShield(int shield) { m_player->setCurrentShield(shield); }	//플레이어 쉴드셋
 	
+	void damageBullet(float damage) { m_player->damageBullet(damage); }
 };
 

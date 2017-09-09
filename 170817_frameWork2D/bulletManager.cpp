@@ -135,7 +135,9 @@ void bulletManager::CharCollisionCheck()
 			RECT temp;
 			if (IntersectRect(&temp, &m_character->getEnemy_hitRc(), &(*m_viBulletList)->getRect()))
 			{
-				m_character->setCurrentHP(m_character->getCurrentHP() - (*m_viBulletList)->getDamage());
+				//m_character->setCurrentHP(m_character->getCurrentHP() - (*m_viBulletList)->getDamage());
+				//deleteBullet(m_viBulletList);
+				m_character->damageBullet((*m_viBulletList)->getDamage());
 				deleteBullet(m_viBulletList);
 			}
 			else

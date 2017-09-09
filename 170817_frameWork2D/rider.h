@@ -7,6 +7,12 @@ private:
 	int count = 0;
 
 	int runDelay = 0;
+
+	int shieldCount = 0;
+	int shieldRenderTemp = 0;
+	int shieldRenderCount = 0;
+
+	int bullet_damage = 0;
 public:
 	rider();
 	~rider();
@@ -24,7 +30,9 @@ public:
 	void fire();
 	void hpFaceInfo();
 	void run();
-	
+	void shieldRegen();
+	void damage();
 
+	void damageBullet(float damage);
 };
 

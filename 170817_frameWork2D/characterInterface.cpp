@@ -65,6 +65,7 @@ void characterInterface::command()
 		_fCommandTime = 0;
 		_vCOMMAND.clear();
 		dashOnce = true;
+		dash = false;
 	}
 
 	if (_vCOMMAND.size() == 0)	//대쉬 종료시 기본애니메이션으로 변경
@@ -72,7 +73,7 @@ void characterInterface::command()
 		once = true;
 		m_player.dash = false;
 		wsprintf(_str, TEXT(""));
-		if (!m_player.hit&&!m_player.melee&&m_player.animation != WALK)
+		if (!m_player.hit && !m_player.melee&&m_player.animation != WALK)
 		{
 			m_player.animation = IDLE;
 		}
@@ -84,7 +85,10 @@ void characterInterface::command()
 		{
 			m_player.currentStamina -= 50;
 			dashOnce = false;
-
+			dash = true;
+		}
+		if (dash)
+		{
 			m_player.dash = true;
 			wsprintf(_str, TEXT("왼쪽대쉬"));
 			m_player.x -= m_player.speed + 5.0f;
@@ -98,7 +102,10 @@ void characterInterface::command()
 		{
 			m_player.currentStamina -= 50;
 			dashOnce = false;
-
+			dash = true;
+		}
+		if (dash)
+		{
 			m_player.dash = true;
 			wsprintf(_str, TEXT("오른쪽대쉬"));
 			m_player.x += m_player.speed + 5.0f;
@@ -111,7 +118,10 @@ void characterInterface::command()
 		{
 			m_player.currentStamina -= 50;
 			dashOnce = false;
-
+			dash = true;
+		}
+		if (dash)
+		{
 			m_player.dash = true;
 			wsprintf(_str, TEXT("위쪽대쉬"));
 			m_player.y -= m_player.speed + 5.0f;
@@ -124,7 +134,10 @@ void characterInterface::command()
 		{
 			m_player.currentStamina -= 50;
 			dashOnce = false;
-
+			dash = true;
+		}
+		if (dash)
+		{
 			m_player.dash = true;
 			wsprintf(_str, TEXT("아래쪽대쉬"));
 			m_player.y += m_player.speed + 5.0f;
@@ -160,6 +173,18 @@ void characterInterface::run()
 }
 
 void characterInterface::hpFaceInfo()
+{
+}
+
+void characterInterface::shieldRegen()
+{
+}
+
+void characterInterface::damage()
+{
+}
+
+void characterInterface::damageBullet(float damage)
 {
 }
 
