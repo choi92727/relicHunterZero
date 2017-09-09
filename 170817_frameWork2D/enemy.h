@@ -21,6 +21,7 @@ struct tagEnemy
 	image* image;
 	RECT rc;
 	RECT detectionRc;
+	RECT collisionRc;
 	float x, y;
 	int currentHP, maxHP;
 	float speed;
@@ -39,7 +40,7 @@ struct tagEnemy
 	float fireDelay= 1.5f * 60.0f;//총알 발사 대기시간
 	bool fireEnemy = false;//총을 쏘는 에너미인지
 	int enemyNumber = 0;//현재 에너미의 숫자값
-
+	
 };
 
 class enemy :public gameNode
@@ -67,6 +68,8 @@ public:
 
 	//에너미 탐지거리 렉트
 	virtual RECT getDetectionRect() { return m_enemy.detectionRc; }
+	virtual RECT getCollisionRect() { return m_enemy.collisionRc; }
+	
 
 	//에너미 X
 	virtual float getX() { return m_enemy.x; }
@@ -144,6 +147,7 @@ public:
 	//에너미 탐지거리 렉트
 	RECT getDetectionRect() { return m_enemy.detectionRc; }
 
+	RECT getCollisionRect() { return m_enemy.collisionRc; }
 	//에너미 X
 	float getX() { return m_enemy.x; }
 
@@ -222,6 +226,7 @@ public:
 	//에너미 탐지거리 렉트
 	RECT getDetectionRect() { return m_enemy.detectionRc; }
 
+	RECT getCollisionRect() { return m_enemy.collisionRc; }
 	//에너미 X
 	float getX() { return m_enemy.x; }
 
@@ -299,6 +304,7 @@ public:
 	//에너미 탐지거리 렉트
 	RECT getDetectionRect() { return m_enemy.detectionRc; }
 
+	RECT getCollisionRect() { return m_enemy.collisionRc; }
 	//에너미 X
 	float getX() { return m_enemy.x; }
 	

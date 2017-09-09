@@ -85,7 +85,7 @@ HRESULT turtle::init(POINT position)
 	m_enemy.isDetection = m_enemy.detection = false;																							//플레이어를 탐지 했냐?
 	m_enemy.current = STOP_ENEMY;																												//에너미 현재 상태
 	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
-	
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 30, 42, 5);
 	//추가 변수->문광현
 	m_enemy.fire = true;
 	m_enemy.fireDelay= 1.5f * 60.0f;//총알 발사 대기시간
@@ -115,7 +115,7 @@ void turtle::update()
 	detection();
 	animation();
 	//fireCheck();
-
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 30, 42, 5);
 	//프로그레스바
 	m_progressBar->setX(m_enemy.x - 30);
 	m_progressBar->setY(m_enemy.y - 60);
@@ -261,6 +261,7 @@ HRESULT duck::init(POINT position)
 	m_enemy.y = position.y;
 	m_enemy.rc = RectMakeCenter(m_enemy.x, m_enemy.y, 38, 60);																					//에너미 렉트
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);			//에너미 탐지 거리
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 28, 38, 5);
 	m_enemy.currentHP = m_enemy.maxHP = 100;																									//현재 HP / 최대 HP
 	m_enemy.dashCoolTime = 0;																													//에너미 대쉬 쿨타임
 	m_enemy.dashCoolTimeMax = RND->getIntFromInto(150, 250);																					//에너미 대쉬 쿨타임 맥스
@@ -298,7 +299,7 @@ void duck::update()
 {
 	m_enemy.rc = RectMakeCenter(m_enemy.x, m_enemy.y, 38, 60);
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);
-
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 28, 38, 5);
 	detection();
 	animation();
 	if(m_enemy.isDetection) dashCoolTime();
@@ -463,6 +464,7 @@ HRESULT kamikaze::init(POINT position)
 	m_enemy.y = position.y;
 	m_enemy.rc = RectMakeCenter(m_enemy.x, m_enemy.y, 38, 38);																					//에너미 렉트
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);			//에너미 탐지 거리
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 20, 38, 5);
 	m_enemy.currentHP = m_enemy.maxHP = 35;																										//현재 HP / 최대 HP
 	m_enemy.dashCoolTime = 0;																													//에너미 대쉬 쿨타임
 	m_enemy.dashCoolTimeMax = RND->getIntFromInto(100, 200);																					//에너미 대쉬 쿨타임 맥스
@@ -499,6 +501,7 @@ void kamikaze::update()
 {
 	m_enemy.rc = RectMakeCenter(m_enemy.x, m_enemy.y, 38, 38);
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);
+	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 20, 38, 5);
 
 	detection();
 	animation();
