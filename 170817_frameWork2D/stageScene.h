@@ -62,6 +62,7 @@ public:
 	void enemyGunRender();
 	void enemyGunSetPosition();
 	void enemyShotGun();
+	void enemyDeadCheck();
 	
 };
 

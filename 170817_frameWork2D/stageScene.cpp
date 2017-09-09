@@ -155,7 +155,7 @@ void stageScene::update()
 	m_bulletManager->update();
 	m_enemyManager->update();
 	m_objectManager->update();
-
+	enemyDeadCheck();
 
 	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
@@ -306,6 +306,18 @@ void stageScene::enemyShotGun()
 		{
 			m_enemyGun[i]->setEnemyFireTriger(false);
 			m_enemyGun[i]->fire();
+		}
+	}
+}
+
+void stageScene::enemyDeadCheck()
+{
+	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
+	{
+		if (m_enemyManager->getVEnemy()[i]->getCurrent() == DEAD_ENEMY && m_enemyManager->getVEnemy()[i]->getFireEnemy())
+		{
+			//m_enemyGun[i]->release();
+			m_enemyGun.erase(m_enemyGun.begin() + i);
 		}
 	}
 }
