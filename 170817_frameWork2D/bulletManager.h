@@ -4,7 +4,9 @@
 #include "tileNode.h"
 #include "objectManager.h"
 #include "characterManager.h"
-class bulletManager
+
+#include "gameNode.h"
+class bulletManager : public gameNode
 {
 private:
 	typedef vector<bulletInterface*> vBulletList;

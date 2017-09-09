@@ -37,7 +37,10 @@ protected:
 		bool shieldRender;	//쉴드그려주기
 
 		RECT enemy_hitRc;	//적에게 맞는 히트박스
-		RECT wall_hitRc;
+		RECT wall_hitRc;	//벽에 충돌하는 박스
+
+		RECT melee_atkRc;	//근접공격하는 렉트
+
 		float x, y;
 		int currentHP, maxHP;			//체력
 		int currentShield, maxShield;	//쉴드
@@ -61,6 +64,8 @@ protected:
 
 		bool meleeAtk;//근접공격 렉트생성
 		bool meleeAtkOnce;//한번만실행
+		bool meleeEnd = false;//근접공격이 끝남
+
 
 		bool run;	//달리기중인지 확인
 		bool runStartDelay;	//스테미너 10이상일때만달리게
@@ -136,6 +141,12 @@ public:
 	RECT getEnemy_hitRc() { return m_player.enemy_hitRc; }//플레이어 피격히트박스 가져오기
 	RECT getWall_hitRc() { return m_player.wall_hitRc; }	//플레이어 벽히트박스 가져오기
 
+	bool getMeleeAtk() { return m_player.meleeAtk; }
+	RECT getMelee_atkRc() { return m_player.melee_atkRc; }//플레이어 근접공격 렉트 가져오기@@@@@@@@@
+	float getP_Angle() { return m_player.angle; }
+	float getSpeed() { return m_player.speed; }
+	bool getMeleeEnd() { return m_player.meleeEnd; }
+	
 	int getMaxHP() { return m_player.maxHP; }		//플레이어 총체력가져오기
 	void setMaxHP(int HP) { m_player.maxHP = HP; }	//총체력 셋
 	int getCurrentHP() { return m_player.currentHP; }		//플레이어 현재체력가져오기
@@ -146,7 +157,7 @@ public:
 	int getCurrentShield() { return m_player.currentShield; }		//플레이어 쉴드가져오기
 	void setCurrentShield(int shield) { m_player.currentShield = shield; }	//플레이어 쉴드셋
 
-	bool getMeleeAtk() { return m_player.meleeAtk; }
+//	bool getMeleeAtk() { return m_player.meleeAtk; }
 	void setMeleeAtk(bool MeleeAtk) { m_player.meleeAtk = MeleeAtk; }
 
 	bool getIsleft() { return m_player.isLeft; }

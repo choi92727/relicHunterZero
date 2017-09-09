@@ -12,6 +12,8 @@
 #include "enemyManager.h"
 #include "objectManager.h"
 
+#include "collisionBullet.h"
+
 class stageScene :
 	public gameNode
 {
@@ -40,6 +42,9 @@ private:
 	
 	int testX ;
 	int tileX, tileY;
+
+	bool p_meleeToggle = false;	//근접공격시 공격프레임에만 실행되도록함
+	bool p_meleeOnce = true;	//근접공격 한번만실행
 public:
 	stageScene();
 	~stageScene();

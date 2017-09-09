@@ -180,6 +180,25 @@ void stageScene::update()
 		m_enemyGun[i]->setAngle(m_enemyManager->getVEnemy()[i]->getAngle());
 	}
 	enemyShotGun();
+
+	if (KEYMANAGER->isStayKeyDown('V')) 
+	{
+		p_meleeToggle = true;
+	}
+
+	if (p_meleeToggle)
+	{
+		if (m_cm->getMeleeAtk() && p_meleeOnce)
+		{
+			bulletInterface* temp = new collisionBullet;
+			temp->init(CHAR_PLAYER, m_cm->getMelee_atkRc(), 90, m_cm->getP_Angle(), m_cm->getSpeed(), m_cm->getSpeed() * 14);
+			m_bulletManager->addBullet(*temp);
+			p_meleeOnce = false;
+		}
+		if (m_cm->getMeleeEnd()) { p_meleeToggle = false; }
+	}
+
+	if (!p_meleeToggle) p_meleeOnce = true;
 }
 
 void stageScene::render()
