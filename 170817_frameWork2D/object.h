@@ -125,6 +125,8 @@ public:
 	void update();
 	void render(POINT pt);
 
+
+
 	void animation();
 	bool dead();
 
@@ -142,6 +144,7 @@ class teleport : public object
 {
 private:
 	tagObject m_object;
+	image* m_im;
 public:
 	HRESULT init(POINT position);
 	void release();

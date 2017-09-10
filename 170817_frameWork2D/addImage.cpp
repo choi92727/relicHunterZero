@@ -32,6 +32,9 @@ HRESULT addImage::init()
 	IMAGEMANAGER->addFrameImage("박스2 파괴", "Images/spr_longbox_break.bmp", 2552, 130, 11, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("루트1 파괴", "Images/spr_root1_break.bmp", 3048, 134, 12, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("루트2 파괴", "Images/spr_root2_break.bmp", 2286, 134, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("텔레포트이펙트", "Images/텔레포트이펙트 사본.bmp", 2550, 100, 17, 1, true, RGB(255, 0, 255));
+
+	ANIMATIONMANAGER->addDefAnimation("텔포애니", "텔레포트이펙트", 10, false, true);
 
 	//표지판
 	IMAGEMANAGER->addFrameImage("방향 표지판", "Images/notice_move.bmp", 3520, 86, 16, 1, true, RGB(255, 0, 255));
@@ -62,7 +65,7 @@ HRESULT addImage::init()
 	//불렛
 	IMAGEMANAGER->addImage("기본 총알", "Images/spr_bullet_small_1.bmp", 46, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("샷건 총알", "Images/spr_bullet_1.bmp", 46, 30, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("플라즈마 총알", "Images/spr_plasmarbullet.bmp", 552, 30, 12, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("플라즈마 총알", "Images/spr_plasmarbullet.bmp", 1104, 60, 12, 1, true, RGB(255, 0, 255));
 
 
 	//숫자
@@ -91,7 +94,20 @@ HRESULT addImage::init()
 	//체력얼굴
 	IMAGEMANAGER->addFrameImage("지미상태얼굴", "Images/jimmyMark.bmp", 288, 81, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("라이더상태얼굴", "Images/riderMark.bmp", 229, 81, 3, 1, true, RGB(255, 0, 255));
-	
+
+	//아이템
+	IMAGEMANAGER->addFrameImage("주울수있다", "Images/canGetItem.bmp", 240, 38, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아모0", "Images/spr_pickup_ammo_0.bmp", 30, 29, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아모1", "Images/spr_pickup_ammo_1.bmp", 30, 29, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("아모2", "Images/spr_pickup_ammo_2.bmp", 30, 29, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("체력", "Images/spr_pickup_drop_0.bmp", 30, 29, true, RGB(255, 0, 255));
+
+
+	//배경
+	IMAGEMANAGER->addImage("배경1", "Images/stage2.bmp", 1280, 720, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("배경2", "Images/stage3.bmp", 1280, 720, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("배경3", "Images/stage4.bmp", 1280, 720, true, RGB(255, 0, 255));
+
 	//쉴드
 	IMAGEMANAGER->addFrameImage("쉴드", "Images/shield.bmp", 684, 94, 6, 1, true, RGB(255, 0, 255));
 

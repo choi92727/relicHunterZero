@@ -5,7 +5,7 @@ class collisionBullet : public bulletInterface
 public:
 	collisionBullet();
 	~collisionBullet();
-	HRESULT init(CHARACTER _char,RECT rc,float damage,float angle,float speed,float range);
+	HRESULT init(CHARACTER _char, RECT rc, float damage, float angle, float speed, float range);
 	void release();
 	void update();
 	void render();

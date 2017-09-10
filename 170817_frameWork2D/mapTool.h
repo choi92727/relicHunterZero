@@ -24,6 +24,8 @@ private:
 	RECT saveRC[4];
 	RECT loadRC[4];
 
+	bool drawCenter;
+
 	POINT currentShowPt;
 
 	bool sampleTile, sampleObject, sampleEnemy;
@@ -56,4 +58,3 @@ public:
 
 	void pushEnemyMemory();
 };
-

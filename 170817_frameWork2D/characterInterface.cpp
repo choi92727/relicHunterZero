@@ -73,7 +73,8 @@ void characterInterface::command()
 		once = true;
 		m_player.dash = false;
 		wsprintf(_str, TEXT(""));
-		if (!m_player.hit && !m_player.melee&&m_player.animation != WALK)
+		if (!m_player.hit && !m_player.melee&&m_player.animation != WALK &&
+			!m_player.animation == TELEPORT)
 		{
 			m_player.animation = IDLE;
 		}
@@ -86,6 +87,7 @@ void characterInterface::command()
 			m_player.currentStamina -= 50;
 			dashOnce = false;
 			dash = true;
+			SOUNDMANAGER->play("대쉬");
 		}
 		if (dash)
 		{
@@ -103,6 +105,7 @@ void characterInterface::command()
 			m_player.currentStamina -= 50;
 			dashOnce = false;
 			dash = true;
+			SOUNDMANAGER->play("대쉬");
 		}
 		if (dash)
 		{
@@ -119,6 +122,7 @@ void characterInterface::command()
 			m_player.currentStamina -= 50;
 			dashOnce = false;
 			dash = true;
+			SOUNDMANAGER->play("대쉬");
 		}
 		if (dash)
 		{
@@ -135,6 +139,7 @@ void characterInterface::command()
 			m_player.currentStamina -= 50;
 			dashOnce = false;
 			dash = true;
+			SOUNDMANAGER->play("대쉬");
 		}
 		if (dash)
 		{
@@ -185,6 +190,10 @@ void characterInterface::damage()
 }
 
 void characterInterface::damageBullet(float damage)
+{
+}
+
+void characterInterface::isTeleport()
 {
 }
 

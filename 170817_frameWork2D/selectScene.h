@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "stageNode.h"
 enum select_currentType
 {
 	jimmy_selected,
@@ -25,7 +26,7 @@ private:
 	animation* ani_jimmy;
 
 	select_currentType s_Ct;
-
+	tagStageNode m_stageNode[1];
 	int startX , changeX ;
 
 public:
@@ -43,5 +44,6 @@ public:
 
 	void goJimmy();
 	void goRider();
+	void stage1Clear();
 };
 

@@ -53,6 +53,14 @@ bool enemy::dash()
 	return false;
 }
 
+void enemy::walkCoolTime()
+{
+}
+
+void enemy::walk()
+{
+}
+
 bool enemy::fireCheck()
 {
 	return false;
@@ -86,12 +94,16 @@ HRESULT turtle::init(POINT position)
 	m_enemy.current = STOP_ENEMY;																												//에너미 현재 상태
 	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
 	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 30, 42, 5);
+	m_enemy.walkDistance = 0;                                                                                       //에너미 이동 거리
+	m_enemy.walkCoolTime = 0;                                                                                       //에너미 이동 쿨타임
+	m_enemy.walkCoolTimeMax = RND->getIntFromInto(200, 300);                                                               //에너미 이동 쿨타임 맥스
+	m_enemy.itemDrop = false;
 	//추가 변수->문광현
 	m_enemy.fire = true;
 	m_enemy.fireDelay= 1.5f * 60.0f;//총알 발사 대기시간
 	m_enemy.fireEnemy = true;//총을 쏘는 에너미인지
 	m_enemy.enemyNumber = 0;//현재 에너미의 숫자값
-
+	m_enemy.m_enemyType = GUN_ENEMY;
 	//프로그레스바
 	m_progressBar = new progressBar;
 	m_progressBar->init("Images/hpBar_front.bmp", "Images/hpBar_back.bmp", m_enemy.x - 30, m_enemy.y - 60, 61, 7);
@@ -115,6 +127,13 @@ void turtle::update()
 	detection();
 	animation();
 	//fireCheck();
+	if (m_enemy.isDetection)
+	{
+		walkCoolTime();
+	
+	}
+	walk();
+	
 	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 30, 42, 5);
 	//프로그레스바
 	m_progressBar->setX(m_enemy.x - 30);
@@ -237,6 +256,38 @@ bool turtle::dead()
 	return false;
 }
 
+void turtle::walkCoolTime()
+{
+	if (m_enemy.current == STOP_ENEMY)
+	{
+		m_enemy.walkCoolTime++;
+		if (m_enemy.walkCoolTime >= m_enemy.walkCoolTimeMax)
+		{
+			m_enemy.walkCoolTime = 0;
+			m_enemy.walkCoolTimeMax = RND->getIntFromInto(200, 300);
+			setCurrent(MOVE_ENEMY);
+		}
+	}
+}
+
+void turtle::walk()
+{
+	if (m_enemy.current == MOVE_ENEMY)
+	{
+		m_enemy.walkDistance++;
+		m_enemy.x += cosf(m_enemy.walkAngle) * m_enemy.speed;
+		m_enemy.y += (-sinf(m_enemy.walkAngle)) * m_enemy.speed;
+
+		if (m_enemy.walkDistance >= 100)
+		{
+			m_enemy.walkDistance = 0;
+			setCurrent(STOP_ENEMY);
+		}
+		m_enemy.isLeft ? m_enemy.currentFrameY = 1 : m_enemy.currentFrameY = 5;
+	}
+	else m_enemy.walkAngle = m_enemy.angle;
+}
+
 bool turtle::fireCheck()
 {
 	return true;
@@ -263,8 +314,11 @@ HRESULT duck::init(POINT position)
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);			//에너미 탐지 거리
 	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 28, 38, 5);
 	m_enemy.currentHP = m_enemy.maxHP = 100;																									//현재 HP / 최대 HP
-	m_enemy.dashCoolTime = 0;																													//에너미 대쉬 쿨타임
-	m_enemy.dashCoolTimeMax = RND->getIntFromInto(150, 250);																					//에너미 대쉬 쿨타임 맥스
+	m_enemy.walkDistance = 0;                                                                                       //에너미 이동 거리
+	m_enemy.walkCoolTime = 0;                                                                                       //에너미 이동 쿨타임
+	m_enemy.walkCoolTimeMax = RND->getIntFromInto(200, 300);                                                               //에너미 이동 쿨타임 맥스
+	m_enemy.dashCoolTime = 0;                                                                                       //에너미 대쉬 쿨타임
+	m_enemy.dashCoolTimeMax = RND->getIntFromInto(800, 1000);                                                               //에너미 대쉬 쿨타임 맥스
 	m_enemy.dash = 15.0f;																														//에너미 대쉬 속도
 	m_enemy.acceleration = 0;																													//에너미 대쉬 감속
 	m_enemy.speed = 3.0f;																														//에너미 이동 속도
@@ -275,12 +329,15 @@ HRESULT duck::init(POINT position)
 	m_enemy.isDetection = m_enemy.detection = false;																							//플레이어를 탐지 했냐?
 	m_enemy.current = STOP_ENEMY;																												//에너미 현재 상태
 	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
+	m_enemy.itemDrop = false;
+
 	//m_enemy.angle = RND->getFloat(360.0f);
 	//추가 변수
 	m_enemy.fire = true;
 	m_enemy.fireDelay = 1.0f * 60.0f;//총알 발사 대기시간
 	m_enemy.fireEnemy = true;//총을 쏘는 에너미인지
 	m_enemy.enemyNumber = 0;//현재 에너미의 숫자값
+	m_enemy.m_enemyType = GUN_ENEMY;
 
 
 	//프로그레스바
@@ -302,8 +359,14 @@ void duck::update()
 	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 28, 38, 5);
 	detection();
 	animation();
-	if(m_enemy.isDetection) dashCoolTime();
+	if (m_enemy.isDetection)
+	{
+		walkCoolTime();
+		dashCoolTime();
+	}
+	walk();
 	dash();
+	
 
 	//프로그레스바
 	m_progressBar->setX(m_enemy.x - 30);
@@ -392,8 +455,9 @@ void duck::dashCoolTime()
 		if (m_enemy.dashCoolTime >= m_enemy.dashCoolTimeMax)
 		{
 			m_enemy.dashCoolTime = 0;
-			m_enemy.dashCoolTimeMax = RND->getIntFromInto(150, 250);
+			m_enemy.dashCoolTimeMax = RND->getIntFromInto(800, 1000);
 			m_enemy.current = DASH_ENEMY;
+			SOUNDMANAGER->play("오리_대쉬");
 		}
 	}
 }
@@ -445,6 +509,38 @@ bool duck::dead()
 	return false;
 }
 
+void duck::walkCoolTime()
+{
+	if (m_enemy.current == STOP_ENEMY)
+	{
+		m_enemy.walkCoolTime++;
+		if (m_enemy.walkCoolTime >= m_enemy.walkCoolTimeMax)
+		{
+			m_enemy.walkCoolTime = 0;
+			m_enemy.walkCoolTimeMax = RND->getIntFromInto(200, 300);
+			setCurrent(MOVE_ENEMY);
+		}
+	}
+}
+
+void duck::walk()
+{
+	if (m_enemy.current == MOVE_ENEMY)
+	{
+		m_enemy.walkDistance++;
+		m_enemy.x += cosf(m_enemy.walkAngle) * m_enemy.speed;
+		m_enemy.y += (-sinf(m_enemy.walkAngle)) * m_enemy.speed;
+
+		if (m_enemy.walkDistance >= 100)
+		{
+			m_enemy.walkDistance = 0;
+			setCurrent(STOP_ENEMY);
+		}
+		m_enemy.isLeft ? m_enemy.currentFrameY = 1 : m_enemy.currentFrameY = 6;
+	}
+	else m_enemy.walkAngle = m_enemy.angle;
+}
+
 
 //====================================================================	가미가제
 kamikaze::kamikaze()
@@ -466,8 +562,11 @@ HRESULT kamikaze::init(POINT position)
 	m_enemy.detectionRc = RectMakeCenter((m_enemy.rc.left + m_enemy.rc.right) / 2, (m_enemy.rc.top + m_enemy.rc.bottom) / 2, 500, 500);			//에너미 탐지 거리
 	m_enemy.collisionRc = RectMakeCenter(m_enemy.x, m_enemy.y + 20, 38, 5);
 	m_enemy.currentHP = m_enemy.maxHP = 35;																										//현재 HP / 최대 HP
-	m_enemy.dashCoolTime = 0;																													//에너미 대쉬 쿨타임
-	m_enemy.dashCoolTimeMax = RND->getIntFromInto(100, 200);																					//에너미 대쉬 쿨타임 맥스
+	m_enemy.walkDistance = 0;                                                                                       //에너미 이동 거리
+	m_enemy.walkCoolTime = 0;                                                                                       //에너미 이동 쿨타임
+	m_enemy.walkCoolTimeMax = RND->getIntFromInto(200, 300);                                                               //에너미 이동 쿨타임 맥스
+	m_enemy.dashCoolTime = 0;                                                                                       //에너미 대쉬 쿨타임
+	m_enemy.dashCoolTimeMax = RND->getIntFromInto(800, 1000);                                                               //에너미 대쉬 쿨타임 맥스
 	m_enemy.dash = 20.0f;																														//에너미 대쉬 속도
 	m_enemy.acceleration = 0;																													//에너미 대쉬 감속
 	m_enemy.speed = 3.0f;																														//에너미 이동 속도
@@ -478,13 +577,14 @@ HRESULT kamikaze::init(POINT position)
 	m_enemy.isDetection = m_enemy.detection = false;																							//플레이어를 탐지 했냐?
 	m_enemy.current = STOP_ENEMY;																												//에너미 현재 상태
 	m_enemy.isLeft = true;																														//에너미가 왼쪽을 보고 있냐?
+	m_enemy.itemDrop = false;
 	//m_enemy.angle = RND->getFloat(360.0f);
 
-	m_enemy.fire = false;
+	m_enemy.fire = true;
 	m_enemy.fireDelay = 1.0f * 60.0f;//총알 발사 대기시간
-	m_enemy.fireEnemy = true;//총을 쏘는 에너미인지
+	m_enemy.fireEnemy = false;//총을 쏘는 에너미인지
 	m_enemy.enemyNumber = 0;//현재 에너미의 숫자값
-
+	m_enemy.m_enemyType = NONE_ENEMY;
 	//프로그레스바
 	m_progressBar = new progressBar;
 	m_progressBar->init("Images/hpBar_front.bmp", "Images/hpBar_back.bmp", m_enemy.x - 30, m_enemy.y - 50, 61, 7);
@@ -505,7 +605,12 @@ void kamikaze::update()
 
 	detection();
 	animation();
-	if (m_enemy.isDetection) dashCoolTime();
+	if (m_enemy.isDetection)
+	{
+		walkCoolTime();
+		dashCoolTime();
+	}
+	walk();
 	dash();
 
 	//프로그레스바
@@ -595,8 +700,9 @@ void kamikaze::dashCoolTime()
 		if (m_enemy.dashCoolTime >= m_enemy.dashCoolTimeMax)
 		{
 			m_enemy.dashCoolTime = 0;
-			m_enemy.dashCoolTimeMax = RND->getIntFromInto(100, 200);
+			m_enemy.dashCoolTimeMax = RND->getIntFromInto(500, 700);
 			m_enemy.current = DASH_ENEMY;
+			SOUNDMANAGER->play("가미가제_대쉬");
 		}
 	}
 }
@@ -609,7 +715,7 @@ bool kamikaze::dash()
 		m_enemy.x += cosf(m_enemy.dashAngle) * m_enemy.dash;
 		m_enemy.y += (-sinf(m_enemy.dashAngle)) * m_enemy.dash;
 
-		m_enemy.acceleration += 0.20;
+		m_enemy.acceleration += 0.10;
 		m_enemy.dash -= m_enemy.acceleration;
 		m_enemy.currentFrameX = 0;
 		if (m_enemy.dash <= 0)
@@ -647,4 +753,36 @@ bool kamikaze::dead()
 		m_enemy.isLeft ? m_enemy.currentFrameY = 3 : m_enemy.currentFrameY = 8;
 	}
 	return false;
+}
+
+void kamikaze::walkCoolTime()
+{
+	if (m_enemy.current == STOP_ENEMY)
+	{
+		m_enemy.walkCoolTime++;
+		if (m_enemy.walkCoolTime >= m_enemy.walkCoolTimeMax)
+		{
+			m_enemy.walkCoolTime = 0;
+			m_enemy.walkCoolTimeMax = RND->getIntFromInto(200, 300);
+			setCurrent(MOVE_ENEMY);
+		}
+	}
+}
+
+void kamikaze::walk()
+{
+	if (m_enemy.current == MOVE_ENEMY)
+	{
+		m_enemy.walkDistance++;
+		m_enemy.x += cosf(m_enemy.walkAngle) * m_enemy.speed;
+		m_enemy.y += (-sinf(m_enemy.walkAngle)) * m_enemy.speed;
+
+		if (m_enemy.walkDistance >= 100)
+		{
+			m_enemy.walkDistance = 0;
+			setCurrent(STOP_ENEMY);
+		}
+		m_enemy.isLeft ? m_enemy.currentFrameY = 1 : m_enemy.currentFrameY = 6;
+	}
+	else m_enemy.walkAngle = m_enemy.angle;
 }

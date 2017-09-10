@@ -154,6 +154,24 @@
       <Filter>MainGame\bullet</Filter>
     </ClCompile>
     <ClCompile Include="collisionBullet.cpp" />
+    <ClCompile Include="charcterGetItem.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="effectTest.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="gunTestScene.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="noneGun.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameNode.h">
@@ -327,6 +345,33 @@
       <Filter>MainGame\bullet</Filter>
     </ClInclude>
     <ClInclude Include="collisionBullet.h" />
+    <ClInclude Include="charcterGetItem.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="effectTest.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="gunTestScene.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="itemManager.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="noneGun.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="singletonBase.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="stageNode.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="frameWork2D">
@@ -412,5 +457,19 @@
     <Text Include="ReadMe.txt">
       <Filter>frameWork2D</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="stageNode.stage">
+      <Filter>MainGame</Filter>
+    </None>
+    <None Include="tileMap.map">
+      <Filter>MainGame</Filter>
+    </None>
+    <None Include="tileMap1.map">
+      <Filter>MainGame</Filter>
+    </None>
+    <None Include="tileMap2.map">
+      <Filter>MainGame</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ protected:
 	float m_fireDelay;//총알을 쏘는 제한시간
 	float m_isDelay;//실제 도는 제한시간
 	bool m_fire;//발사 가능한지 여부
-	
+
 	Image* m_gunImage[2];//이미지 회전 시 필요한 변수
 	Graphics* m_graphics;//이미지 회전시 필요한 변수
 	CHARACTER m_playerType;//플레이어 타입 변수
@@ -28,9 +28,9 @@ protected:
 	int m_totalBullet;
 
 	//에너미용 변수
-	int m_gunIndex ;
+	int m_gunIndex;
 	bool m_enemy_fire = true;
-	float m_enemyfireDelay = 1.5f * 60.0f;
+	float m_enemyfireDelay;
 	bool m_canFire;
 
 
@@ -59,12 +59,12 @@ public:
 	void setGunIndex(int _gunIndex) { m_gunIndex = _gunIndex; }
 
 	bool getEnemyFireTriger() { return m_enemy_fire; }
-	void setEnemyFireTriger(bool _bool){ m_enemy_fire = _bool; }
+	void setEnemyFireTriger(bool _bool) { m_enemy_fire = _bool; }
 
 	bool getCanFire() { return m_canFire; }
-	void setCanFire(bool _setFire) {m_canFire = _setFire; }
+	void setCanFire(bool _setFire) { m_canFire = _setFire; }
 
-
+	void setTotalBullet(int bullet) { m_totalBullet += bullet; }
 
 };
 

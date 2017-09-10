@@ -13,7 +13,7 @@ mainGame::~mainGame()
 HRESULT mainGame::init()
 {
 	gameNode::init(true);
-
+	
 
 	m_add = new addImage;
 	m_add->init();

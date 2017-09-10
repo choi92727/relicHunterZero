@@ -18,7 +18,17 @@ HRESULT bulletManager::init()
 
 void bulletManager::release()
 {
-
+	bulletInterface *p;
+	for (m_viBulletList = m_vBulletList.begin(); m_viBulletList != m_vBulletList.end(); ++m_viBulletList)
+	{
+		p = *m_viBulletList;
+		if (p != NULL)
+		{
+			delete p;
+			p = nullptr;
+		}
+	}
+	m_vBulletList.clear();
 }
 
 void bulletManager::update()
@@ -49,16 +59,45 @@ void bulletManager::render(POINT pt)
 		(*m_viBulletList)->render(pt);
 	}
 
-	
-	char text[64];
-	wsprintf(text, "bulletSize %d",m_vBulletList.size());
 
-	TextOut(getMemDC(), WINSIZEX/2, 130, text, strlen(text));
+	char text[64];
+	wsprintf(text, "bulletSize %d", m_vBulletList.size());
+
+	TextOut(getMemDC(), WINSIZEX / 2, 130, text, strlen(text));
 }
 
-void bulletManager::addBullet(bulletInterface &m_bullet)
+void bulletManager::addBullet(GUNTYPE _gunType, int x, int y, float angle, float speed, CHARACTER playerType)
 {
-	m_vBulletList.push_back(&m_bullet);
+	bulletInterface* temp;
+	switch (_gunType)
+	{
+	case GUN_DEFAULT:
+		temp = new defaultBullet;
+		break;
+	case GUN_MACHINE:
+		temp = new machineBullet;
+		break;
+	case GUN_SHOTGUN:
+		temp = new shotBullet;
+		break;
+	case GUN_PLASMA:
+		temp = new plasmarBullet;
+		break;
+	default:
+		break;
+	}
+	temp->init();
+	temp->fire(x, y, angle, speed, playerType);
+	
+	m_vBulletList.push_back(temp);
+}
+
+void bulletManager::addCollisionBullet(CHARACTER _char, RECT rc, float damage, float angle, float speed, float range)
+{
+	bulletInterface* temp = new collisionBullet;
+	temp->init(_char, rc, damage, angle, speed, range);
+
+	m_vBulletList.push_back(temp);
 }
 
 void bulletManager::bulletMove()
@@ -176,7 +215,10 @@ void bulletManager::wallCollsionCheck()
 
 void bulletManager::deleteBullet(viBulletList &m_bullet)
 {
+	bulletInterface *p;
 	(*m_bullet)->release();
+	p = *m_bullet;
+	delete p;
 	m_bullet = m_vBulletList.erase(m_bullet);
 }
 

@@ -21,7 +21,7 @@ void defaultBullet::fire(int x, int y, float angle, float speed, CHARACTER playe
 	m_range = 4000;
 	m_speed = speed;
 	m_angle = angle;
-	m_playerType = playerType;
+	m_playerType = playerType;  
 }
 
 HRESULT defaultBullet::init()
@@ -63,15 +63,15 @@ void defaultBullet::render()
 
 void defaultBullet::render(POINT pt)
 {
-	Rectangle(getMemDC(), m_x - pt.x, m_y - pt.y, m_x + m_width - pt.x, m_y - pt.y + m_height / 2);
+	//Rectangle(getMemDC(), m_x - pt.x, m_y - pt.y, m_x + m_width - pt.x, m_y - pt.y + m_height / 2);
 
 	DrawPng(m_bulletImage, m_graphics, m_x - pt.x, m_y - m_width / 2 - pt.y, m_height, m_width, m_angle);
 	
-	char text[64];
+	//char text[64];
 
-	wsprintf(text, "%d,%d", m_x, m_y);
+	//wsprintf(text, "%d,%d", m_x, m_y);
 
-	TextOut(getMemDC(), m_x - pt.x, m_y - pt.y, text, strlen(text));
+	//TextOut(getMemDC(), m_x - pt.x, m_y - pt.y, text, strlen(text));
 
 }
 

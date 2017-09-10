@@ -14,3 +14,9 @@ enum GUNTYPE
 	GUN_PLASMA
 };
 
+enum ENEMY_TYPE
+{
+	GUN_ENEMY,
+	NONE_ENEMY
+};
+

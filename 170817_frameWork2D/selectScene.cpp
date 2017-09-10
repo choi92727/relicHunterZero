@@ -230,10 +230,36 @@ void selectScene::selectRender()
 
 void selectScene::goJimmy()
 {
+	m_stageNode[0].characterName = JIMMY;
+	stage1Clear();
 	SCENEMANAGER->changeScene("stageScene");//지미가 선택되고 화면전환
 }
 
 void selectScene::goRider()
 {
-	SCENEMANAGER->changeScene("mapTool");//라이더가 선택되고 화면전환
+	m_stageNode[0].characterName = RIDER;
+	stage1Clear();
+	SCENEMANAGER->changeScene("stageScene");//라이더가 선택되고 화면전환
+}
+void selectScene::stage1Clear()
+{
+	HANDLE file;
+	DWORD write;
+
+	m_stageNode[0].stage = 0;
+
+	m_stageNode[0].HP = 100;
+	m_stageNode[0].currentBullet = 10;
+	m_stageNode[0].maxBullet = 10;
+
+	file = CreateFile("stageNode.stage",
+		GENERIC_WRITE,
+		0,
+		NULL,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+
+	WriteFile(file, m_stageNode, sizeof(tagStageNode), &write, NULL);
+	CloseHandle(file);
 }

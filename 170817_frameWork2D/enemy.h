@@ -15,32 +15,37 @@ enum currentEnemy
 	DASH_ENEMY,		//(대쉬) 오리, 가미가제 전용
 };
 
+
 //에너미 구조체
 struct tagEnemy
 {
 	image* image;
 	RECT rc;
 	RECT detectionRc;
-	RECT collisionRc;
 	float x, y;
 	int currentHP, maxHP;
 	float speed;
 	float angle;
-	float dashAngle;						//오리, 가미가제 전용
-	int dashCoolTime, dashCoolTimeMax;		//오리, 가미가제 전용
-	float dash, acceleration;				//오리, 가미가제 전용
+	float walkAngle;
+	int walkDistance;
+	int walkCoolTime, walkCoolTimeMax;
+	float dashAngle;                  //오리, 가미가제 전용
+	int dashCoolTime, dashCoolTimeMax;      //오리, 가미가제 전용
+	float dash, acceleration;            //오리, 가미가제 전용
 	int count, detectionCount;
 	int currentFrameX, currentFrameY;
 	int detectionX;
 	bool isDetection, detection;
 	bool isLeft;
+	bool itemDrop;
 	currentEnemy current;
+	RECT collisionRc;
 	//총알 발사 변수
 	bool fire = true;
 	float fireDelay= 1.5f * 60.0f;//총알 발사 대기시간
-	bool fireEnemy;//총을 쏘는 에너미인지
+	bool fireEnemy = false;//총을 쏘는 에너미인지
 	int enemyNumber = 0;//현재 에너미의 숫자값
-	
+	ENEMY_TYPE m_enemyType;
 };
 
 class enemy :public gameNode
@@ -62,7 +67,8 @@ public:
 	virtual void dashCoolTime();
 	virtual bool dead();
 	virtual bool dash();
-
+	virtual void walkCoolTime();
+	virtual void walk();
 	//에너미 몸체 렉트
 	virtual RECT getRect() { return m_enemy.rc; }
 
@@ -95,6 +101,11 @@ public:
 	 bool getFireEnemy() { return m_enemy.fireEnemy; }
 	 virtual bool fireCheck();
 
+	 ENEMY_TYPE getEnemyType() { return m_enemy.m_enemyType; }
+
+
+
+
 	//에너미 현재 체력 수정
 	virtual void setHP(int hp)
 	{
@@ -104,7 +115,11 @@ public:
 			m_enemy.count = 0;
 			m_enemy.currentFrameX = 0;
 			//현재 체력이 없을 경우 죽음 모션 발동
-			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			if (m_enemy.currentHP <= 0)
+			{
+				m_enemy.current = DEAD_ENEMY;
+				m_enemy.itemDrop = true;
+			}
 			//현재 체력이 남아있을 경우 피격 모션 발동
 			else m_enemy.current = HIT_ENEMY;
 		}
@@ -127,6 +142,9 @@ public:
 		m_enemy.current = current;
 		m_enemy.count = m_enemy.currentFrameX = 0;
 	}
+
+	virtual bool getItemDrop() { return false; }
+	virtual void setItemDrop(bool itemDrop) {}
 };
 
 //거북이 클래스
@@ -147,7 +165,8 @@ public:
 	void detection();
 	void animation();
 	bool dead();
-
+	void walkCoolTime();
+	void walk();
 	//에너미 몸체 렉트
 	RECT getRect() { return m_enemy.rc; }
 
@@ -176,9 +195,18 @@ public:
 			m_enemy.count = 0;
 			m_enemy.currentFrameX = 0;
 			//현재 체력이 없을 경우 죽음 모션 발동
-			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			if (m_enemy.currentHP <= 0)
+			{
+				m_enemy.current = DEAD_ENEMY;
+				m_enemy.itemDrop = true;
+				SOUNDMANAGER->play("거북이_죽음");
+			}
 			//현재 체력이 남아있을 경우 피격 모션 발동
-			else m_enemy.current = HIT_ENEMY;
+			else
+			{
+				m_enemy.current = HIT_ENEMY;
+				SOUNDMANAGER->play("거북이_피격");
+			}
 		}
 	}
 
@@ -192,13 +220,16 @@ public:
 	//에너미 왼쪽을 보고 있냐?
 	void setIsLeft(bool isLeft) { m_enemy.isLeft = isLeft; }
 
+
 	//에너미 현재 상태
-	currentEnemy getCurrent() { return m_enemy.current; }
 	void setCurrent(currentEnemy current)
 	{
 		m_enemy.current = current;
 		m_enemy.count = m_enemy.currentFrameX = 0;
 	}
+
+	bool getItemDrop() { return m_enemy.itemDrop; }
+	void setItemDrop(bool itemDrop) { m_enemy.itemDrop = itemDrop; }
 
 	//추가 함수->상단에 설명추가
 	bool getFire() { return m_enemy.fire; }
@@ -209,7 +240,7 @@ public:
 	int getEnemyNumber() { return m_enemy.enemyNumber; }
 	void setEnemyNumber(int _number) { m_enemy.enemyNumber = _number; }
 
-	virtual bool getFireEnemy() { return m_enemy.fireEnemy; }
+	bool getFireEnemy() { return m_enemy.fireEnemy; }
 	bool fireCheck();
 };
 
@@ -233,6 +264,8 @@ public:
 	void dashCoolTime();
 	bool dash();
 	bool dead();
+	void walkCoolTime();
+	void walk();
 
 	//에너미 몸체 렉트
 	RECT getRect() { return m_enemy.rc; }
@@ -262,11 +295,19 @@ public:
 			m_enemy.count = 0;
 			m_enemy.currentFrameX = 0;
 			//현재 체력이 없을 경우 죽음 모션 발동
-			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			if (m_enemy.currentHP <= 0)
+			{
+				m_enemy.current = DEAD_ENEMY;
+				m_enemy.itemDrop = true;
+				SOUNDMANAGER->play("오리_죽음");
+			}
 			//현재 체력이 남아있을 경우 피격 모션 발동
 			else m_enemy.current = HIT_ENEMY;
 		}
 	}
+
+	bool getItemDrop() { return m_enemy.itemDrop; }
+	void setItemDrop(bool itemDrop) { m_enemy.itemDrop = itemDrop; }
 
 	//에너미 현재 체력 수정
 	virtual void setHP1(int hp) { m_enemy.currentHP = hp; }
@@ -318,6 +359,8 @@ public:
 	void dashCoolTime();
 	bool dash();
 	bool dead();
+	void walkCoolTime();
+	void walk();
 
 	//에너미 몸체 렉트
 	RECT getRect() { return m_enemy.rc; }
@@ -347,15 +390,29 @@ public:
 			m_enemy.currentHP -= hp;
 			m_enemy.count = 0;
 			m_enemy.currentFrameX = 0;
+			
 			//현재 체력이 없을 경우 죽음 모션 발동
-			if (m_enemy.currentHP <= 0) m_enemy.current = DEAD_ENEMY;
+			if (m_enemy.currentHP <= 0)
+			{
+				m_enemy.current = DEAD_ENEMY;
+				m_enemy.itemDrop = true;
+				SOUNDMANAGER->play("가미가제_죽음");
+			}
 			//현재 체력이 남아있을 경우 피격 모션 발동
-			else m_enemy.current = HIT_ENEMY;
+			else
+			{
+				m_enemy.current = HIT_ENEMY;
+				SOUNDMANAGER->play("가미가제_피격");
+			}
 		}
 	}
 
+
+	bool getItemDrop() { return m_enemy.itemDrop; }
+	void setItemDrop(bool itemDrop) { m_enemy.itemDrop = itemDrop; }
+
 	//에너미 현재 체력 수정
-	virtual void setHP1(int hp) { m_enemy.currentHP = hp; }
+	void setHP1(int hp) { m_enemy.currentHP = hp; }
 
 	//에너미 탐지했냐?
 	bool getIsDetection() { return m_enemy.isDetection; }

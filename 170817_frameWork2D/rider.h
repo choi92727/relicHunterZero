@@ -13,6 +13,16 @@ private:
 	int shieldRenderCount = 0;
 
 	int bullet_damage = 0;
+
+	bool soundTeleportOnce = true;
+
+	bool deathOnce = true;	//사운드한번실행
+	bool walkOnce = true;//
+	bool runOnce = true;//
+	bool shieldBreakOnce = true;	//
+	bool shieldRegenOnce = true;	//
+
+	bool RECTrender;
 public:
 	rider();
 	~rider();
@@ -34,5 +44,7 @@ public:
 	void damage();
 
 	void damageBullet(float damage);
+
+	void isTeleport();
 };
 

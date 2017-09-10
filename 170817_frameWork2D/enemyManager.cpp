@@ -44,13 +44,22 @@ void enemyManager::update()
 	this->deleteEnemy();
 }
 
-void enemyManager::render(POINT pt)
+bool enemyManager::render(POINT pt)
 {
+	bool isInRect=false;
+	RECT temp;
+	RECT camera_rc = RectMake(pt.x, pt.y, 1280, 720);
 	m_viEnemy = m_vEnemy.begin();
 	for (m_viEnemy; m_viEnemy != m_vEnemy.end(); m_viEnemy++)
 	{
+		if (IntersectRect(&temp, &camera_rc, &(*m_viEnemy)->getRect()))
+		{
+
 		(*m_viEnemy)->render(pt);
+		isInRect = true;
+		}
 	}
+	return isInRect;
 }
 
 //거북이 추가

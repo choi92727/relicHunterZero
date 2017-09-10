@@ -37,10 +37,18 @@ void objectManager::update()
 
 void objectManager::render(POINT pt)
 {
+	RECT temp;
+	RECT camera_rc =  RectMake(pt.x, pt.y, 1280, 720);
 	m_viObject = m_vObject.begin();
 	for (m_viObject; m_viObject != m_vObject.end(); m_viObject++)
 	{
-		(*m_viObject)->render(pt);
+		if (IntersectRect(&temp, &camera_rc, &(*m_viObject)->getRect()))
+		{
+
+			(*m_viObject)->render(pt);
+		}
+		
+	
 	}
 }
 

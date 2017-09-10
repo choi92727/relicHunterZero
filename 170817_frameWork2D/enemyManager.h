@@ -18,7 +18,7 @@ public:
 	HRESULT init();
 	void release();
 	void update();
-	void render(POINT pt);
+	bool render(POINT pt);
 
 	//∞≈∫œ¿Ã √ﬂ∞°
 	void addTurtle(POINT position);

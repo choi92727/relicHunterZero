@@ -307,6 +307,8 @@ HRESULT teleport::init(POINT position)
 	m_object.y = position.y;
 	m_object.rc = RectMake(m_object.x, m_object.y, 150, 100);
 	m_object.isTeleport = true;
+	m_im = IMAGEMANAGER->findImage("텔레포트이펙트");
+	ANIMATIONMANAGER->start("텔포애니");
 	return S_OK;
 }
 
@@ -316,10 +318,13 @@ void teleport::release()
 
 void teleport::update()
 {
-	m_object.rc = RectMake(m_object.x, m_object.y, 150, 100);
+	m_object.rc = RectMake(m_object.x-30, m_object.y-30, 150, 100);
 }
 
 void teleport::render(POINT pt)
 {
+	//Rectangle(getMemDC(), m_object.rc.left - pt.x, m_object.rc.top - pt.y, m_object.rc.right - pt.x, m_object.rc.bottom - pt.y);
+	m_im->aniRender(getMemDC(), m_object.x - 30 - pt.x, m_object.y - 72 - pt.y, ANIMATIONMANAGER->findAnimation("텔포애니"));
 	m_object.image->render(getMemDC(), m_object.x - 30 - pt.x, m_object.y - 72 - pt.y);
+
 }

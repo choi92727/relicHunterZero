@@ -76,7 +76,11 @@ protected:
 		bool damage;	//공격을받을시 데미지판정
 
 		bool die; //게임을끝내는 불값
+
+		bool teleporting = false; //텔레포트중인가?
 		tagCharacter nowCharacter;
+
+		bool completeTeleport = false;
 	};
 
 	tagPlayer m_player;
@@ -146,7 +150,7 @@ public:
 	float getP_Angle() { return m_player.angle; }
 	float getSpeed() { return m_player.speed; }
 	bool getMeleeEnd() { return m_player.meleeEnd; }
-	
+
 	int getMaxHP() { return m_player.maxHP; }		//플레이어 총체력가져오기
 	void setMaxHP(int HP) { m_player.maxHP = HP; }	//총체력 셋
 	int getCurrentHP() { return m_player.currentHP; }		//플레이어 현재체력가져오기
@@ -157,12 +161,16 @@ public:
 	int getCurrentShield() { return m_player.currentShield; }		//플레이어 쉴드가져오기
 	void setCurrentShield(int shield) { m_player.currentShield = shield; }	//플레이어 쉴드셋
 
-//	bool getMeleeAtk() { return m_player.meleeAtk; }
+																			//	bool getMeleeAtk() { return m_player.meleeAtk; }
 	void setMeleeAtk(bool MeleeAtk) { m_player.meleeAtk = MeleeAtk; }
 
 	bool getIsleft() { return m_player.isLeft; }
 	void setIsleft(bool isleft) { m_player.isLeft = isleft; }
 
 	virtual void damageBullet(float damage);
+
+	virtual void isTeleport();
+
+	bool getCompleteTeleport() { return m_player.completeTeleport; }
 };
 

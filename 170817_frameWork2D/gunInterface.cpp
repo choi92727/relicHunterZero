@@ -57,7 +57,7 @@ void gunInterface::reload()
 		{
 			m_totalBullet -= (m_maxBullet - m_currentBullet);
 			m_currentBullet += (m_maxBullet - m_currentBullet);
-			
+
 		}
 	}
 }

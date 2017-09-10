@@ -76,6 +76,11 @@ HRESULT jimmy::init(POINT position)
 
 	shieldNumDraw = new numberDrawManager;
 	shieldNumDraw->init("별숫자", 2);
+
+	m_player.completeTeleport = false;
+	deathOnce = true;
+
+	RECTrender = false;
 	return S_OK;
 }
 
@@ -90,6 +95,11 @@ void jimmy::release()
 
 void jimmy::update(POINT pt)
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		if (RECTrender) RECTrender = false;
+		else RECTrender = true;
+	}
 	//프로그래스바
 	hpBar->setGauge(m_player.currentHP, m_player.maxHP);
 	hpBar->update();
@@ -160,11 +170,13 @@ void jimmy::render(POINT pt)
 	OldBrush = (HBRUSH)SelectObject(getMemDC(), MyBrush);
 	MyPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 	OldPen = (HPEN)SelectObject(getMemDC(), MyPen);
-
-	Rectangle(getMemDC(), m_player.enemy_hitRc.left - pt.x, m_player.enemy_hitRc.top - pt.y,
-		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
-	Rectangle(getMemDC(), m_player.wall_hitRc.left - pt.x, m_player.wall_hitRc.top - pt.y,
-		m_player.wall_hitRc.right - pt.x, m_player.wall_hitRc.bottom - pt.y);
+	if (RECTrender)
+	{
+		Rectangle(getMemDC(), m_player.enemy_hitRc.left - pt.x, m_player.enemy_hitRc.top - pt.y,
+			m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
+		Rectangle(getMemDC(), m_player.wall_hitRc.left - pt.x, m_player.wall_hitRc.top - pt.y,
+			m_player.wall_hitRc.right - pt.x, m_player.wall_hitRc.bottom - pt.y);
+	}
 	//Rectangle(getMemDC(), m_player.melee_atkRc.left - pt.x, m_player.melee_atkRc.top -pt.y,
 	//	m_player.melee_atkRc.right - pt.x, m_player.melee_atkRc.bottom - pt.y);
 	SelectObject(getMemDC(), OldBrush);
@@ -263,7 +275,6 @@ void jimmy::animation()
 		}
 		m_player.isLeft ? m_player.frameY = 13 : m_player.frameY = 4;
 	}
-
 	//플레이어 근접공격 애니메이션
 	if (m_player.animation == MELEE)
 	{
@@ -296,8 +307,10 @@ void jimmy::animation()
 		if (m_player.frameCount % 5 == 0)
 		{
 			m_player.frameCount = 0;
-			m_player.frameX++;
-			if (m_player.frameX > 7) m_player.frameX = 0;
+			m_player.frameX--;
+			if (m_player.frameX == 0) m_player.completeTeleport = true;
+
+
 		}
 		m_player.isLeft ? m_player.frameY = 16 : m_player.frameY = 7;
 	}
@@ -305,6 +318,11 @@ void jimmy::animation()
 	//플레이어 걷기 애니메이션
 	if (m_player.animation == WALK)
 	{
+		if (walkOnce)
+		{
+			SOUNDMANAGER->play("걷기");
+			walkOnce = false;
+		}
 		m_player.frameCount++;
 		if (m_player.frameCount % 5 == 0)
 		{
@@ -314,7 +332,11 @@ void jimmy::animation()
 		}
 		m_player.isLeft ? m_player.frameY = 17 : m_player.frameY = 8;
 	}
-
+	else
+	{
+		walkOnce = true;
+		SOUNDMANAGER->stop("걷기");
+	}
 
 	if (m_player.die)	//사망처리
 	{
@@ -358,18 +380,15 @@ void jimmy::move()
 		m_player.y += m_player.speed;
 		if (!m_player.dash && !m_player.hit) m_player.animation = WALK;
 	}
+
 	if (!KEYMANAGER->isStayKeyDown('A') &&
 		!KEYMANAGER->isStayKeyDown('D') &&
 		!KEYMANAGER->isStayKeyDown('W') &&
 		!KEYMANAGER->isStayKeyDown('S') &&
 		!m_player.dash && !m_player.hit &&
-		!m_player.melee)
+		!m_player.melee && m_player.animation != TELEPORT)
 	{
 		m_player.animation = IDLE;
-	}
-	if (KEYMANAGER->isOnceKeyDown('T'))
-	{
-		damageBullet(5);
 	}
 	//아무것도 눌리지 않았을때 기본 애니메이션으로 변경
 }
@@ -397,7 +416,7 @@ void jimmy::melee(POINT pt)
 			if (m_player.meleeAtkOnce == true)
 			{
 				m_player.melee_atkRc = RectMakeCenter(m_player.x + (cosf(m_player.angle) * 50), m_player.y + (-sinf(m_player.angle) * 50), 60, 60);
-				
+
 				m_player.meleeAtk = true;
 				m_player.meleeAtkOnce = false;
 			}
@@ -408,7 +427,7 @@ void jimmy::melee(POINT pt)
 		{
 			m_player.melee = false;
 			m_player.meleeAtk = false;
-			
+
 			m_player.meleeEnd = true;
 			count = 0;
 		}
@@ -445,6 +464,12 @@ void jimmy::dead()
 	}
 	if (!m_player.life)
 	{
+		if (deathOnce)
+		{
+			SOUNDMANAGER->play("사망");
+			deathOnce = false;
+			m_player.frameX = 0;
+		}
 		m_player.animation = DEATH;
 	}
 }
@@ -471,19 +496,25 @@ void jimmy::hpFaceInfo()
 
 void jimmy::run()
 {
-
 	if (KEYMANAGER->isStayKeyDown(VK_LSHIFT) && !m_player.melee && !m_player.dash&&
 		m_player.animation != IDLE)								//가만히있을때 달리지않음
 	{
 		if (m_player.currentStamina > 0 && !m_player.runStartDelay)	//스테미너가 0보다 많을경우 달리기실행
 		{
 			m_player.run = true;
+			if (runOnce)
+			{
+				SOUNDMANAGER->play("달리기시작");
+				SOUNDMANAGER->play("달리기중");
+				runOnce = false;
+			}
 		}
 		else          //아니면 달리기 종료
 		{
 			m_player.runStartDelay = true;
 			m_player.run = false;
 			m_player.speed = 5.0f;	//고정값으로 해줌
+			runOnce = true;
 		}
 
 		if (m_player.run)
@@ -495,6 +526,10 @@ void jimmy::run()
 			{
 				m_player.currentStamina--;	//달릴때 스테미너감소
 			}
+			if (runDelay % 12 == 0)
+			{
+				SOUNDMANAGER->play("달리기중");
+			}
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LSHIFT))	//쉬프트키를 떼면 달리기종료
@@ -505,6 +540,9 @@ void jimmy::run()
 		}
 		m_player.run = false;
 		m_player.speed = 5.0f;
+
+		SOUNDMANAGER->stop("달리기중");
+		runOnce = true;
 	}
 	if (m_player.currentStamina < 100 && !m_player.run)	//스테미너가 100보다 작고 달리는중이 아니라면
 	{
@@ -527,6 +565,15 @@ void jimmy::shieldRegen()
 			if (shieldCount % 3 == 0)
 			{
 				m_player.currentShield++;
+				if (m_player.currentShield >1)
+				{
+					shieldBreakOnce = true;
+					if (shieldRegenOnce)
+					{
+						SOUNDMANAGER->play("쉴드리젠");
+						shieldRegenOnce = false;
+					}
+				}
 			}
 		}
 	}
@@ -559,14 +606,22 @@ void jimmy::damage()
 	}
 	if (m_player.damage)
 	{
+		if (m_player.currentShield <= 0 && shieldBreakOnce)
+		{
+			SOUNDMANAGER->play("쉴드깨짐");
+			shieldBreakOnce = false;
+		}
 		if (m_player.currentShield >0)
 		{
 			m_player.currentShield -= bullet_damage;
 			m_player.shieldRender = true;
+			SOUNDMANAGER->play("쉴드피격");
+			shieldRegenOnce = true;		//사운드한번만실행되는함수 다시한번만실행되게
 		}
 		else
 		{
 			m_player.currentHP -= bullet_damage;
+			SOUNDMANAGER->play("피격");
 		}
 		m_player.damage = false;
 	}
@@ -622,4 +677,19 @@ void jimmy::damageBullet(float damage)
 	m_player.damage = true;//데미지판정
 
 	bullet_damage = damage;
+}
+
+void jimmy::isTeleport()
+{
+	m_player.frameX = 7;
+	if (soundTeleportOnce)
+	{
+		SOUNDMANAGER->play("텔레포트");
+		soundTeleportOnce = false;
+	}
+	if (m_player.animation == IDLE)
+	{
+		m_player.animation = TELEPORT;
+	}
+
 }

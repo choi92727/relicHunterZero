@@ -35,6 +35,11 @@ void characterManager::release()
 void characterManager::update(POINT pt)
 {
 	m_player->update(pt);
+
+	if (KEYMANAGER->isOnceKeyDown('Y'))////////////////////////////////
+	{
+		m_player->isTeleport();
+	}
 }
 
 void characterManager::render(POINT pt)

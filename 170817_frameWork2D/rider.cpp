@@ -13,7 +13,11 @@ rider::~rider()
 
 HRESULT rider::init(POINT position)
 {
-
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		if (RECTrender) RECTrender = false;
+		else RECTrender = true;
+	}
 	_fCommandClear = 2.5f;	//커맨드입력시간
 	_fCommandTime = 0.0f;
 
@@ -75,6 +79,11 @@ HRESULT rider::init(POINT position)
 	shieldNumDraw = new numberDrawManager;
 	shieldNumDraw->init("별숫자", 2);
 
+
+	m_player.completeTeleport = false;
+	deathOnce = true;
+
+	RECTrender = false;
 	return S_OK;
 }
 
@@ -157,12 +166,13 @@ void rider::render(POINT pt)
 	OldBrush = (HBRUSH)SelectObject(getMemDC(), MyBrush);
 	MyPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
 	OldPen = (HPEN)SelectObject(getMemDC(), MyPen);
-
-	Rectangle(getMemDC(), m_player.enemy_hitRc.left - pt.x, m_player.enemy_hitRc.top - pt.y,
-		m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
-	Rectangle(getMemDC(), m_player.wall_hitRc.left - pt.x, m_player.wall_hitRc.top - pt.y,
-		m_player.wall_hitRc.right - pt.x, m_player.wall_hitRc.bottom - pt.y);
-
+	if (RECTrender)
+	{
+		Rectangle(getMemDC(), m_player.enemy_hitRc.left - pt.x, m_player.enemy_hitRc.top - pt.y,
+			m_player.enemy_hitRc.right - pt.x, m_player.enemy_hitRc.bottom - pt.y);
+		Rectangle(getMemDC(), m_player.wall_hitRc.left - pt.x, m_player.wall_hitRc.top - pt.y,
+			m_player.wall_hitRc.right - pt.x, m_player.wall_hitRc.bottom - pt.y);
+	}
 	SelectObject(getMemDC(), OldBrush);
 	SelectObject(getMemDC(), OldPen);
 	DeleteObject(MyPen);
@@ -249,6 +259,7 @@ void rider::animation()
 	}
 
 	//플레이어 기본 애니메이션
+
 	if (m_player.animation == IDLE)
 	{
 		m_player.frameCount++;
@@ -260,7 +271,6 @@ void rider::animation()
 		}
 		m_player.isLeft ? m_player.frameY = 12 : m_player.frameY = 4;
 	}
-
 	//플레이어 근접공격 애니메이션
 	if (m_player.animation == MELEE)
 	{
@@ -281,8 +291,8 @@ void rider::animation()
 		if (m_player.frameCount % 5 == 0)
 		{
 			m_player.frameCount = 0;
-			m_player.frameX++;
-			if (m_player.frameX > 8) m_player.frameX = 0;
+			m_player.frameX--;
+			if (m_player.frameX == 0) m_player.completeTeleport = true;
 		}
 		m_player.isLeft ? m_player.frameY = 14 : m_player.frameY = 6;
 	}
@@ -290,6 +300,11 @@ void rider::animation()
 	//플레이어 걷기 애니메이션
 	if (m_player.animation == WALK)
 	{
+		if (walkOnce)
+		{
+			SOUNDMANAGER->play("걷기");
+			walkOnce = false;
+		}
 		m_player.frameCount++;
 		if (m_player.frameCount % 5 == 0)
 		{
@@ -299,7 +314,12 @@ void rider::animation()
 		}
 		m_player.isLeft ? m_player.frameY = 15 : m_player.frameY = 7;
 	}
-	if (m_player.die)	//사망처리
+	else
+	{
+		walkOnce = true;
+		SOUNDMANAGER->stop("걷기");
+	}
+	if (m_player.die)	//사망처리ㅊ
 	{
 		m_player.frameX = 9;
 
@@ -344,7 +364,7 @@ void rider::move()
 		!KEYMANAGER->isStayKeyDown('W') &&
 		!KEYMANAGER->isStayKeyDown('S') &&
 		!m_player.dash && !m_player.hit &&
-		!m_player.melee)
+		!m_player.melee && m_player.animation != TELEPORT)
 	{
 		m_player.animation = IDLE;
 	}
@@ -410,6 +430,12 @@ void rider::dead()
 	}
 	if (!m_player.life)
 	{
+		if (deathOnce)
+		{
+			SOUNDMANAGER->play("사망");
+			deathOnce = false;
+			m_player.frameX = 0;
+		}
 		m_player.animation = DEATH;
 	}
 }
@@ -442,12 +468,19 @@ void rider::run()
 		if (m_player.currentStamina > 0 && !m_player.runStartDelay)	//스테미너가 0보다 많을경우 달리기실행
 		{
 			m_player.run = true;
+			if (runOnce)
+			{
+				SOUNDMANAGER->play("달리기시작");
+				SOUNDMANAGER->play("달리기중");
+				runOnce = false;
+			}
 		}
 		else          //아니면 달리기 종료
 		{
 			m_player.runStartDelay = true;
 			m_player.run = false;
 			m_player.speed = 5.0f;	//고정값으로 해줌
+			runOnce = true;
 		}
 
 		if (m_player.run)
@@ -459,6 +492,10 @@ void rider::run()
 			{
 				m_player.currentStamina--;	//달릴때 스테미너감소
 			}
+			if (runDelay % 12 == 0)
+			{
+				SOUNDMANAGER->play("달리기중");
+			}
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LSHIFT))	//쉬프트키를 떼면 달리기종료
@@ -469,6 +506,9 @@ void rider::run()
 		}
 		m_player.run = false;
 		m_player.speed = 5.0f;
+
+		SOUNDMANAGER->stop("달리기중");
+		runOnce = true;
 	}
 	if (m_player.currentStamina < 100 && !m_player.run)	//스테미너가 100보다 작고 달리는중이 아니라면
 	{
@@ -491,6 +531,15 @@ void rider::shieldRegen()
 			if (shieldCount % 3 == 0)
 			{
 				m_player.currentShield++;
+				if (m_player.currentShield >1)
+				{
+					shieldBreakOnce = true;
+					if (shieldRegenOnce)
+					{
+						SOUNDMANAGER->play("쉴드리젠");
+						shieldRegenOnce = false;
+					}
+				}
 			}
 		}
 	}
@@ -523,14 +572,22 @@ void rider::damage()
 	}
 	if (m_player.damage)
 	{
+		if (m_player.currentShield <= 0 && shieldBreakOnce)
+		{
+			SOUNDMANAGER->play("쉴드깨짐");
+			shieldBreakOnce = false;
+		}
 		if (m_player.currentShield >0)
 		{
 			m_player.currentShield -= bullet_damage;
 			m_player.shieldRender = true;
+			SOUNDMANAGER->play("쉴드피격");
+			shieldRegenOnce = true;		//사운드한번만실행되는함수 다시한번만실행되게
 		}
 		else
 		{
 			m_player.currentHP -= bullet_damage;
+			SOUNDMANAGER->play("피격");
 		}
 		m_player.damage = false;
 	}
@@ -586,4 +643,19 @@ void rider::damageBullet(float damage)
 	m_player.damage = true;//데미지판정
 
 	bullet_damage = damage;
+}
+
+void rider::isTeleport()
+{
+	m_player.frameX = 8;
+	if (soundTeleportOnce)
+	{
+		SOUNDMANAGER->play("텔레포트");
+		soundTeleportOnce = false;
+	}
+	if (m_player.animation == IDLE)
+	{
+		m_player.animation = TELEPORT;
+	}
+
 }

@@ -66,15 +66,15 @@ void plasmarBullet::update()
 void plasmarBullet::render(POINT pt)
 {
 
-	Rectangle(getMemDC(), m_x, m_y, m_x + m_image->getFrameWidth(), m_y + m_image->getFrameHeight());
+	/*Rectangle(getMemDC(), m_x, m_y, m_x + m_image->getFrameWidth(), m_y + m_image->getFrameHeight());*/
 
 	m_image->aniRender(getMemDC(), m_x - pt.x, m_y - pt.y, m_ani);
 
-	char text[64];
+	//char text[64];
 
-	wsprintf(text, "%d,%d", m_x, m_y);
+	//wsprintf(text, "%d,%d", m_x, m_y);
 
-	TextOut(getMemDC(), m_x - pt.x, m_y - pt.y, text, strlen(text));
+	//TextOut(getMemDC(), m_x - pt.x, m_y - pt.y, text, strlen(text));
 }
 
 
