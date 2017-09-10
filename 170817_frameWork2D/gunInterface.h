@@ -31,6 +31,7 @@ protected:
 	int m_gunIndex ;
 	bool m_enemy_fire = true;
 	float m_enemyfireDelay = 1.5f * 60.0f;
+	bool m_canFire;
 
 
 
@@ -58,7 +59,11 @@ public:
 	void setGunIndex(int _gunIndex) { m_gunIndex = _gunIndex; }
 
 	bool getEnemyFireTriger() { return m_enemy_fire; }
-	void setEnemyFireTriger(bool _bool) { m_enemy_fire = _bool; }
+	void setEnemyFireTriger(bool _bool){ m_enemy_fire = _bool; }
+
+	bool getCanFire() { return m_canFire; }
+	void setCanFire(bool _setFire) {m_canFire = _setFire; }
+
 
 
 };

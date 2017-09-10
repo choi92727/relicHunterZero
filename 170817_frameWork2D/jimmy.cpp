@@ -367,6 +367,10 @@ void jimmy::move()
 	{
 		m_player.animation = IDLE;
 	}
+	if (KEYMANAGER->isOnceKeyDown('T'))
+	{
+		damageBullet(5);
+	}
 	//아무것도 눌리지 않았을때 기본 애니메이션으로 변경
 }
 

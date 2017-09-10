@@ -137,9 +137,10 @@ void defaultGun::fire()
 			, m_angle, m_speed, m_playerType);
 
 		m_bulletManager->addBullet(*m_bullet);
-		m_currentBullet--;
-	}
-		
+		if (m_playerType == CHAR_PLAYER) {
+			m_currentBullet--;
+		}
+	}	
 }
 
 

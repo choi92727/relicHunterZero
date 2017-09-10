@@ -38,7 +38,7 @@ struct tagEnemy
 	//총알 발사 변수
 	bool fire = true;
 	float fireDelay= 1.5f * 60.0f;//총알 발사 대기시간
-	bool fireEnemy = false;//총을 쏘는 에너미인지
+	bool fireEnemy;//총을 쏘는 에너미인지
 	int enemyNumber = 0;//현재 에너미의 숫자값
 	
 };
@@ -209,7 +209,7 @@ public:
 	int getEnemyNumber() { return m_enemy.enemyNumber; }
 	void setEnemyNumber(int _number) { m_enemy.enemyNumber = _number; }
 
-	bool getFireEnemy() { return m_enemy.fireEnemy; }
+	virtual bool getFireEnemy() { return m_enemy.fireEnemy; }
 	bool fireCheck();
 };
 

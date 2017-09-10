@@ -13,7 +13,10 @@ stageScene::~stageScene()
 
 HRESULT stageScene::init()
 {
-	
+
+	m_cd = new cursorDraw;
+	m_cd->init(0);
+
 	loadStage("tileMap1.map");
 
 	m_bulletManager = new bulletManager;
@@ -36,7 +39,15 @@ HRESULT stageScene::init()
 			temp->init(CHAR_ENEMY);
 			temp->setBulletManagerLink(*m_bulletManager);
 			temp->setPosition(m_createEnemy[i].pt.x, m_createEnemy[i].pt.y - 50);
+			if (m_createEnemy[i].enm == ENM_KAMIKAZE)
+			{
+				temp->setCanFire(false);
+			}
+			else
+			{
+				temp->setCanFire(true);
 
+			}
 			m_enemyGun.push_back(temp);
 	
 	}
@@ -96,6 +107,8 @@ void stageScene::release()
 
 void stageScene::update()
 {
+	getIsReload();
+
 	if (m_cm->getMeleeAtk()) {
 		m_defaultGun->setAngle(180 * (PI / 180));
 	}
@@ -244,12 +257,7 @@ void stageScene::render()
 	testNumber->render(WINSIZEX/2,0, 1);
 
 
-	
-
-
-
-	
-
+	m_cd->render();
 
 }
 
@@ -313,24 +321,35 @@ void stageScene::moveCamera(POINT characterPt)
 	currentCamera.y = characterPt.y + (ptMouse.y - WINSIZEY / 2) / 6 - WINSIZEY / 2;
 }
 
-
+void stageScene::getIsReload()
+{
+	if (m_cd->reload())
+	{
+		m_defaultGun->reload();
+	}
+}
 
 void stageScene::enemyGunRender()
 {
 	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
-		if (m_enemyManager->getVEnemy()[i]->getFireEnemy())
-		{
-			m_enemyGun[i]->render();
+		if (m_enemyGun[i]->getCanFire()) {
+			m_enemyGun[i]->render(currentCamera);
 		}
+		
 	}
+}
+
+void stageScene::enemyGunSetPosition()
+{
 }
 
 void stageScene::enemyShotGun()
 {
 	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
-		if (m_enemyManager->getVEnemy()[i]->getIsDetection() && m_enemyGun[i]->getEnemyFireTriger() && m_enemyManager->getVEnemy()[i]->getFireEnemy())
+		if (m_enemyManager->getVEnemy()[i]->getIsDetection() && m_enemyGun[i]->getEnemyFireTriger() 
+			&& m_enemyGun[i]->getCanFire() && m_enemyManager->getVEnemy()[i]->getCurrent() !=DEAD_ENEMY)
 		{
 			m_enemyGun[i]->setEnemyFireTriger(false);
 			m_enemyGun[i]->fire();
@@ -342,7 +361,7 @@ void stageScene::enemyDeadCheck()
 {
 	for (int i = 0; i < m_enemyManager->getVEnemy().size(); i++)
 	{
-		if (m_enemyManager->getVEnemy()[i]->getCurrent() == DEAD_ENEMY && m_enemyManager->getVEnemy()[i]->getFireEnemy())
+		if (m_enemyManager->getVEnemy()[i]->getCurrent() == DEAD_ENEMY)
 		{
 			//m_enemyGun[i]->release();
 			m_enemyGun.erase(m_enemyGun.begin() + i);

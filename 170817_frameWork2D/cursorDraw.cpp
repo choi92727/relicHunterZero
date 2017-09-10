@@ -41,16 +41,16 @@ void cursorDraw::render()
 
 bool cursorDraw::reload()//R을 누르면 재장전이되고 재장전 이미지의 마지막 프레임이 오면 true를 리턴한다.
 {
-	if (KEYMANAGER->isOnceKeyDown('R'))
-	{
-		cursor_ani = ANIMATIONMANAGER->findAnimation("cursor2");
-		ANIMATIONMANAGER->start("cursor2");
-
-	}
-	if (cursor_ani->isPlay() == false&& cursor_ani == ANIMATIONMANAGER->findAnimation("cursor2"))//재장전 완료
+	if (cursor_ani->isPlay() == false && cursor_ani == ANIMATIONMANAGER->findAnimation("cursor2"))//재장전 완료
 	{
 		cursor_ani = ANIMATIONMANAGER->findAnimation("cursor1");
 		return true;
 	}
+	if (KEYMANAGER->isOnceKeyDown('R'))
+	{
+		cursor_ani = ANIMATIONMANAGER->findAnimation("cursor2");
+		ANIMATIONMANAGER->start("cursor2");
+	}
+	
 	return false;
 }

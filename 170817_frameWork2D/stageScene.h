@@ -11,13 +11,14 @@
 #include "characterManager.h"
 #include "enemyManager.h"
 #include "objectManager.h"
-
+#include "cursorDraw.h"
 #include "collisionBullet.h"
 
 class stageScene :
 	public gameNode
 {
 private:
+	cursorDraw* m_cd;
 	tagTile tile[TILEY][TILEX];
 	tagCreateEnemy m_createEnemy[ENEMYMAX];
 	tagCreateObject m_createObject[OBJECTMAX];
@@ -58,6 +59,9 @@ public:
 	void loadEnermy(char* mapName);
 
 	void moveCamera(POINT characterPt);
+
+	void getIsReload();
+
 
 	void collision_tile_character();
 	void collision_tile_Enemy();
